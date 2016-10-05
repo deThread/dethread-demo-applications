@@ -1,0 +1,53 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+.active{
+  color: lightcoral;
+}
+
+/*About Us!*/
+.jumbotron{
+  margin-top: -20px;
+}
+.section1 {
+  background-color: lightcyan;
+  height: 500px;
+  margin-top: -2.2em;
+  padding: 45px;
+}
+.textContainer{
+  margin-top: 45px;
+}
+
+.section2{
+  background-color: peru;
+  height: 500px;
+  margin-top: -2.2em;
+  padding: 45px;
+}
+
+.footer{
+  height: 40px;
+}
+/* ~~~~~ */
+
+/* Performance */
+.perfContainer{
+  padding-left: 150px;
+  padding-right: 150px;
+  text-align: center;
+  overflow: none;
+}
+.card{
+  height: 750px;
+  width: 750px;
+  margin: 50px auto;
+}
+
+.data{
+  height: 300px;
+  width: 500px;
+  border: 1px solid gold;
+  margin: 25px auto;
+}
