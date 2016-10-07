@@ -6,10 +6,11 @@
   "repository": "https://github.com/shawn-southwell/Distributed-Computing-for-Teams",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --history-api-fallback",
+    "startServer": "nodemon ./server/server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch"
   },
-  "author": "Daniel Lao, Bryan Yee, ",
+  "author": "Daniel Lao, Bryan Yee, Shawn Southwell ",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.2.1",
@@ -27,7 +28,10 @@
   },
   "dependencies": {
     "babel-preset-stage-1": "^6.1.18",
+    "express": "^4.14.0",
     "lodash": "^3.10.1",
+    "nodemon": "^1.11.0",
+    "path": "^0.12.7",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
