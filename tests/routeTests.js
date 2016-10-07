@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const expect = require('chai');
+const expect = require('chai').expect;
 const request = require('supertest');
 
 const PORT = process.env.PORT || 3000;
@@ -21,19 +21,22 @@ describe('Server routes', function () {
       request(HOST)
         .get('/')
         .expect((response) => {
-          const indexFile = fs.readFileSync(path.join(__dirname, 'index.html'));
-          expect(JSON.stringify(indexFile).to.equal(response.text));
-        }, done);
+          const indexFile = fs.readFileSync(path.join(__dirname, '../', 'index.html'));
+          expect(indexFile.toString()).to.equal(response.text);
+        })
+        .expect(200,done);
     });
   });
 
   describe('GET request to /bundle.js', function() {
     it('should respond with the bundle.js file', function(done) {
       request(HOST)
+        .get('/bundle.js')
         .expect((response) => {
-          const bundleFile = fs.readFileSync(path.join(__dirname, 'bundle.js'));
-          expect(JSON.stringify(bundleFile).to.equal(response.text));
-        }, done);
+          const bundleFile = fs.readFileSync(path.join(__dirname, '../',  'bundle.js'));
+          expect(bundleFile.toString()).to.equal(response.text);
+        })
+        .expect(200,done);
     });
   });
 
