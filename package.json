@@ -5,11 +5,13 @@
   "main": "index.js",
   "repository": "https://github.com/shawn-southwell/Distributed-Computing-for-Teams",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --history-api-fallback",
-    "startServer": "nodemon ./server/server.js",
+    "startDev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --history-api-fallback",
+    "start": "nodemon ./server/server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "test-routes": "export NODE_ENV=test && mocha --timeout 20000 tests/"
   },
+
   "author": "Daniel Lao, Bryan Yee, Shawn Southwell ",
   "license": "ISC",
   "devDependencies": {
@@ -23,6 +25,7 @@
     "jsdom": "^8.1.0",
     "mocha": "^2.4.5",
     "react-addons-test-utils": "^0.14.7",
+    "supertest": "^2.0.0",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   },
