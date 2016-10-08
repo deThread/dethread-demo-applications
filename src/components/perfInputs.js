@@ -27,11 +27,6 @@ function handleMessage(e) {
   }
 }
 
-// crackMD5(length, workers, hash){
-//     //needs to call MD5
-//     console.log(startWorkers, handleMessage)
-//     console.log('in crack');
-//   }
 
 
 

@@ -23,7 +23,7 @@ class JoinSession extends Component {
 	}
 
 	componentDidMount() {
-
+	
 	}
 
 	checkMaster() {
@@ -32,7 +32,11 @@ class JoinSession extends Component {
 
 		p2p.on('connect', () => {
 			console.log("connection formed!!");
-			p2p.emit('checkMaster');
+			// p2p.emit('checkMaster');
+			// p2p.on('checkMaster', () => {
+			// console.log('AG')
+			//p2p.emit('availableMaster', this.state.hasMaster);
+			//})
 		});
 
 		p2p.on('masterChosen', () => {
@@ -40,9 +44,13 @@ class JoinSession extends Component {
 			this.setState({hasMaster: true});
 		})
 		
-		p2p.on('checkMaster', () => {
-			console.log('AG')
-			//p2p.emit('availableMaster', this.state.hasMaster);
+		// p2p.on('checkMaster', () => {
+		// 	console.log('AG')
+		// 	//p2p.emit('availableMaster', this.state.hasMaster);
+		// })
+
+		p2p.on('starting to crack', () => {
+			console.log('received info about the crack')
 		})
 		// p2p.on('availableMaster', (res) => {
 		// 	if (!this.state.hasMaster && res){
@@ -66,7 +74,7 @@ class JoinSession extends Component {
 
 		const sessionView = !this.state.userParticipation ? <Participate checkMaster={this.checkMaster}/> 
 						 : !this.state.hasMaster ? <Host masterSelect={this.hosting}/> 
-						 : this.state.isMaster ? <Performance /> 
+						 : this.state.isMaster ? <Performance p2p={p2p}/> 
 						 : <Pending />; 
 
 		return sessionView

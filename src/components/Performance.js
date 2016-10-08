@@ -5,15 +5,15 @@ import NavLink from './NavLink';
 import WorkerInput from './workerInput';
 import HashInput from './hashInput';
 import LengthInput from './lengthInput';
-import {startWorkers, handleMessage} from './perfInputs.js';
-
+import {startWorkers, handleMessage} from './perfInputs';
 
 class Performance extends Component{
   constructor(props){
     super(props);
     this.state = {length: 0, workers : 4, hash : null, }
-    this.crackMD5 = this.crackMD5.bind(this);
     this.update = this.update.bind(this);
+    this.startMD5Decrypt = this.startMD5Decrypt.bind(this);
+    
   }
   update(name, e) {
       console.log(this.state)
@@ -23,11 +23,6 @@ class Performance extends Component{
       stateUpdate[toChange] = e.target.value;
       this.setState(stateUpdate);   
   }
-  crackMD5(length, workers, hash){
-    //needs to call MD5
-    console.log(startWorkers, handleMessage)
-    console.log('in crack');
-  }
   update(name, e) {
       console.log(this.state)
       let toChange = name;
@@ -36,7 +31,15 @@ class Performance extends Component{
       stateUpdate[toChange] = e.target.value;
       this.setState(stateUpdate);      
   }
+  startMD5Decrypt(){
+    //emit to slave clients
+    this.props.p2p.emit('starting to crack');
+    //startWorkers.bind(this, +this.state.length, +this.state.workers, this.state.hash)
 
+  }
+  componentDidMount(){
+    console.log('inside CDM, p2p is: ',this.props.p2p);
+  }
   render(){
     return(<div>
               <div className="perfContainer">
@@ -64,7 +67,7 @@ class Performance extends Component{
                   </form>
 
                   <button className="startHash btn btn-danger" 
-                    onClick={startWorkers.bind(this, +this.state.length, +this.state.workers, this.state.hash)}>
+                    onClick={this.startMD5Decrypt.bind(this)}>
                     Fire cracker.js.io
                   </button>
               </div>
