@@ -14,7 +14,7 @@ class Navbar extends Component{
              <ul className="nav navbar-nav navbar-right">
                 <li><NavLink to="/AboutUs">About Us</NavLink></li>
                 <li><NavLink to="/Contact">Contact</NavLink></li>
-                <li><NavLink to="/Performance">Performance</NavLink></li>
+                <li><NavLink to="/JoinSession">Join Session</NavLink></li>
             </ul>
           </div>
         </div>
