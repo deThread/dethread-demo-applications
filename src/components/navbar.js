@@ -15,6 +15,7 @@ class Navbar extends Component{
                 <li><NavLink to="/AboutUs">About Us</NavLink></li>
                 <li><NavLink to="/Contact">Contact</NavLink></li>
                 <li><NavLink to="/Performance">Performance</NavLink></li>
+                <li><NavLink to="/JoinSession">Join Session</NavLink></li>
             </ul>
           </div>
         </div>
