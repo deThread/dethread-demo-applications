@@ -11,7 +11,7 @@ import {startWorkers, handleMessage} from './perfInputs.js';
 class Performance extends Component{
   constructor(props){
     super(props);
-    this.state = {hasUserConnected : false, length: 0, workers : 4, hash : null, }
+    this.state = {length: 0, workers : 4, hash : null, }
     this.crackMD5 = this.crackMD5.bind(this);
     this.update = this.update.bind(this);
   }
@@ -61,29 +61,14 @@ class Performance extends Component{
                       <HashInput id="hashInput" className="form-control"
                       hash={this.state.hash} update={this.update.bind(this,'hash')} />
                     </div>
+                  </form>
 
-
-                    <div className="data well well-sm">
-                      <WorkerInput workers={this.state.workers} update={this.update.bind(this,'workers')} />
-                      <LengthInput len={this.state.length} update={this.update.bind(this,'length')} />
-                      <HashInput hash={this.state.hash} update={this.update.bind(this,'hash')} />
-
-                      <button className="startHash btn btn-danger" 
-                        onClick={startWorkers.bind(this, +this.state.length, +this.state.workers, this.state.hash)}>
-                        Fire cracker.js.io
-                      </button>
-                    </div>
-                  </form>   
-                  <div className="container-fluid">
-                    <div className="row text-center"> 
-                      <h1><em>Currently Hosting</em></h1>
-                    </div>
-
-
-                  </div>
-
-                </div>
+                  <button className="startHash btn btn-danger" 
+                    onClick={startWorkers.bind(this, +this.state.length, +this.state.workers, this.state.hash)}>
+                    Fire cracker.js.io
+                  </button>
               </div>
+            </div>
           </div>
        )
   }
