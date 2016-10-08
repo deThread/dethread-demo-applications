@@ -9,7 +9,8 @@
     "start": "nodemon ./server/server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch",
-    "test-routes": "export NODE_ENV=test && mocha --timeout 20000 tests/"
+    "test-routes": "export NODE_ENV=test && mocha --timeout 20000 tests/",
+    "build": "webpack"
   },
 
   "author": "Daniel Lao, Bryan Yee, Shawn Southwell ",
@@ -39,6 +40,10 @@
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
     "react-router": "^2.8.1",
-    "redux": "^3.0.4"
+    "redux": "^3.0.4",
+    "socket.io": "^1.5.0",
+    "socket.io-client": "^1.5.0",
+    "socket.io-p2p": "^2.2.0",
+    "socket.io-p2p-server": "^1.2.0"
   }
 }
