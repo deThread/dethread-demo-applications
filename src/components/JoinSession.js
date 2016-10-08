@@ -23,29 +23,42 @@ class JoinSession extends Component {
 	}
 
 	componentDidMount() {
+
 	}
 
 	checkMaster() {
 		socket = io();
 		p2p = new P2P(socket);
-		p2p.on('connect', (res) => {
+
+		p2p.on('connect', () => {
 			console.log("connection formed!!");
-		})
-		p2p.on('masterChosen', (res) => {
+			p2p.emit('checkMaster');
+		});
+
+		p2p.on('masterChosen', () => {
 			console.log(`You Are now a Slave`);
 			this.setState({hasMaster: true});
 		})
-		p2p.on('checkMaster', (res) => {
 		
+		p2p.on('checkMaster', () => {
+			console.log('AG')
+			//p2p.emit('availableMaster', this.state.hasMaster);
 		})
-		p2p.emit('checkMaster');
+		// p2p.on('availableMaster', (res) => {
+		// 	if (!this.state.hasMaster && res){
+		// 		this.setState({hasMaster : res});
+		// 	} 
+		// 	console.log('generalStatement')
+		// })
+		
 
 		this.setState({userParticipation: true});
 	}
 
 	hosting() {		
 		//p2p.emit('newClientConnection', {cores: navigator.hardwareConcurrency});
-		p2p.emit('masterChosen'); 
+		p2p.emit('masterChosen');
+		//setInterval(function(){p2p.emit('availableMaster')},50);
 		this.setState({hasMaster: true, isMaster: true}); 
 	}
 
