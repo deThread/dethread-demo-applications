@@ -63,16 +63,16 @@ class Performance extends Component{
                     </div>
 
 
-                  <div className="data well well-sm">
-                    <WorkerInput workers={this.state.workers} update={this.update.bind(this,'workers')} />
-                    <LengthInput len={this.state.length} update={this.update.bind(this,'length')} />
-                    <HashInput hash={this.state.hash} update={this.update.bind(this,'hash')} />
+                    <div className="data well well-sm">
+                      <WorkerInput workers={this.state.workers} update={this.update.bind(this,'workers')} />
+                      <LengthInput len={this.state.length} update={this.update.bind(this,'length')} />
+                      <HashInput hash={this.state.hash} update={this.update.bind(this,'hash')} />
 
-                    <button className="startHash btn btn-danger" 
-                      onClick={startWorkers.bind(this, +this.state.length, +this.state.workers, this.state.hash)}>
-                      Fire cracker.js.io
-                    </button>
-
+                      <button className="startHash btn btn-danger" 
+                        onClick={startWorkers.bind(this, +this.state.length, +this.state.workers, this.state.hash)}>
+                        Fire cracker.js.io
+                      </button>
+                    </div>
                   </form>   
                   <div className="container-fluid">
                     <div className="row text-center"> 
