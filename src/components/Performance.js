@@ -7,6 +7,7 @@ import HashInput from './hashInput';
 import LengthInput from './lengthInput';
 import {startWorkers, handleMessage} from './perfInputs.js';
 
+
 class Performance extends Component{
   constructor(props){
     super(props);
@@ -14,20 +15,26 @@ class Performance extends Component{
     this.crackMD5 = this.crackMD5.bind(this);
     this.update = this.update.bind(this);
   }
-
   update(name, e) {
       console.log(this.state)
       let toChange = name;
       let stateVal = this.state[toChange];
       let stateUpdate = {};
       stateUpdate[toChange] = e.target.value;
-      this.setState(stateUpdate);
-      
-    }
+      this.setState(stateUpdate);   
+  }
   crackMD5(length, workers, hash){
     //needs to call MD5
     console.log(startWorkers, handleMessage)
     console.log('in crack');
+  }
+  update(name, e) {
+      console.log(this.state)
+      let toChange = name;
+      let stateVal = this.state[toChange];
+      let stateUpdate = {};
+      stateUpdate[toChange] = e.target.value;
+      this.setState(stateUpdate);      
   }
 
   render(){
@@ -55,6 +62,12 @@ class Performance extends Component{
                       hash={this.state.hash} update={this.update.bind(this,'hash')} />
                     </div>
 
+
+                  <div className="data well well-sm">
+                    <WorkerInput workers={this.state.workers} update={this.update.bind(this,'workers')} />
+                    <LengthInput len={this.state.length} update={this.update.bind(this,'length')} />
+                    <HashInput hash={this.state.hash} update={this.update.bind(this,'hash')} />
+
                     <button className="startHash btn btn-danger" 
                       onClick={startWorkers.bind(this, +this.state.length, +this.state.workers, this.state.hash)}>
                       Fire cracker.js.io
@@ -65,12 +78,14 @@ class Performance extends Component{
                     <div className="row text-center"> 
                       <h1><em>Currently Hosting</em></h1>
                     </div>
+
+
                   </div>
 
                 </div>
               </div>
           </div>
-          )
+       )
   }
 }
 
