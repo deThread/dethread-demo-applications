@@ -16,7 +16,6 @@ render((
     <Route path="/" component={AboutUs} />
     <Route path="AboutUs" component={AboutUs} />
     <Route path="Contact" component={Contact} />
-    <Route path="Performance" component={Performance} />
     <Route path="JoinSession" component={JoinSession} />
     </Route>
   </Router>),document.getElementById('root'));
