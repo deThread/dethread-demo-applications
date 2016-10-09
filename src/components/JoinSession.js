@@ -21,7 +21,7 @@ class JoinSession extends Component {
 			userParticipation: false,
 			calculating: false,
 			hasSolution: false
-		}
+		};
 		this.checkMaster = this.checkMaster.bind(this);
 		this.hosting = this.hosting.bind(this);
 	}
@@ -81,14 +81,11 @@ class JoinSession extends Component {
 	}
 
 	render() {
-
 		const sessionView = !this.state.userParticipation ? <Participate checkMaster={this.checkMaster} /> 
 						 : !this.state.hasMaster ? <Host masterSelect={this.hosting} /> 
 						 : this.state.isMaster ? <Performance p2p={p2p} /> 
 						 : !this.state.calculating ? <Pending /> : <WorkerProcess p2p={p2p} data={dataFromHost} />; 
-
-		return sessionView
-		
+		return sessionView;
 	}
 }
 
