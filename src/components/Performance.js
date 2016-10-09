@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
 import NavLink from './NavLink';
 
-//input components 
 import WorkerInput from './workerInput';
 import HashInput from './hashInput';
 import LengthInput from './lengthInput';
 import { startWorkers } from './perfInputs';
 
 class Performance extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {length: 0, workers: 3, hash: null, numClients: 2}
+  constructor() {
+    super();
+    this.state = { length: 0, workers: 3, hash: null, numClients: 2 };
     this.update = this.update.bind(this);
     this.startMD5Decrypt = this.startMD5Decrypt.bind(this);
   }
 
+  componentDidMount() {
+
+  }
+
   update(name, e) {
-      console.log(this.state)
-      let toChange = name;
-      let stateVal = this.state[toChange];
-      let stateUpdate = {};
-      stateUpdate[toChange] = e.target.value;
-      this.setState(stateUpdate);   
+    console.log(this.state);
+    const toChange = name;
+    const stateVal = this.state[toChange];
+    const stateUpdate = {};
+    stateUpdate[toChange] = e.target.value;
+    this.setState(stateUpdate);   
   }
 
   startMD5Decrypt() {
@@ -37,18 +40,11 @@ class Performance extends Component {
 
     const startTime = Date.now();
 
-    console.log('host stats', hostBegin, hostEnd)
-    console.log('client stats', clientBegin, clientEnd)
-
     this.props.p2p.emit('starting to crack', { begin: clientBegin, end: clientEnd, hash: this.state.hash, startTime, length: +this.state.length });
 
     startWorkers(this.props.p2p, hostBegin, hostEnd,
                  +this.state.workers, this.state.hash, 
                  startTime, +this.state.length);
-  }
-
-  componentDidMount() {
-    console.log('inside CDM, p2p is: ',this.props.p2p);
   }
 
   render() {

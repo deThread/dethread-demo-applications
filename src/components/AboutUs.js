@@ -4,7 +4,7 @@ import Motivation from './Motivation';
 import Footer from './Footer';
 
 class AboutUs extends Component {
-  render(){
+  render() {
     return (<div>
               <div className="jumbotron">
                 <div className="container">

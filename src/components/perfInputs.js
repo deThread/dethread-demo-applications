@@ -6,8 +6,8 @@ function startWorkers(p2p, begin, end, numWorkers, hash, startTime, length) {
   localp2p = p2p;
   globalStartTime = startTime;
   const numCombos = end - begin;
-  console.log('in start workers', 'begin', begin, 'end', end, 'numCombos', numCombos);
   const workerFrag = Math.round(numCombos / numWorkers);
+
   for (let i = 0; i < numWorkers; i += 1) {
     const workerBegin = begin + (workerFrag * i);
     const workerEnd = workerBegin + (workerFrag - 1);
@@ -20,7 +20,6 @@ function startWorkers(p2p, begin, end, numWorkers, hash, startTime, length) {
   }
 }
 
-// handling worker message
 function handleMessage(e) {
   if (e.data.cmd === 'success') {
     const duration = Math.round((Date.now() - globalStartTime) / 1000);
@@ -34,4 +33,4 @@ function handleMessage(e) {
   }
 }
 
-export { startWorkers }
+export { startWorkers };
