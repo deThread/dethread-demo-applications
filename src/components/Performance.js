@@ -5,16 +5,16 @@ import NavLink from './NavLink';
 import WorkerInput from './workerInput';
 import HashInput from './hashInput';
 import LengthInput from './lengthInput';
-import {startWorkers, handleMessage} from './perfInputs.js';
+import { startWorkers } from './perfInputs';
 
-
-class Performance extends Component{
-  constructor(props){
+class Performance extends Component {
+  constructor(props) {
     super(props);
-    this.state = {hasUserConnected : false, length: 0, workers : 4, hash : null, }
-    this.crackMD5 = this.crackMD5.bind(this);
+    this.state = {length: 0, workers: 3, hash: null, numClients: 2}
     this.update = this.update.bind(this);
+    this.startMD5Decrypt = this.startMD5Decrypt.bind(this);
   }
+
   update(name, e) {
       console.log(this.state)
       let toChange = name;
@@ -23,21 +23,35 @@ class Performance extends Component{
       stateUpdate[toChange] = e.target.value;
       this.setState(stateUpdate);   
   }
-  crackMD5(length, workers, hash){
-    //needs to call MD5
-    console.log(startWorkers, handleMessage)
-    console.log('in crack');
-  }
-  update(name, e) {
-      console.log(this.state)
-      let toChange = name;
-      let stateVal = this.state[toChange];
-      let stateUpdate = {};
-      stateUpdate[toChange] = e.target.value;
-      this.setState(stateUpdate);      
+
+  startMD5Decrypt() {
+    console.log('start decryption');
+
+    const numCombos = Math.pow(26, this.state.length);
+    const clientFrag = Math.round(numCombos / this.state.numClients);
+
+    const hostBegin = 0;
+    const hostEnd = clientFrag - 1;
+    const clientBegin = clientFrag;
+    const clientEnd = clientBegin + (clientFrag - 1);
+
+    const startTime = Date.now();
+
+    console.log('host stats', hostBegin, hostEnd)
+    console.log('client stats', clientBegin, clientEnd)
+
+    this.props.p2p.emit('starting to crack', { begin: clientBegin, end: clientEnd, hash: this.state.hash, startTime, length: +this.state.length });
+
+    startWorkers(this.props.p2p, hostBegin, hostEnd,
+                 +this.state.workers, this.state.hash, 
+                 startTime, +this.state.length);
   }
 
-  render(){
+  componentDidMount() {
+    console.log('inside CDM, p2p is: ',this.props.p2p);
+  }
+
+  render() {
     return(<div>
               <div className="perfContainer">
                 <div className="card well well-lg">
@@ -61,29 +75,14 @@ class Performance extends Component{
                       <HashInput id="hashInput" className="form-control"
                       hash={this.state.hash} update={this.update.bind(this,'hash')} />
                     </div>
+                  </form>
 
-
-                  <div className="data well well-sm">
-                    <WorkerInput workers={this.state.workers} update={this.update.bind(this,'workers')} />
-                    <LengthInput len={this.state.length} update={this.update.bind(this,'length')} />
-                    <HashInput hash={this.state.hash} update={this.update.bind(this,'hash')} />
-
-                    <button className="startHash btn btn-danger" 
-                      onClick={startWorkers.bind(this, +this.state.length, +this.state.workers, this.state.hash)}>
-                      Fire cracker.js.io
-                    </button>
-
-                  </form>   
-                  <div className="container-fluid">
-                    <div className="row text-center"> 
-                      <h1><em>Currently Hosting</em></h1>
-                    </div>
-
-
-                  </div>
-
-                </div>
+                  <button className="startHash btn btn-danger" 
+                    onClick={this.startMD5Decrypt.bind(this)}>
+                    Fire cracker.js.io
+                  </button>
               </div>
+            </div>
           </div>
        )
   }

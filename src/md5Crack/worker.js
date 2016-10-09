@@ -10,8 +10,8 @@ this.addEventListener('message', (e) => {
   switch (e.data.cmd) {
     case 'start':
       id = e.data.id;
-      begin = e.data.begin;
-      end = e.data.end;
+      begin = e.data.workerBegin;
+      end = e.data.workerEnd;
       hash = e.data.hash;
       length = e.data.length
       crackMD5(begin, end, hash);
@@ -28,7 +28,7 @@ function crackMD5(begin, end, hash) {
     // call i to str, compare hashed string to actual hash
     const base26 = padWithZeros(i.toString(26));
     const convertedStr = base26toSTR(base26);
-
+    
     if (MD5(convertedStr) === hash) {
       console.log("worker succeeded", convertedStr, id)
       postMessage({ cmd: 'success', clearText: convertedStr, id });
