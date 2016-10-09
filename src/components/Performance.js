@@ -34,6 +34,7 @@ class Performance extends Component{
   startMD5Decrypt(){
     //emit to slave clients
     this.props.p2p.emit('starting to crack');
+    console.log('pee2pww',this.props.p2p.decoder)
     //startWorkers.bind(this, +this.state.length, +this.state.workers, this.state.hash)
 
   }

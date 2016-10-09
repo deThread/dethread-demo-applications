@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import Pending from './Pending.js';
 import Performance from './Performance.js';
 import Participate from './ParticipateButton.js';
+import WorkerProcess from './workerProcess';
 import Host from './Host.js';
 import P2P from 'socket.io-p2p';
 import io from 'socket.io-client';
@@ -16,7 +17,9 @@ class JoinSession extends Component {
 		this.state = {
 			hasMaster: false,
 			isMaster: false,
-			userParticipation: false
+			userParticipation: false,
+			calculating: false,
+			hasSolution: false
 		}
 		this.checkMaster = this.checkMaster.bind(this);
 		this.hosting = this.hosting.bind(this);
@@ -28,7 +31,8 @@ class JoinSession extends Component {
 
 	checkMaster() {
 		socket = io();
-		p2p = new P2P(socket);
+		const opts = {numClients : 10}
+		p2p = new P2P(socket,opts);
 
 		p2p.on('connect', () => {
 			console.log("connection formed!!");
@@ -50,7 +54,10 @@ class JoinSession extends Component {
 		// })
 
 		p2p.on('starting to crack', () => {
-			console.log('received info about the crack')
+			console.log('received info about the crack');
+			this.setState({calculating: true});
+			console.log(p2p);
+			//re routing participant clients 
 		})
 		// p2p.on('availableMaster', (res) => {
 		// 	if (!this.state.hasMaster && res){
@@ -75,7 +82,7 @@ class JoinSession extends Component {
 		const sessionView = !this.state.userParticipation ? <Participate checkMaster={this.checkMaster}/> 
 						 : !this.state.hasMaster ? <Host masterSelect={this.hosting}/> 
 						 : this.state.isMaster ? <Performance p2p={p2p}/> 
-						 : <Pending />; 
+						 : !this.state.calculating ? <Pending /> : <WorkerProcess />; 
 
 		return sessionView
 		
