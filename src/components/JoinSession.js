@@ -10,6 +10,7 @@ import io from 'socket.io-client';
 
 let socket;
 let p2p;
+let dataFromHost;
 
 class JoinSession extends Component {
 	constructor() {
@@ -31,11 +32,11 @@ class JoinSession extends Component {
 
 	checkMaster() {
 		socket = io();
-		const opts = {numClients : 10}
+		const opts = { numClients : 10 }
 		p2p = new P2P(socket,opts);
 
 		p2p.on('connect', () => {
-			console.log("connection formed!!");
+			console.log('connection formed!');
 			// p2p.emit('checkMaster');
 			// p2p.on('checkMaster', () => {
 			// console.log('AG')
@@ -44,21 +45,20 @@ class JoinSession extends Component {
 		});
 
 		p2p.on('masterChosen', () => {
-			console.log(`You Are now a Slave`);
-			this.setState({hasMaster: true});
-		})
+			console.log('You Are now a Slave');
+			this.setState({ hasMaster: true });
+		});
 		
 		// p2p.on('checkMaster', () => {
 		// 	console.log('AG')
 		// 	//p2p.emit('availableMaster', this.state.hasMaster);
 		// })
 
-		p2p.on('starting to crack', () => {
-			console.log('received info about the crack');
-			this.setState({calculating: true});
-			console.log(p2p);
-			//re routing participant clients 
-		})
+		p2p.on('starting to crack', (data) => {
+			dataFromHost = JSON.stringify(data);
+			console.log(`Host started crack. Received data from host: ${dataFromHost}`);
+			this.setState({ calculating: true });
+		});
 		// p2p.on('availableMaster', (res) => {
 		// 	if (!this.state.hasMaster && res){
 		// 		this.setState({hasMaster : res});
@@ -66,23 +66,26 @@ class JoinSession extends Component {
 		// 	console.log('generalStatement')
 		// })
 		
+		p2p.on('crackedPassword', (data) => {
+			console.log('success (data)', data);
+			console.log(`Password has been found in ${data.duration} seconds: ${data.clearText}`);
+			this.setState({ hasSolution: true });
+		});
 
-		this.setState({userParticipation: true});
+		this.setState({ userParticipation: true });
 	}
 
 	hosting() {		
-		//p2p.emit('newClientConnection', {cores: navigator.hardwareConcurrency});
 		p2p.emit('masterChosen');
-		//setInterval(function(){p2p.emit('availableMaster')},50);
-		this.setState({hasMaster: true, isMaster: true}); 
+		this.setState({ hasMaster: true, isMaster: true }); 
 	}
 
 	render() {
 
-		const sessionView = !this.state.userParticipation ? <Participate checkMaster={this.checkMaster}/> 
-						 : !this.state.hasMaster ? <Host masterSelect={this.hosting}/> 
-						 : this.state.isMaster ? <Performance p2p={p2p}/> 
-						 : !this.state.calculating ? <Pending /> : <WorkerProcess />; 
+		const sessionView = !this.state.userParticipation ? <Participate checkMaster={this.checkMaster} /> 
+						 : !this.state.hasMaster ? <Host masterSelect={this.hosting} /> 
+						 : this.state.isMaster ? <Performance p2p={p2p} /> 
+						 : !this.state.calculating ? <Pending /> : <WorkerProcess p2p={p2p} data={dataFromHost} />; 
 
 		return sessionView
 		
