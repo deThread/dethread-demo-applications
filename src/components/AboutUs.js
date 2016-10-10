@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import Motivation from './Motivation';
+import Connection from './Connection';
+import WhyJS from './Whyjs'
 import Footer from './Footer';
 
 class AboutUs extends Component {
@@ -8,20 +10,26 @@ class AboutUs extends Component {
     return (<div>
               <div className="jumbotron">
                 <div className="container">
-                  <h1>Distributed Computing<br/> For Teams</h1>
-                  <p>We aim to connect things together to make things faster.</p>
-                  <p><a className="btn btn-primary btn-lg" href="#" role="button">Learn mas &raquo;</a></p>
+                  <h1>DeThread</h1>
+                  <p className="subTitle">A platform for making Distributed Computing easier, all in the browser.</p>
                 </div>
               </div>
-              <div className="section1">
-                <h2> Why Distributed Computing for Teams ? </h2>
+              <div className="section section1">
+                <h2> What is DeThread?</h2>
                 <div className="textContainer">
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sagittis, nunc at varius sagittis, ligula est suscipit odio, sed cursus lectus nunc vel nibh. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse a ligula hendrerit, consequat nisi sit amet, pretium neque. Ut vehicula ac lorem id feugiat. Nunc massa lectus, consequat at augue sit amet, pellentesque vulputate justo. Sed finibus eros ante. Ut at tellus id dolor commodo dapibus id vitae massa. Mauris ac pulvinar enim, eu cursus est. Phasellus in mi sed sem elementum vulputate.</p>
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sagittis, nunc at varius sagittis, ligula est suscipit odio, sed cursus lectus nunc vel nibh. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse a ligula hendrerit, consequat nisi sit amet, pretium neque. Ut vehicula ac lorem id feugiat. Nunc massa lectus, consequat at augue sit amet, pellentesque vulputate justo. Sed finibus eros ante. Ut at tellus id dolor commodo dapibus id vitae massa. Mauris ac pulvinar enim, eu cursus est. Phasellus in mi sed sem elementum vulputate.</p>
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sagittis, nunc at varius sagittis, ligula est suscipit odio, sed cursus lectus nunc vel nibh. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse a ligula hendrerit, consequat nisi sit amet, pretium neque. Ut vehicula ac lorem id feugiat. Nunc massa lectus, consequat at augue sit amet, pellentesque vulputate justo. Sed finibus eros ante. Ut at tellus id dolor commodo dapibus id vitae massa. Mauris ac pulvinar enim, eu cursus est. Phasellus in mi sed sem elementum vulputate.</p>
+                <article>
+                  <p>DeThread is an place where users can use idle computer time to cure diseases,
+                  study the environment, and participate in cutting edge, scientific research.
+                  When you find a project you would like to support, simply click the link, and your computer will become
+                  part of a bot-net.  Each node in the bot-net has two-way communication with the master node,
+                  which distributes a process to each participating node. It's safe easy, and free, and it always will be.
+                  </p>
+                  <Connection />
+                </article>
                 </div>
               </div>
               <Motivation />
+              <WhyJS />
               <Footer />
             </div>
             

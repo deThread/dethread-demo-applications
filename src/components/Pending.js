@@ -4,12 +4,13 @@ import { browserHistory } from 'react-router';
 class Pending extends Component {
 	render() {
 		return (
-			<div className="container"> 
-				<h1>Currently Waiting to Start Cracking</h1>
-				<div className="row text-center">
-					<button type="button" className="btn btn-default">
-						<span className="glyphicon glyphicon-repeat fast-right-spinner"></span>
-					</button>
+			<div className="container pending"> 
+				<h1>Waiting for host to start . . .</h1>
+				<p>There are currently 2 clients in the room.</p>
+				<div className="container spinner">
+					 <div className="any-element animation is_loading">
+  				 	&nbsp;
+  				 </div>
 				</div>
 			</div> 
 		)

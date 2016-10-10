@@ -4,6 +4,7 @@ import Pending from './Pending.js';
 import Performance from './Performance.js';
 import Participate from './ParticipateButton.js';
 import WorkerProcess from './workerProcess';
+import Success from './Success';
 import Host from './Host.js';
 import P2P from 'socket.io-p2p';
 import io from 'socket.io-client';
@@ -20,7 +21,9 @@ class JoinSession extends Component {
 			isMaster: false,
 			userParticipation: false,
 			calculating: false,
-			hasSolution: false
+			hasSolution: false,
+			clearText: "",
+			duration: null
 		};
 		this.checkMaster = this.checkMaster.bind(this);
 		this.hosting = this.hosting.bind(this);
@@ -69,7 +72,14 @@ class JoinSession extends Component {
 		p2p.on('crackedPassword', (data) => {
 			console.log('success (data)', data);
 			console.log(`Password has been found in ${data.duration} seconds: ${data.clearText}`);
-			this.setState({ hasSolution: true });
+			console.log('IN CRACKED PASSWORD EMIT LISTENER')
+			const foundPW = data.clearText, duration = data.duration;
+			const stateObj = {};
+			stateObj['hasSolution'] = true;
+			stateObj['clearText'] = foundPW;
+			stateObj['duration'] = duration;
+			console.log(stateObj);
+			this.setState(stateObj);
 		});
 
 		this.setState({ userParticipation: true });
@@ -83,9 +93,13 @@ class JoinSession extends Component {
 	render() {
 		const sessionView = !this.state.userParticipation ? <Participate checkMaster={this.checkMaster} /> 
 						 : !this.state.hasMaster ? <Host masterSelect={this.hosting} /> 
-						 : this.state.isMaster ? <Performance p2p={p2p} /> 
-						 : !this.state.calculating ? <Pending /> : <WorkerProcess p2p={p2p} data={dataFromHost} />; 
-		return sessionView;
+						 : this.state.isMaster ? <Performance p2p={p2p} pw={this.state.clearText} duration={this.state.duration} success={this.state.hasSolution} /> 
+						 : !this.state.calculating ? <Pending /> : <WorkerProcess p2p={p2p} data={dataFromHost} pw={this.state.clearText} duration={this.state.duration} success={this.state.hasSolution} />;
+	//const successView = this.state.hasSolution ? <Success pw={this.state.clearText} duration={this.state.duration}/> : "";  
+		return (<div>
+							{sessionView}
+						</div>
+		)
 	}
 }
 

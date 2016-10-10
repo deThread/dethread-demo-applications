@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavLink from './NavLink';
-
+import Success from './Success';
 import WorkerInput from './workerInput';
 import HashInput from './hashInput';
 import LengthInput from './lengthInput';
@@ -48,6 +48,7 @@ class Performance extends Component {
   }
 
   render() {
+    const solved = this.props.success ? <Success pw={this.props.pw} duration={this.props.duration}/> : "";
     return(<div>
               <div className="perfContainer">
                 <div className="card well well-lg">
@@ -67,7 +68,8 @@ class Performance extends Component {
                     </div>
 
                     <div className="form-group">
-                      <label for="hashInput">Hash</label>
+                      <label for="hashInput">Hash</label><br/>
+                      <a target="_blank" href="http://www.miraclesalad.com/webtools/md5.php">[Hash Generator]</a>
                       <HashInput id="hashInput" className="form-control"
                       hash={this.state.hash} update={this.update.bind(this,'hash')} />
                     </div>
@@ -75,9 +77,13 @@ class Performance extends Component {
 
                   <button className="startHash btn btn-danger" 
                     onClick={this.startMD5Decrypt.bind(this)}>
-                    Fire cracker.js.io
+                    Start
                   </button>
+                  <div>
+                    {solved}
+                  </div>
               </div>
+              
             </div>
           </div>
        )

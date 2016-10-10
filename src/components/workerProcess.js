@@ -15,7 +15,14 @@ class WorkerProcess extends Component {
 
   render() {
     return(
-          <div> Processing </div>
+          <div> 
+            <h2>Processing ...</h2> 
+            <div className="container spinner">
+					    <div className="any-element animation is_loading">
+  				 	    &nbsp;
+  				    </div>
+				    </div>
+          </div>
           )
   }
 }

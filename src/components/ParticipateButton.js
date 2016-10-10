@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-const Participate = (props)=> {
+const Participate = props => {
 
 	return (
 		<div>
-			<p> Would you like to participate in a group MD5 decryption effort?</p>
-			<button className="btn btn-primary" onClick={props.checkMaster}>Sure!</button>
+			<p> Would you like to join a room to compute MD5 hash decrytpion?</p>
+			<button className="btn btn-primary" onClick={props.checkMaster}>Yes</button>
 		</div>
 	)
 }
