@@ -1,8 +1,10 @@
 const workerArr = [];
 let globalStartTime;
 let localp2p;
+let localOnSolution;
 
-function startWorkers(p2p, begin, end, numWorkers, hash, startTime, length) {
+function startWorkers(onSolution,p2p, begin, end, numWorkers, hash, startTime, length) {
+  localOnSolution = onSolution;
   localp2p = p2p;
   globalStartTime = startTime;
   const numCombos = end - begin;
@@ -24,7 +26,7 @@ function handleMessage(e) {
   if (e.data.cmd === 'success') {
     const duration = Math.round((Date.now() - globalStartTime) / 1000);
     console.log(`Worker: ${e.data.id} found word: ${e.data.clearText} in ${duration} seconds`);
-    
+    localOnSolution(e.data.clearText,duration);
     localp2p.emit('crackedPassword', { clearText: e.data.clearText, duration });
 
     workerArr.forEach((worker) => {

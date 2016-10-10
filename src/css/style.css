@@ -5,32 +5,56 @@ body{
 .active{
   color: lightcoral;
 }
+p{
+  font-size: 18px;
+  text-align: center;
+}
+h1, h2{
+  text-align: center;
+}
 
+.section{
+  text-align: center;
+}
 /*About Us!*/
 .jumbotron{
   margin-top: -20px;
+  height: 300px;
+}
+.subTitle{
+  text-align: center;
 }
 .section1 {
-  background-color: lightcyan;
   height: 500px;
   margin-top: -2.2em;
-  padding: 45px;
+  padding-top: 50px;
+  padding-left: 155px; 
+  padding-right: 155px;
 }
 .textContainer{
   margin-top: 45px;
+  padding-left: 85px;
+  padding-right: 85px;
+}
+.connection{
+  margin-top: 50px;
+  margin-bottom: 35px;
 }
 
 .section2{
-  background-color: peru;
-  height: 500px;
-  margin-top: -2.2em;
+  margin-top: 4em;
   padding: 45px;
 }
-
+/* Section Three */
+.section3{
+  padding-left: 125px;
+  padding-right: 125px;
+}
+/* ~~~~~ */
 .footer{
   height: 40px;
 }
-/* ~~~~~ */
+
 
 /* Performance */
 .perfContainer{
@@ -43,6 +67,7 @@ body{
   height: 750px;
   width: 750px;
   margin: 50px auto;
+  text-align: center;
 }
 
 .data{
@@ -53,21 +78,101 @@ body{
 }
 
 /* HostChecking */
-.host {
-  margin: 10px;
-  width: 20%;
-  height: 100px;
-  background-color: green;
+.hostLabel{
+  margin-right: 15px;
+}
+.hostBTN{
+  display: block;
+}
+/* Pending */
+.pending{
+  margin-top: 125px;
+  margin-left: -30px;
+}
+.partText{
+  margin-top: 30px;
 }
 
+/* Success */
+.success{
+  background: white;
+  border: 1px solid slategrey;
+  margin-top: 100px;
+  height: 150px;
+  padding-top: 15px;
+}
+.successText{
+  color: black;
+}
 /* Spinner */
-.glyphicon.fast-right-spinner {
-    -webkit-animation: glyphicon-spin-r 1s infinite linear;
-    animation: glyphicon-spin-r 1s infinite linear;
+  /* Layout Basics */
+.spinner{
+  margin-top: 50px;
+}
+.is_loading {
+  position: relative;
+}
+.is_loading:before,
+.is_loading:after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+}
+/* Spinner Styling */
+.animation:after,
+.animation--double:after,
+.animation--striped:after,
+.animation--dial:after{
+  width: 40px; height: 40px;
+  margin: -25px 0 0 -25px;
+  
+  border: 5px solid rgba(0,0,0,.4);
+  border-radius: 50px;
+}
+/* Default Spinner */
+.animation:after,
+.animation--double:after {
+  border-bottom-color: transparent;
+  animation: spin 1s infinite linear;
+}
+/* Reversed second spinner */
+.animation--double:before {
+  width: 32px; height: 32px;
+  margin: -19px 0 0 -19px;
+  
+  border: 3px solid rgba(0,0,0,.4);
+  border-bottom-color: transparent;
+  border-radius: 40px;
+  
+  animation: spin-reverse 1s infinite linear;
+}
+/* Striped spinner */
+.animation--striped:after {
+  border-style: dotted;
+  animation: spin 3s infinite linear;
+}
+/* Dial knob spinner */
+.animation--dial:before {
+  width: 7px; height: 7px;
+  margin: 6px 0 0 6px;
+  
+  background: rgba(0,0,0,.4);
+  border-radius: 7px;
+
+  transform-origin: -6px -6px;
+  animation: spin 1.5s infinite linear;
 }
 
-.glyphicon.normal-right-spinner {
-    -webkit-animation: glyphicon-spin-r 2s infinite linear;
-    animation: glyphicon-spin-r 2s infinite linear;
-}
 
+/*-------------------------------------
+** ANIMATIONS
+*/
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes spin-reverse {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+/* ~~~~~ */
