@@ -17,4 +17,4 @@ app.use((req, res) => {
 });
 
 
-http.listen(PORT, () => console.log("Listening On PORT 3000!!!!"));
+http.listen(PORT, () => console.log(`Listening on ${PORT}`));
