@@ -27,6 +27,7 @@ class JoinSession extends Component {
 		};
 		this.checkMaster = this.checkMaster.bind(this);
 		this.hosting = this.hosting.bind(this);
+		this.onSolution = this.onSolution.bind(this);
 	}
 
 	componentDidMount() {
@@ -89,12 +90,18 @@ class JoinSession extends Component {
 		p2p.emit('masterChosen');
 		this.setState({ hasMaster: true, isMaster: true }); 
 	}
-
+	onSolution(foundPW, duration){
+		const stateObj = {};
+		stateObj['hasSolution'] = true;
+		stateObj['clearText'] = foundPW;
+		stateObj['duration'] = duration;
+		this.setState(stateObj);
+	}
 	render() {
 		const sessionView = !this.state.userParticipation ? <Participate checkMaster={this.checkMaster} /> 
 						 : !this.state.hasMaster ? <Host masterSelect={this.hosting} /> 
-						 : this.state.isMaster ? <Performance p2p={p2p} pw={this.state.clearText} duration={this.state.duration} success={this.state.hasSolution} /> 
-						 : !this.state.calculating ? <Pending /> : <WorkerProcess p2p={p2p} data={dataFromHost} pw={this.state.clearText} duration={this.state.duration} success={this.state.hasSolution} />;
+						 : this.state.isMaster ? <Performance p2p={p2p} pw={this.state.clearText} duration={this.state.duration} success={this.state.hasSolution} onSolution={this.onSolution} /> 
+						 : !this.state.calculating ? <Pending /> : <WorkerProcess p2p={p2p} data={dataFromHost} pw={this.state.clearText} duration={this.state.duration} success={this.state.hasSolution} onSolution={this.onSolution} />;
 	//const successView = this.state.hasSolution ? <Success pw={this.state.clearText} duration={this.state.duration}/> : "";  
 		return (<div>
 							{sessionView}

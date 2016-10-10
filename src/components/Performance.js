@@ -42,7 +42,7 @@ class Performance extends Component {
 
     this.props.p2p.emit('starting to crack', { begin: clientBegin, end: clientEnd, hash: this.state.hash, startTime, length: +this.state.length });
 
-    startWorkers(this.props.p2p, hostBegin, hostEnd,
+    startWorkers(this.props.onSolution,this.props.p2p, hostBegin, hostEnd,
                  +this.state.workers, this.state.hash, 
                  startTime, +this.state.length);
   }
