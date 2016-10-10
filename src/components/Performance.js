@@ -9,13 +9,13 @@ import { startWorkers } from './perfInputs';
 class Performance extends Component {
   constructor() {
     super();
-    this.state = { length: 0, workers: 3, hash: null, numClients: 2 };
+    this.state = { length: 0, workers: 3, hash: null, numClients: 0 };
     this.update = this.update.bind(this);
     this.startMD5Decrypt = this.startMD5Decrypt.bind(this);
   }
 
   componentDidMount() {
-
+    this.setState({numClients : this.props.p2p.numConnectedClients + 1 })
   }
 
   update(name, e) {
@@ -80,6 +80,7 @@ class Performance extends Component {
                     Start
                   </button>
                   <div>
+                    There are {this.state.numClients} total clients in this room.
                     {solved}
                   </div>
               </div>

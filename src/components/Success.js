@@ -5,9 +5,11 @@ class Success extends Component{
     super(props)
   }
   render(){
+    const dur = this.props.duration <= 1 ? 'second' : 'seconds';
     return (<div>
-              <div className="success well well-lg">
-                <p>Found {this.props.pw} in {this.props.duration} seconds</p>
+              <div className="success">
+                <h2> Success! </h2>
+                <p className="successText">We found this password : {this.props.pw} in {this.props.duration} {dur}</p>
               </div>
             </div>)
   }

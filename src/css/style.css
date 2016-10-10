@@ -67,6 +67,7 @@ h1, h2{
   height: 750px;
   width: 750px;
   margin: 50px auto;
+  text-align: center;
 }
 
 .data{
@@ -77,19 +78,31 @@ h1, h2{
 }
 
 /* HostChecking */
-.host {
-  margin: 10px;
-  width: 20%;
-  height: 100px;
-  background-color: green;
+.hostLabel{
+  margin-right: 15px;
+}
+.hostBTN{
+  display: block;
 }
 /* Pending */
-.containerPending{
+.pending{
   margin-top: 125px;
+  margin-left: -30px;
 }
+.partText{
+  margin-top: 30px;
+}
+
 /* Success */
 .success{
-  background: lightseagreen;
+  background: white;
+  border: 1px solid slategrey;
+  margin-top: 100px;
+  height: 150px;
+  padding-top: 15px;
+}
+.successText{
+  color: black;
 }
 /* Spinner */
   /* Layout Basics */

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 
 const Host = (props)=> {
 	return (
+			<div className="card well well-lg">
 			<div className="container-fluid">
 				<div className="row text-center"> 
-					<label id="hostLabel">Would you like to host?</label>
-					<button onClick={props.masterSelect} className="host">Host</button>
+					<p className="hostLabel">Would you like to host?</p>
+					<button className="hostBTN btn btn-primary btn-md" onClick={props.masterSelect}>Host</button>
 					
 				</div>
+			</div>
 			</div>
 		)
 }
