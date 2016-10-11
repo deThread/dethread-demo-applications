@@ -4,12 +4,13 @@ import Success from './Success';
 import WorkerInput from './workerInput';
 import HashInput from './hashInput';
 import LengthInput from './lengthInput';
+import Spinner from './Spinner';
 import { startWorkers } from './perfInputs';
 
 class Performance extends Component {
   constructor() {
     super();
-    this.state = { length: 0, workers: 3, hash: null, numClients: 0 };
+    this.state = { length: 0, workers: 3, hash: null, numClients: 0, hasStarted : false};
     this.update = this.update.bind(this);
     this.startMD5Decrypt = this.startMD5Decrypt.bind(this);
   }
@@ -29,7 +30,7 @@ class Performance extends Component {
 
   startMD5Decrypt() {
     console.log('start decryption');
-
+    this.setState({hasStarted : true})
     const numCombos = Math.pow(26, this.state.length);
     const clientFrag = Math.round(numCombos / this.state.numClients);
 
@@ -41,14 +42,19 @@ class Performance extends Component {
     const startTime = Date.now();
 
     this.props.p2p.emit('starting to crack', { begin: clientBegin, end: clientEnd, hash: this.state.hash, startTime, length: +this.state.length });
-
     startWorkers(this.props.onSolution,this.props.p2p, hostBegin, hostEnd,
                  +this.state.workers, this.state.hash, 
                  startTime, +this.state.length);
   }
 
   render() {
-    const solved = this.props.success ? <Success pw={this.props.pw} duration={this.props.duration}/> : "";
+    let solved;
+    if (this.props.success) {
+      solved = <Success pw={this.props.pw} duration={this.props.duration}/>
+    } else if(this.state.hasStarted){
+      solved = <Spinner />
+    }
+    
     return(<div>
               <div className="perfContainer">
                 <div className="card well well-lg">
