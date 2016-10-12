@@ -4,6 +4,7 @@ notes
 bundle.js
 notes
 *.log
+*.zip
 
 
 # Elastic Beanstalk Files

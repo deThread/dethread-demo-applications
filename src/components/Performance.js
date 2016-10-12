@@ -4,6 +4,7 @@ import Success from './Success';
 import WorkerInput from './workerInput';
 import HashInput from './hashInput';
 import LengthInput from './lengthInput';
+import CharsetDropDown from './CharsetDropDown';
 import { startWorkers } from './perfInputs';
 
 class Performance extends Component {
@@ -15,7 +16,7 @@ class Performance extends Component {
   }
 
   componentDidMount() {
-    this.setState({numClients : this.props.p2p.numConnectedClients + 1 })
+    this.setState({ numClients : this.props.p2p.numConnectedClients + 1 })
   }
 
   update(name, e) {
@@ -57,22 +58,28 @@ class Performance extends Component {
                   <form>
                     <div className="form-group">
                       <label for="workerInput">Workers</label>
-                      <WorkerInput type="text" className="form-control" id="workerInput"
+                      <WorkerInput className="form-control" id="workerInput" type="text"
                       workers={this.state.workers} update={this.update.bind(this,'workers')} />
                     </div>                    
 
                     <div className="form-group">
                       <label for="lengthInput">Length of Word</label>
-                      <LengthInput type="text" className="form-control" id="lengthInput"
+                      <LengthInput className="form-control" id="lengthInput" type="text"
                       len={this.state.length} update={this.update.bind(this,'length')} />
                     </div>
 
                     <div className="form-group">
                       <label for="hashInput">Hash</label><br/>
                       <a target="_blank" href="http://www.miraclesalad.com/webtools/md5.php">[Hash Generator]</a>
-                      <HashInput id="hashInput" className="form-control"
+                      <HashInput className="form-control" id="hashInput"
                       hash={this.state.hash} update={this.update.bind(this,'hash')} />
                     </div>
+
+                    <div className="form-group">
+                      <label for="charsetDropDown">Charset</label><br/>
+                      <CharsetDropDown className="form-control" id="charsetDropDown" />
+                    </div>
+
                   </form>
 
                   <button className="startHash btn btn-danger" 
