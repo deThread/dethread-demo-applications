@@ -90,6 +90,7 @@ class JoinSession extends Component {
 		p2p.emit('masterChosen');
 		this.setState({ hasMaster: true, isMaster: true }); 
 	}
+
 	onSolution(foundPW, duration){
 		const stateObj = {};
 		stateObj['hasSolution'] = true;
@@ -97,6 +98,7 @@ class JoinSession extends Component {
 		stateObj['duration'] = duration;
 		this.setState(stateObj);
 	}
+	
 	render() {
 		const sessionView = !this.state.userParticipation ? <Participate checkMaster={this.checkMaster} /> 
 						 : !this.state.hasMaster ? <Host masterSelect={this.hosting} /> 
