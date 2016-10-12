@@ -9,7 +9,7 @@
     "start": "nodemon ./server/server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch",
-    "test-routes": "export NODE_ENV=test && mocha --timeout 20000 tests/",
+    "test-routes": "mocha --timeout 20000 tests/",
     "build": "webpack"
   },
   "author": "Daniel Lao, Bryan Yee, Shawn Southwell ",

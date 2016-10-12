@@ -55,7 +55,6 @@ h1, h2{
   height: 40px;
 }
 
-
 /* Performance */
 .perfContainer{
   padding-left: 150px;
@@ -81,9 +80,25 @@ h1, h2{
 .hostLabel{
   margin-right: 15px;
 }
+
 .hostBTN{
   display: block;
+  margin: auto;
 }
+
+/* Performance inputs */
+.charset-dropdown{
+  left: 30%;
+}
+
+#length, #workers{
+  width: 36px;
+}
+
+.startHash{
+  margin-top: 100px;
+}
+
 /* Pending */
 .pending{
   margin-top: 125px;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const Host = (props)=> {
+const Host = (props) => {
 	return (
 			<div className="card well well-lg">
 			<div className="container-fluid">
