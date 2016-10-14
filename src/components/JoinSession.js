@@ -111,7 +111,7 @@ class JoinSession extends Component {
 		const newState = {
 			startTime: data.startTime,
 			length: data.length,
-			globalNumCombos: data.numCombos,
+			globalNumCombos: data.globalNumCombos,
 			hash: data.hash,
 			begin: data.begin,
 			end: data.end,
