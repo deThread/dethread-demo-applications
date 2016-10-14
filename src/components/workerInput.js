@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-export default class WorkerInput extends Component{
-  render() {
-    return (
-      <div>
-        <input type="number" id="workers" name="length" placeholder="number of workers" value={this.props.workers} min='0' max='8' onChange={this.props.update} />
-      </div>
-    )
-  }
-}
+const WorkerInput = function(props) {
+  return (
+    <div>
+      <input type="number" id="workers" name="workers" min="1" max={`${props.optimalWorkers}`} onChange={props.updateSettings} />
+    </div>
+  )
+};
+
+export default WorkerInput;
