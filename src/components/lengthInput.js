@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+const LengthInput = function(props) {
+  return (
+    <div>
+      <input type="number" id="length" name="length" placeholder="length" value={props.len} min='0' onChange={props.update} />
+    </div>
+  )
+};
 
-export default class LengthInput extends Component{
-  render() {
-    return (
-      <div>
-        <input type="number" id="length" name="length" placeholder="length" value={this.props.len} min='0' onChange={this.props.update} />
-      </div>
-    )
-  }
-}
+export default LengthInput;

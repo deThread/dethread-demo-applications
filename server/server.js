@@ -1,20 +1,70 @@
+'use strict'
+
 const express = require('express');
 const path = require('path');
 const app = express(); 
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const p2p = require('socket.io-p2p-server').Server;
+
 const PORT = process.env.PORT || 3000; 
 
+// Server routing
 
-io.use(p2p);
-
-app.use('/', express.static(path.join(__dirname, '../')));
-app.use('/', express.static(path.join(__dirname, '../', 'src', 'md5Crack')));
+app.use(express.static(path.join(__dirname, '../')));
+app.use(express.static(path.join(__dirname, '../', 'src', 'md5Crack')));
 
 app.use((req, res) => {
   res.sendStatus(404);
 });
 
 
-http.listen(PORT, () => console.log(`Listening on ${PORT}`));
+http.listen(PORT, () => console.log(`Listening on ${PORT}.`));
+
+
+
+// Distribted Computing logic & Application State
+
+let state = {
+  calculating: false,
+  hash: undefined,
+  length: undefined,
+  numCombos: undefined,
+  clearText: undefined,
+  startTime: undefined,
+  duration: undefined,
+  connections: [],
+  master: undefined,
+};
+
+
+// function startClient(hash, length, socket) {
+//   globalStartTime = Date.now();
+//   console.log("GLOBAL STARTTIME", globalStartTime);
+//   const numCombos = Math.pow(26, length);
+//   const begin = 0;
+//   const end = numCombos - 1; 
+//   socket.emit('doCrack', {hash, length, begin, end, globalStartTime})
+// }
+
+
+
+
+// Socket logic
+
+io.on('connection', function(socket) {
+  console.log("a user connected with the following id: ", socket.id);
+  state.connections.push(socket);
+
+  socket.on('client-connected', () => {
+    socket.emit('master-selected', !!state.master);
+  });
+
+  socket.on('claim-master', () => {
+    console.log('master selected. Socket id: ', socket.id)
+    state.master = socket;
+    socket.broadcast.emit('master-claimed');
+  });
+
+
+})
+

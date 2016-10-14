@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+const HashInput = function(props) {
+  return (
+    <div>
+      <input type="text" id="hash" name="hash" placeholder="hash" value={props.hash} onChange={props.update} />
+    </div>
+  )
+};
 
-export default class HashInput extends Component{
-  render() {
-    return (
-      <div>
-        <input type="text" id="hash" name="hash" placeholder="hash" value={this.props.hash} onChange={this.props.update} />
-      </div>
-    )
-  }
-}
+export default HashInput;

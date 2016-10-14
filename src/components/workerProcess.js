@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import { startWorkers } from './perfInputs';
+import { startWorkers } from './PerfInputs';
 
 import Success from './Success';
 import Spinner from './Spinner';
 
 class WorkerProcess extends Component {
-  constructor() {
-    super();
-  }
-
   componentDidMount() {
     let numWorkers = (navigator.hardwareConcurrency / 2) || 4;
     const data = JSON.parse(this.props.data);

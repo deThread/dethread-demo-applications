@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
 import NavLink from './NavLink';
 import Success from './Success';
-import WorkerInput from './workerInput';
-import HashInput from './hashInput';
-import LengthInput from './lengthInput';
+import WorkerInput from './WorkerInput';
+import HashInput from './HashInput';
+import LengthInput from './LengthInput';
 import CharsetDropDown from './CharsetDropDown';
 import Spinner from './Spinner';
-import { startWorkers } from './perfInputs';
+import { startWorkers } from './PerfInputs';
 
 class Performance extends Component {
-  constructor() {
-    super();
-    this.state = { length: 0, workers: 3, hash: null, numClients: 0, hasStarted : false};
-    this.update = this.update.bind(this);
-    this.startMD5Decrypt = this.startMD5Decrypt.bind(this);
-  }
-
   componentDidMount() {
     this.setState({ numClients : this.props.p2p.numConnectedClients + 1 })
   }
