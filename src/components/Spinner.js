@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 const Spinner = function() {
   return (<div>
             <div className="spinner">

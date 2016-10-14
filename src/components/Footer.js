@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 const Footer = function() {
   return (<div>
             <footer className="footer">

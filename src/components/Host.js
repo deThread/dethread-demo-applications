@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 const Host = function(props) {
 	return (
 			<div className="card well well-lg">

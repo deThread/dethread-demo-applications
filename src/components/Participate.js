@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 const Participate = function(props) {
 	const link = <a target="_blank" href="https://en.wikipedia.org/wiki/MD5">here</a>;
 	

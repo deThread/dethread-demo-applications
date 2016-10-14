@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 const Motivation = function() {
   return (<div>
             <div className="section2">

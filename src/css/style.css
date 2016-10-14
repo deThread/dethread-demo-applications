@@ -87,6 +87,12 @@ h1, h2{
 }
 
 /* Performance inputs */
+.worker-recommendation {
+  font-size: 10pt;
+  padding: 0px;
+  margin: 0px;
+}
+
 .charset-dropdown{
   left: 30%;
 }

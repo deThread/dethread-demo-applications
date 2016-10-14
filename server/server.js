@@ -52,11 +52,11 @@ let state = {
 // Socket logic
 
 io.on('connection', function(socket) {
-  console.log("a user connected with the following id: ", socket.id);
-  state.connections.push(socket);
 
   socket.on('client-connected', () => {
-    socket.emit('master-selected', !!state.master);
+    console.log("a user connected with the following id: ", socket.id);
+    state.connections.push(socket);
+    socket.emit('master-selected', { hasMaster: !!state.master, numConnections: state.connections.length });
   });
 
   socket.on('claim-master', () => {
@@ -64,7 +64,6 @@ io.on('connection', function(socket) {
     state.master = socket;
     socket.broadcast.emit('master-claimed');
   });
-
 
 })
 

@@ -13,7 +13,7 @@ class WorkerProcess extends Component {
   }
 
   render() {
-    const solved = this.props.success ? <Success pw={this.props.pw} duration={this.props.duration} /> : "";
+    const solved = this.props.success ? <Success clearText={this.props.clearText} duration={this.props.duration} /> : "";
     const spinner = !this.props.success ? <Spinner /> : "";
     const processing = !this.props.success ? <h2>Processing . . .</h2> : "";
     return(<div> 

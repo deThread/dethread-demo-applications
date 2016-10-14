@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 const WhyJS = function() {
   return (<div>
             <div className="section section3">

@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import Motivation from './Motivation';
 import Connection from './Connection';
 import WhyJS from './Whyjs'
