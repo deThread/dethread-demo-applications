@@ -101,8 +101,12 @@ h1, h2{
   width: 36px;
 }
 
-.startHash{
+.local-settings {
   margin-top: 100px;
+}
+
+.startHash{
+  margin-top: 20px;
 }
 
 /* Pending */

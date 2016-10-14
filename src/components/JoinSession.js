@@ -6,92 +6,138 @@ import Participate from './Participate';
 import WorkerProcess from './WorkerProcess';
 import Success from './Success';
 import Host from './Host';
+import { startWorkers } from './PerfInputs';
 
 let socket;
-let dataFromHost;
 
 class JoinSession extends Component {
 	constructor() {
 		super(); 
 		this.state = {
 			userParticipation: false,
+			ready: false,
 			hasMaster: false,
 			isMaster: false,
 			calculating: false,
-			numConnections: undefined,
+			globalConnections: undefined,
+			globalWorkers: undefined,
+			globalNumCombos: undefined,
 			clearText: undefined,
 			duration: undefined,
 			length: undefined,
 			workers: undefined,
 			optimalWorkers: undefined,
 			hash: undefined,
+			begin: undefined,
+			end: undefined,
 		};
 
 		this.startSocketConnection = this.startSocketConnection.bind(this);
 		this.claimMaster = this.claimMaster.bind(this);
-		this.update = this.update.bind(this);
+		this.updateSettings = this.updateSettings.bind(this);
+		this.chooseWorkerCount = this.chooseWorkerCount.bind(this);
 		this.startMD5Decrypt = this.startMD5Decrypt.bind(this);
+		this.startWork = this.startWork.bind(this);
+		this.passwordCracked = this.passwordCracked.bind(this);
 	}
 
 	startSocketConnection() {
 		socket = io();
 
-		socket.on('connect', () => {
-			socket.emit('client-connected');
+		socket.on('client-connected-response', (data) => {
+			this.setState({ hasMaster: data.hasMaster, userParticipation: true });
 		});
 
-		socket.on('master-selected', (data) => {
-			this.setState({ hasMaster: data.hasMaster, numConnections: data.numConnections, userParticipation: true });
+		socket.on('claim-master-response', (data) => {
+			this.setState({ globalConnections: data.globalConnections });
 		});
 
-		socket.on('master-claimed', () => {
-			this.setState({ hasMaster: true });
+		socket.on('master-claimed', (data) => {
+			this.setState({ hasMaster: true, globalConnections: data.globalConnections });
 		});
+
+		socket.on('new-client-ready', (data) => {
+			this.setState({ globalConnections: data.globalConnections, globalWorkers: data.globalWorkers });
+		});
+
+		socket.on('start-work', this.startWork);
+
+		socket.on('password-found', (data) => {
+			console.log('password-found', data);
+			this.setState({ clearText: data.clearText, duration: data.duration });
+		});
+
+		socket.on('connect_error', (e) => {
+		  console.log('connection error', socket.id);
+		});
+
+		socket.on('reconnect', () => {
+		  console.log('socket reconnected', socket.id);
+		})
+
+		socket.on('reconnect_error', (e) => {
+		  console.log('reconnect connection error', socket.id);
+		})
 
 		const optimalWorkers = (navigator.hardwareConcurrency / 2) + 1;
-		this.setState({optimalWorkers});
+		this.setState({ optimalWorkers });
 	}
 
 	claimMaster() {
-		socket.emit('claim-master')
-		this.setState({ hasMaster: true, isMaster: true });
+		socket.emit('claim-master');
+		this.setState({ hasMaster: true, isMaster: true, ready: true });
 	}
 
-	// need to fix
-	update(name, e) {
-	  console.log(this.state);
+	updateSettings(name, e) {
 	  const toChange = name;
 	  const stateVal = this.state[toChange];
 	  const stateUpdate = {};
-	  stateUpdate[toChange] = e.target.value;
+	  if (name === 'workers' || name === 'length' ) stateUpdate[toChange] = Number(e.target.value);
+	  else stateUpdate[toChange] = e.target.value;
 	  this.setState(stateUpdate);   
 	}
 
-	// need to fix
+	chooseWorkerCount() {
+		socket.emit('client-ready', { ready: true, workers: this.state.workers });
+		this.setState({ ready: true });
+	}
+
 	startMD5Decrypt() {
-	  console.log('start decryption');
-	  this.setState({hasStarted : true})
-	  const numCombos = Math.pow(26, this.state.length);
-	  const clientFrag = Math.round(numCombos / this.state.numClients);
+	  console.log('start decryption hash', this.state.hash);
+	  socket.emit('start-decryption', { hash: this.state.hash, length: this.state.length, workers: this.state.workers });
+	}
 
-	  const hostBegin = 0;
-	  const hostEnd = clientFrag - 1;
-	  const clientBegin = clientFrag;
-	  const clientEnd = clientBegin + (clientFrag - 1);
+	startWork(data) {
+		const newState = {
+			startTime: data.startTime,
+			length: data.length,
+			globalNumCombos: data.numCombos,
+			hash: data.hash,
+			begin: data.begin,
+			end: data.end,
+			calculating: true,
+		};
 
-	  const startTime = Date.now();
+		startWorkers(this.passwordCracked, data.begin, data.end, this.state.workers, data.hash, data.length, data.startTime);
+		this.setState(newState);
+	}
 
-	  this.props.p2p.emit('starting to crack', { begin: clientBegin, end: clientEnd, hash: this.state.hash, startTime, length: +this.state.length });
-	  startWorkers(this.props.onSolution,this.props.p2p, hostBegin, hostEnd,
-	               +this.state.workers, this.state.hash, 
-	               startTime, +this.state.length);
+	passwordCracked(clearText, duration) {
+		const data = {
+			clearText,
+			duration,
+		};
+		
+		socket.emit('password-cracked', data);
+		this.setState(data);
 	}
 
 	render() {
 		const sessionView = !this.state.userParticipation ? <Participate startSocketConnection={this.startSocketConnection} /> 
 						 : !this.state.hasMaster ? <Host claimMaster={this.claimMaster} /> 
-						 : this.state.isMaster ? <Performance {...this.state} update={this.update} startMD5Decrypt={this.startMD5Decrypt} onSolution={this.onSolution} /> 
-						 : !this.state.calculating ? <Pending /> : <WorkerProcess data={dataFromHost} clearText={this.state.clearText} duration={this.state.duration} success={this.state.hasSolution} onSolution={this.onSolution} />;
+						 : this.state.isMaster ? <Performance {...this.state} updateSettings={this.updateSettings} startMD5Decrypt={this.startMD5Decrypt} /> 
+						 : !this.state.calculating || !this.state.ready ? <Pending ready={this.state.ready} optimalWorkers={this.state.optimalWorkers} workers={this.state.workers} updateSettings={this.updateSettings} chooseWorkerCount={this.chooseWorkerCount} globalConnections={this.state.globalConnections} />
+						 : <WorkerProcess {...this.state} />;
 		return (	<div>
 								{sessionView}
 							</div>

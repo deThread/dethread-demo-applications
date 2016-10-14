@@ -6,7 +6,7 @@ const Success = function(props) {
   return (<div>
             <div className="success">
               <h2> Success! </h2>
-              <p className="successText">We found this password : {props.pw} in {props.duration} {dur}</p>
+              <p className="successText">We found this password: {props.clearText} in {props.duration} {dur}</p>
             </div>
           </div>)
 };
