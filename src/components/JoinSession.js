@@ -68,6 +68,11 @@ class JoinSession extends Component {
 			this.setState({ clearText: data.clearText, duration: data.duration });
 		});
 
+		socket.on('master-disconnected', () => {
+			socket.disconnect();
+			browserHistory.push('MasterDisconnect');
+		});
+
 		socket.on('connect_error', (e) => {
 		  console.log('connection error', socket.id);
 		});

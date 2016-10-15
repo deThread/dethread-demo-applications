@@ -8,6 +8,7 @@ import Contact from './components/Contact';
 import Performance from './components/Performance';
 import AboutUs from './components/AboutUs';
 import JoinSession from './components/JoinSession';
+import MasterDisconnect from './components/MasterDisconnect';
 
 render((
   <Router history={browserHistory}>
@@ -16,5 +17,6 @@ render((
     <Route path="AboutUs" component={AboutUs} />
     <Route path="Contact" component={Contact} />
     <Route path="JoinSession" component={JoinSession} />
+    <Route path="MasterDisconnect" component={MasterDisconnect} />
     </Route>
   </Router>),document.getElementById('root'));
