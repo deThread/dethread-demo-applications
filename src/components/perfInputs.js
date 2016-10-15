@@ -8,7 +8,7 @@ function startWorkers(passwordCracked, begin, end, numWorkers, hash, length, sta
   const numCombos = end - begin;
   const workerFrag = Math.ceil(numCombos / numWorkers);
   // TODO: Need to verify that workerFrag is the correct number
-
+  
   for (let i = 0; i < numWorkers; i += 1) {
     const workerBegin = begin + (workerFrag * i);
     const workerEnd = workerBegin + (workerFrag - 1);

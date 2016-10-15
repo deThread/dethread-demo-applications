@@ -49,7 +49,7 @@ function startDecryption(data) {
 
   console.log('numCombos: ', state.globalNumCombos);
 
-  const workerFrag = state.globalNumCombos / state.activeWorkerCount;
+  const workerFrag = Math.round(state.globalNumCombos / state.activeWorkerCount);
   distributeWork(workerFrag);
 }
 
@@ -63,6 +63,7 @@ function distributeWork(workerFrag) {
     const clientCombos = workerFrag * socket.workers;
     const begin = iterationIndex;
     const end = (iterationIndex + clientCombos) - 1;
+
     iterationIndex = (iterationIndex + clientCombos);
 
     const data = {
@@ -98,6 +99,21 @@ io.on('connection', function(socket) {
     state.master = socket;
     socket.emit('claim-master-response', { globalConnections: state.activeSocketCount });
     socket.broadcast.emit('master-claimed', { globalConnections: state.activeSocketCount });
+    socket.on('disconnect', () => {
+      state = {
+        calculating: false,
+        hash: undefined,
+        length: undefined,
+        globalNumCombos: undefined,
+        startTime: undefined,
+        clearText: undefined,
+        duration: undefined,
+        sockets: {},
+        activeSocketCount: 0,
+        activeWorkerCount: 0,
+        master: undefined,
+      };
+    })
   });
 
   socket.on('client-ready', (data) => {
@@ -121,6 +137,7 @@ io.on('connection', function(socket) {
     state.clearText = data.clearText;
     state.duration = data.duration;
     socket.broadcast.emit('password-found', data);
+    socket.disconnect();
   });
 
 });
