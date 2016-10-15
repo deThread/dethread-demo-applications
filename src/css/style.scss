@@ -1,9 +1,10 @@
+$primary-color: lightcoral;
 body{
   margin: 0;
   padding: 0;
 }
 .active{
-  color: lightcoral;
+  color: $primary-color;
 }
 p{
   font-size: 18px;

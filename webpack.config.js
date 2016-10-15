@@ -1,3 +1,4 @@
+const path = require('path');
 module.exports = {
   entry: [
     './src/index.js'
@@ -14,7 +15,13 @@ module.exports = {
       query: {
         presets: ['react', 'es2015', 'stage-1']
       }
-    }]
+    },
+      {
+         test: /\.scss?$/,
+         loader: 'style!css!sass',
+         include: path.join(__dirname, 'src', 'css')
+       }
+    ]
   },
   watch: true,
   devTool: 'source-map',
@@ -27,3 +34,5 @@ module.exports = {
     inline: true
   }
 };
+
+
