@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const CharsetDropDown = () => {
+const CharsetDropDown = function() {
   return (
     <div>
       <div className="dropdown">
