@@ -8,6 +8,8 @@ import Contact from './components/Contact';
 import Performance from './components/Performance';
 import AboutUs from './components/AboutUs';
 import JoinSession from './components/JoinSession';
+//style
+import stylesheet from './css/style.scss';
 
 render((
   <Router history={browserHistory}>
