@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import Spinner from './Spinner';
-class Pending extends Component {
-	render() {
-		return (<div>
+import PendingWorkers from './PendingWorkers';
+import PendingStart from './PendingStart';
+
+const Pending = function(props) {
+	const pending = !props.ready ? <PendingWorkers optimalWorkers={props.optimalWorkers} updateSettings={props.updateSettings} chooseWorkerCount={props.chooseWorkerCount} />
+									: <PendingStart globalConnections={props.globalConnections} workers={props.workers} />;
+
+	return (<div>
 						<div className="card well well-lg">
 							<div className="pending"> 
-								<h1>Waiting for host to start . . .</h1>
-								<p>There are currently 2 clients in the room.</p>
-								<Spinner />
+								{pending}
 							</div> 
 						</div>
 					</div>
-		)
-	}
-}
+					)
+};
 
-export default Pending; 
+export default Pending;

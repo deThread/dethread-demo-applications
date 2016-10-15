@@ -3,12 +3,15 @@ import { render } from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
 //components
-import App from './components/app';
-//routes
+import App from './components/App';
 import Contact from './components/Contact';
 import Performance from './components/Performance';
 import AboutUs from './components/AboutUs';
 import JoinSession from './components/JoinSession';
+import MasterDisconnect from './components/MasterDisconnect';
+//style
+import stylesheet from './css/style.scss';
+
 
 render((
   <Router history={browserHistory}>
@@ -17,5 +20,6 @@ render((
     <Route path="AboutUs" component={AboutUs} />
     <Route path="Contact" component={Contact} />
     <Route path="JoinSession" component={JoinSession} />
+    <Route path="MasterDisconnect" component={MasterDisconnect} />
     </Route>
   </Router>),document.getElementById('root'));

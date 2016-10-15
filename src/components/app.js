@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import NavLink from './NavLink';
-import Navbar from './navbar';
+import Navbar from './Navbar';
 
 class App extends Component{
-  render(){
+  render() {
     return (
       <div>
          <Navbar />
