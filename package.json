@@ -12,7 +12,7 @@
     "test-routes": "mocha --timeout 20000 tests/",
     "build": "webpack"
   },
-  "author": "Daniel Lao, Bryan Yee, Shawn Southwell ",
+  "author": "Daniel Lao, Bryan Yee, Shawn Southwell",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.2.1",
@@ -39,16 +39,10 @@
     "express": "^4.14.0",
     "lodash": "^3.10.1",
     "nodemon": "^1.11.0",
-    "path": "^0.12.7",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
-    "react-redux": "^4.0.0",
     "react-router": "^2.8.1",
-    "redux": "^3.0.4",
     "sass": "^0.5.0",
-    "socket.io": "^1.5.0",
-    "socket.io-client": "^1.5.0",
-    "socket.io-p2p": "^2.2.0",
-    "socket.io-p2p-server": "^1.2.0"
+    "socket.io": "^1.5.0"
   }
 }
