@@ -6,9 +6,10 @@ import Participate from './Participate';
 import WorkerProcess from './WorkerProcess';
 import Success from './Success';
 import Host from './Host';
-import { startWorkers } from './PerfInputs';
+import { initSocket } from '../Socket';
+import { startWorkers, terminateAllWorkers } from './PerfInputs';
 
-let socket;
+let socket; 
 
 class JoinSession extends Component {
 	constructor() {
@@ -41,8 +42,12 @@ class JoinSession extends Component {
 		this.passwordCracked = this.passwordCracked.bind(this);
 	}
 
+	componentDidMount() {
+	  terminateAllWorkers();
+	}
+
 	startSocketConnection() {
-		socket = io();
+		socket = initSocket(io);
 
 		socket.on('client-connected-response', (data) => {
 			this.setState({ hasMaster: data.hasMaster, userParticipation: true });
@@ -65,11 +70,13 @@ class JoinSession extends Component {
 		socket.on('password-found', (data) => {
 			console.log('password-found', data);
 			socket.disconnect();
+			terminateAllWorkers();
 			this.setState({ clearText: data.clearText, duration: data.duration });
 		});
 
 		socket.on('master-disconnected', () => {
 			socket.disconnect();
+			terminateAllWorkers();
 			browserHistory.push('MasterDisconnect');
 		});
 
