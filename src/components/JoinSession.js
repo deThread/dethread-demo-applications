@@ -123,10 +123,16 @@ class JoinSession extends Component {
 
 	startMD5Decrypt() {
 	  console.log('start decryption hash', this.state.hash);
-
-	  socket.emit('start-decryption', { hash: this.state.hash, length: this.state.length, workers: this.state.workers });
+		if(!this.state.hash || this.state.hash.length !== 32){
+			alert('Please enter a valid hash')
+		} else if (!this.state.length){
+			alert('Please enter a valid length')
+		} else if (!this.state.workers){
+			alert('Please enter a valid number of Web Workers');
+		} else {
+	  	socket.emit('start-decryption', { hash: this.state.hash, length: this.state.length, workers: this.state.workers });
+		} 
 	}
-
 	startWork(data) {
 		const newState = {
 			startTime: data.startTime,
