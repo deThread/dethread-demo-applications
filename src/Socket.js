@@ -7,6 +7,7 @@ function disconnectSocket() {
 }
 
 function initSocket(io) {
+	//returning a live connection of socket
 	socket = io();
 	return socket; 
 }

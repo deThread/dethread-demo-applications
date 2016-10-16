@@ -35,7 +35,7 @@ function terminateAllWorkers() {
     let worker = workerArr.pop(); 
     worker.terminate();
   }
-  console.log("workerArr expect []", workerArr);
+  console.log("workerArr Expect", workerArr);
 }
 
 export { startWorkers, terminateAllWorkers };

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { terminateAllWorkers } from './PerfInputs';
 import { disconnectSocket } from '../Socket';
 
-
 class Contact extends Component {
 
 	componentDidMount() {

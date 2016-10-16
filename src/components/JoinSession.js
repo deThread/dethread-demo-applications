@@ -48,7 +48,6 @@ class JoinSession extends Component {
 
 	startSocketConnection() {
 		socket = initSocket(io);
-		
 
 		socket.on('client-connected-response', (data) => {
 			this.setState({ hasMaster: data.hasMaster, userParticipation: true });

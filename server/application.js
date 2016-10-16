@@ -10,7 +10,6 @@ function socketConnection(io) {
 
     // Add event handlers to socket
     socket.on('claim-master', () => {
-      console.log("socket in application JS", socket);
       console.log('master selected. Socket id: ', socket.id)
       socket.ready = true;
       state.activeSocketCount += 1; // Note that the activeWorkerCount will not include the master's web workers until 'start-decryption'
