@@ -51,7 +51,7 @@ function socketConnection(io) {
     socket.on('disconnect', ()=> {
       state.activeWorkerCount -= socket.workers;
       state.activeSocketCount -= 1;
-      socket.broadcast.emit('client-disconnect', {globalWorkers : state.activeWorkerCount, globalConnections : state.activeSocketCount});
+      socket.broadcast.emit('client-disconnect', { globalWorkers : state.activeWorkerCount, globalConnections : state.activeSocketCount });
     });
   });
 }
