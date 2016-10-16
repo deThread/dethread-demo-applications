@@ -25,12 +25,17 @@ function handleMessage(e) {
   if (e.data.cmd === 'success') {
     const duration = Math.round((Date.now() - globalStartTime) / 1000);
     console.log(`Worker: ${e.data.id} found word: ${e.data.clearText} in ${duration} seconds`);
+    terminateAllWorkers();
     localPasswordCracked(e.data.clearText, duration);
-
-    workerArr.forEach((worker) => {
-      worker.terminate();
-    });
   }
 }
 
-export { startWorkers };
+function terminateAllWorkers() {
+  while(workerArr.length) {
+    let worker = workerArr.pop(); 
+    worker.terminate();
+  }
+  console.log("workerArr Expect", workerArr);
+}
+
+export { startWorkers, terminateAllWorkers };
