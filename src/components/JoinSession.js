@@ -62,6 +62,7 @@ class JoinSession extends Component {
 		});
 
 		socket.on('new-client-ready', (data) => {
+			console.log("data.globalWorkers!!!!!!!!!!", data.globalWorkers);
 			this.setState({ globalConnections: data.globalConnections, globalWorkers: data.globalWorkers });
 		});
 
@@ -92,6 +93,11 @@ class JoinSession extends Component {
 		  console.log('reconnect connection error', socket.id);
 		})
 
+		socket.on('client-disconnect', (data) => {
+			this.setState({globalConnections: data.globalConnections, globalWorkers: data.globalWorkers});
+			console.log("client disconnected ");
+		})
+
 		const optimalWorkers = (navigator.hardwareConcurrency / 2) + 1;
 		this.setState({ optimalWorkers });
 	}
@@ -117,6 +123,7 @@ class JoinSession extends Component {
 
 	startMD5Decrypt() {
 	  console.log('start decryption hash', this.state.hash);
+
 	  socket.emit('start-decryption', { hash: this.state.hash, length: this.state.length, workers: this.state.workers });
 	}
 
@@ -125,12 +132,13 @@ class JoinSession extends Component {
 			startTime: data.startTime,
 			length: data.length,
 			globalNumCombos: data.globalNumCombos,
+			globalWorkers: data.globalWorkers,
 			hash: data.hash,
 			begin: data.begin,
 			end: data.end,
 			calculating: true,
 		};
-
+		console.log("startWork server", data);
 		startWorkers(this.passwordCracked, data.begin, data.end, this.state.workers, data.hash, data.length, data.startTime);
 		this.setState(newState);
 	}

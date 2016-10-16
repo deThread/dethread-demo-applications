@@ -14,7 +14,8 @@ class Performance extends Component {
     if (this.props.clearText) {
       solved = <Success clearText={this.props.clearText} duration={this.props.duration}/>
     } else if (this.props.calculating) {
-      solved = <div><Spinner /><p>Number of contributing web workers: 11{/*this.props.globalWorkers*/}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
+      console.log("WORKERS in performance!!", this.props.globalWorkers);
+      solved = <div><Spinner /><p>Number of contributing web workers: {this.props.globalWorkers}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
     }
 
     let is = this.props.globalConnections === 1 ? 'is' : 'are';
