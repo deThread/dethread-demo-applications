@@ -48,6 +48,11 @@ function socketConnection(io) {
       socket.disconnect();
     });
 
+    socket.on('disconnect', ()=> {
+      state.activeWorkerCount -= socket.workers;
+      state.activeSocketCount -= 1;
+      socket.broadcast.emit('client-disconnect', {globalWorkers : state.activeWorkerCount, globalConnections : state.activeSocketCount});
+    });
   });
 }
 
@@ -76,6 +81,8 @@ function startDecryption(data) {
   state.globalNumCombos = Math.pow(26, Number(data.length));
   state.startTime = Date.now();
 
+  console.log("THIS IS STATE.activeworkers in server", state.activeWorkerCount);
+
   console.log('numCombos: ', state.globalNumCombos);
 
   const workerFrag = Math.round(state.globalNumCombos / state.activeWorkerCount);
@@ -99,6 +106,7 @@ function distributeWork(workerFrag) {
       startTime: state.startTime,
       length: state.length,
       globalNumCombos: state.globalNumCombos,
+      globalWorkers: state.activeWorkerCount,
       hash: state.hash,
       begin,
       end,
