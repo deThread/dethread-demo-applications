@@ -9,23 +9,25 @@ import Spinner from './Spinner';
 
 class Performance extends Component {
   render() {
-    let solved;
-    console.log('performance', this.props)
+    let solved,
+        hideUponSuccess = {};
     if (this.props.clearText) {
       solved = <Success clearText={this.props.clearText} duration={this.props.duration}/>
+      hideUponSuccess.display = 'none';
+      console.log(hideUponSuccess);
     } else if (this.props.calculating) {
-      solved = <div><Spinner /><p>Number of contributing web workers: 11{/*this.props.globalWorkers*/}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
+      console.log("WORKERS in performance!!", this.props.globalWorkers);
+      solved = <div><Spinner /><p>Number of contributing web workers: {this.props.globalWorkers}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
     }
 
     let is = this.props.globalConnections === 1 ? 'is' : 'are';
     let client = this.props.globalConnections === 1 ? 'client' : 'total clients';
-    
     return(<div>
               <div className="perfContainer">
                 <div className="card well well-lg">
                   <h2> MD5 Hash Decryption </h2><br />
 
-                  <form>
+                  <form style={hideUponSuccess} >
                     <h3>Host Settings</h3>
                     <div className="form-group">
                       <label for="lengthInput">Length of Word</label>
@@ -52,17 +54,16 @@ class Performance extends Component {
                     </div>                    
                   </form>
 
-                  <button className="startHash btn btn-danger" 
+                  <button style={hideUponSuccess} className="startHash btn btn-danger" 
                     onClick={this.props.startMD5Decrypt}>
                     Start
                   </button><br /><br />
-
+                  {solved}
+                  <p> This problem was solved by {this.props.globalConnections} {client}! </p>
                   <div>
                     There {is} currently {this.props.globalConnections} {client} in the room.
-                    {solved}
                   </div>
-              </div>
-              
+                </div>
             </div>
           </div>
        )
