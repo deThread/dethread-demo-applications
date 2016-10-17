@@ -30,7 +30,14 @@ function socketConnection(io) {
       state.activeSocketCount += 1;
       state.activeWorkerCount += data.workers;
 
-      io.emit('new-client-ready', { globalConnections: state.activeSocketCount, globalWorkers: state.activeWorkerCount });
+      const response = { globalConnections: state.activeSocketCount, globalWorkers: state.activeWorkerCount };
+
+      if (state.calculating) {
+        distributeWork(socket);
+        socket.broadcast.emit('new-client-ready', response);
+      } else {
+        io.emit('new-client-ready', response);
+      }
     });
 
     socket.on('start-decryption', (data) => {
@@ -64,11 +71,14 @@ function initState() {
     hash: undefined,
     length: undefined,
     globalNumCombos: undefined,
+    taskIndex: 0,
+    workerFrag: undefined,
+    redistributeQueue: [],
     startTime: undefined,
     clearText: undefined,
     duration: undefined,
     sockets: {},
-    activeSocketCount: 0,
+    activeSocketCount: 0, // Clients become 'active/ready' when they submit the # of workers to use
     activeWorkerCount: 0,
     master: undefined,
   };
@@ -81,39 +91,46 @@ function startDecryption(data) {
   state.globalNumCombos = Math.pow(26, Number(data.length));
   state.startTime = Date.now();
 
-  console.log("THIS IS STATE.activeworkers in server", state.activeWorkerCount);
+  state.workerFrag = Math.floor(state.globalNumCombos / state.activeWorkerCount);
 
-  console.log('numCombos: ', state.globalNumCombos);
+  // 1 worker can process 3 million samples in ~30 sec; keep the worker load to ~30 sec
+  if (state.workerFrag > 3000000) {
+    state.workerFrag = 3000000;
+  }
 
-  const workerFrag = Math.round(state.globalNumCombos / state.activeWorkerCount);
-  distributeWork(workerFrag);
+  initiateWork();
 }
 
-function distributeWork(workerFrag) {
-  var iterationIndex = 0;
-
-  Object.keys(state.sockets).forEach((socketID, i) => {
+function initiateWork() {
+  Object.keys(state.sockets).forEach((socketID) => {
     const socket = state.sockets[socketID];
     if (!socket.ready) return;
 
-    const clientCombos = workerFrag * socket.workers;
-    const begin = iterationIndex;
-    const end = (iterationIndex + clientCombos) - 1;
-
-    iterationIndex = (iterationIndex + clientCombos);
-
-    const data = {
-      startTime: state.startTime,
-      length: state.length,
-      globalNumCombos: state.globalNumCombos,
-      globalWorkers: state.activeWorkerCount,
-      hash: state.hash,
-      begin,
-      end,
-    };
-
-    socket.emit('start-work', data);
+    distributeWork(socket);
   });
+}
+
+function distributeWork(socket) {
+  const clientCombos = state.workerFrag * socket.workers;
+  const begin = state.taskIndex * state.workerFrag;
+  const end = (begin + clientCombos) - 1;
+
+  if (end >= state.globalNumCombos) end = state.globalNumCombos - 1;
+
+  state.taskIndex += socket.workers;
+
+  const data = {
+    startTime: state.startTime,
+    length: state.length,
+    globalNumCombos: state.globalNumCombos,
+    globalConnections: state.activeSocketCount,
+    globalWorkers: state.activeWorkerCount,
+    hash: state.hash,
+    begin,
+    end,
+  };
+
+  socket.emit('start-work', data);
 }
 
 module.exports = socketConnection;
