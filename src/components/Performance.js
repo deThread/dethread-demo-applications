@@ -9,19 +9,19 @@ import Spinner from './Spinner';
 
 class Performance extends Component {
   render() {
-    let solved,
-        hideUponSuccess = {};
+    let solved;
+    const hideUponSuccess = {};
     if (this.props.clearText) {
-      solved = <Success clearText={this.props.clearText} duration={this.props.duration}/>
+      solved = <Success clearText={this.props.clearText} duration={this.props.duration} globalConnections={this.props.globalConnections}/>
       hideUponSuccess.display = 'none';
       console.log(hideUponSuccess);
     } else if (this.props.calculating) {
-      console.log("WORKERS in performance!!", this.props.globalWorkers);
       solved = <div><Spinner /><p>Number of contributing web workers: {this.props.globalWorkers}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
     }
 
-    let is = this.props.globalConnections === 1 ? 'is' : 'are';
-    let client = this.props.globalConnections === 1 ? 'client' : 'total clients';
+    const is = this.props.globalConnections === 1 ? 'is' : 'are';
+    const client = this.props.globalConnections === 1 ? 'client' : 'total clients';
+
     return(<div>
               <div className="perfContainer">
                 <div className="card well well-lg">
@@ -59,7 +59,6 @@ class Performance extends Component {
                     Start
                   </button><br /><br />
                   {solved}
-                  <p> This problem was solved by {this.props.globalConnections} {client}! </p>
                   <div>
                     There {is} currently {this.props.globalConnections} {client} in the room.
                   </div>

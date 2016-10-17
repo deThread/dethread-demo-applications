@@ -31,11 +31,10 @@ function handleMessage(e) {
 }
 
 function terminateAllWorkers() {
-  while(workerArr.length) {
-    let worker = workerArr.pop(); 
+  while (workerArr.length) {
+    const worker = workerArr.pop(); 
     worker.terminate();
   }
-  console.log("workerArr Expect", workerArr);
 }
 
 export { startWorkers, terminateAllWorkers };
