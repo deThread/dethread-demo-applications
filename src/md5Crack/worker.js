@@ -34,7 +34,9 @@ function crackMD5(begin, end, hash) {
       postMessage({ cmd: 'success', clearText: convertedStr, id });
     }
   }
+  
   console.log("Worker Failed");
+  postMessage({ cmd: 'fail' });
 }
 
 function padWithZeros(baseNum) {

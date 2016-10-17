@@ -47,6 +47,10 @@ function socketConnection(io) {
       startDecryption(data);
     });
 
+    socket.on('request-more-work', () => {
+      distributeWork(socket);
+    });
+
     socket.on('password-cracked', (data) => {
       console.log('password-cracked', data);
       state.clearText = data.clearText;

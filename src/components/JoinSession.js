@@ -39,6 +39,7 @@ class JoinSession extends Component {
 		this.chooseWorkerCount = this.chooseWorkerCount.bind(this);
 		this.startMD5Decrypt = this.startMD5Decrypt.bind(this);
 		this.startWork = this.startWork.bind(this);
+		this.requestMoreWork = this.requestMoreWork.bind(this);
 		this.passwordCracked = this.passwordCracked.bind(this);
 	}
 
@@ -83,7 +84,6 @@ class JoinSession extends Component {
 
 		socket.on('client-disconnect', (data) => {
 			this.setState({globalConnections: data.globalConnections, globalWorkers: data.globalWorkers});
-			console.log("client disconnected ");
 		});
 
 		// Handlers for connection events
@@ -149,8 +149,12 @@ class JoinSession extends Component {
 			calculating: true,
 		};
 
-		startWorkers(this.passwordCracked, data.begin, data.end, this.state.workers, data.hash, data.length, data.startTime);
+		startWorkers(this.passwordCracked, data.begin, data.end, this.state.workers, data.hash, data.length, data.startTime, this.requestMoreWork, socket);
 		this.setState(newState);
+	}
+
+	requestMoreWork(socket) {
+		socket.emit('request-more-work');
 	}
 
 	passwordCracked(clearText, duration) {
