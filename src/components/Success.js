@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
 const Success = function(props) {
-  const dur = props.duration <= 1 ? 'second' : 'seconds';
-  
+  const dur = props.duration === 1 ? 'second' : 'seconds';
+  const client = props.globalConnections === 1 ? 'client' : 'clients';
+
   return (<div>
             <div className="success">
-              <h2> Success! </h2>
-              <p className="successText">We found this password: {props.clearText} in {props.duration} {dur}</p>
+              <h3> Password Found! </h3>
+              <h2> {props.clearText} </h2>
+              <p className="successText"> This problem was solved by {props.globalConnections} {client} in {props.duration} {dur}! </p>
             </div>
           </div>)
 };

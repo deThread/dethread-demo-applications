@@ -141,6 +141,7 @@ class JoinSession extends Component {
 			startTime: data.startTime,
 			length: data.length,
 			globalNumCombos: data.globalNumCombos,
+			globalConnections: data.globalConnections,
 			globalWorkers: data.globalWorkers,
 			hash: data.hash,
 			begin: data.begin,
