@@ -58,6 +58,10 @@ function socketConnection(io) {
     socket.on('disconnect', ()=> {
       state.activeWorkerCount -= socket.workers;
       state.activeSocketCount -= 1;
+
+      const task = { begin: socket.begin, end: socket.end };
+      state.redistributeQueue.push(task);
+
       socket.broadcast.emit('client-disconnect', { globalWorkers : state.activeWorkerCount, globalConnections : state.activeSocketCount });
     });
   });
@@ -112,25 +116,52 @@ function initiateWork() {
 
 function distributeWork(socket) {
   const clientCombos = state.workerFrag * socket.workers;
-  const begin = state.taskIndex * state.workerFrag;
-  const end = (begin + clientCombos) - 1;
+  let begin;
+  let end;
 
-  if (end >= state.globalNumCombos) end = state.globalNumCombos - 1;
+  if (state.redistributeQueue.length === 0) {
+    begin = state.taskIndex * state.workerFrag;
+    end = (begin + clientCombos) - 1;
+  } else {
+    // If there are tasks in the redistribute queue, deploy from the queue
+    const task = state.redistributeQueue.pop();
+    begin = task.begin;
+    end = (begin + clientCombos) - 1;
 
-  state.taskIndex += socket.workers;
+    // If the task in the redistribute queue contains work for more workers than the
+    // requesting socket, store the remaining work back in the queue
+    const remainder = ((task.end - task.begin) + 1) - clientCombos;
 
-  const data = {
-    startTime: state.startTime,
-    length: state.length,
-    globalNumCombos: state.globalNumCombos,
-    globalConnections: state.activeSocketCount,
-    globalWorkers: state.activeWorkerCount,
-    hash: state.hash,
-    begin,
-    end,
-  };
+    if (remainder > 0) {
+      const newTask = { begin: task.end - remainder, end: task.end };
+      state.redistributeQueue.push(newTask);
+    }
+  }
 
-  socket.emit('start-work', data);
+  socket.begin = begin;
+  socket.end = end;
+
+  // Stop distributing work when all tasks have been distributed
+  if (begin >= state.globalNumCombos) {
+    socket.emit('no-available-tasks');
+  } else {
+    if (end >= state.globalNumCombos) end = state.globalNumCombos - 1;
+
+    state.taskIndex += socket.workers;
+
+    const data = {
+      startTime: state.startTime,
+      length: state.length,
+      globalNumCombos: state.globalNumCombos,
+      globalConnections: state.activeSocketCount,
+      globalWorkers: state.activeWorkerCount,
+      hash: state.hash,
+      begin,
+      end,
+    };
+
+    socket.emit('start-work', data);
+  }
 }
 
 module.exports = socketConnection;
