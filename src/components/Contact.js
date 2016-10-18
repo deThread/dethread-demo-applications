@@ -10,7 +10,11 @@ class Contact extends Component {
 	}
 
 	render() {
-  	return <div> This is the Contact page!</div>;
+  	return (
+			<div> This is the Contact page!</div>
+
+			
+		)
   }
 
 };

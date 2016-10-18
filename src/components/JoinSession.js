@@ -15,7 +15,7 @@ class JoinSession extends Component {
 	constructor() {
 		super(); 
 		this.state = {
-			charset: "lower", 
+			charset: undefined, 
 			userParticipation: false,
 			ready: false,
 			hasMaster: false,
@@ -133,6 +133,8 @@ class JoinSession extends Component {
 			alert('Please enter a valid length');
 		} else if (!this.state.workers) {
 			alert('Please enter a valid number of Web Workers');
+		} else if (!this.state.charset) {
+			alert('Please enter the chracters description of the password you entered');
 		} else {
 			console.log('start decryption hash', this.state.hash);
 	  	socket.emit('start-decryption', { hash: this.state.hash, length: this.state.length, workers: this.state.workers });
