@@ -1,14 +1,14 @@
-'use strict'
+'use strict';
 
 const socketConnection = require('./application');
 
 const express = require('express');
 const path = require('path');
-const app = express(); 
+const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-const PORT = process.env.PORT || 3000; 
+const PORT = process.env.PORT || 3000;
 
 
 app.use(express.static(path.join(__dirname, '../')));

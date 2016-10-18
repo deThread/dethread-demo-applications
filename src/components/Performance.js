@@ -8,6 +8,7 @@ import CharsetDropDown from './CharsetDropDown';
 import Spinner from './Spinner';
 
 class Performance extends Component {
+
   render() {
     let solved;
     const hideUponSuccess = {};
@@ -40,10 +41,10 @@ class Performance extends Component {
                       <HashInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'hash')} />
                     </div>
 
-                    <div className="form-group">
-                      <label for="charsetDropDown">Charset</label><br/>
-                      <CharsetDropDown className="form-control" />
-                    </div>
+                  <div className="form-group">
+                    <label for="charsetDropDown">Charset</label><br/>
+                    <CharsetDropDown className="form-control" selectChar={this.props.selectChar}/>
+                  </div>
 
                     <h3 className="local-settings">Local Settings</h3>
                     <div className="form-group">
@@ -53,6 +54,7 @@ class Performance extends Component {
                       <p className="worker-recommendation">(Choose 1 worker if you are running other processes)</p>
                     </div>                    
                   </form>
+
 
                   <button style={hideUponSuccess} className="startHash btn btn-danger" 
                     onClick={this.props.startMD5Decrypt}>
