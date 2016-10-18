@@ -8,6 +8,7 @@ import CharsetDropDown from './CharsetDropDown';
 import Spinner from './Spinner';
 
 class Performance extends Component {
+
   render() {
     let solved;
     const hideUponSuccess = {};
@@ -31,29 +32,30 @@ class Performance extends Component {
                   <form style={hideUponSuccess} >
                     <h3>Host Settings</h3>
                     <div className="form-group">
-                      <label for="lengthInput">Length of Word</label>
+                      <label htmlFor="lengthInput">Length of Word</label>
                       <LengthInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'length')} />
                     </div>
 
                     <div className="form-group">
-                      <label for="hashInput">Hash</label><br/>
+                      <label htmlFor="hashInput">Hash</label><br/>
                       <a target="_blank" href="http://www.miraclesalad.com/webtools/md5.php">[Hash Generator]</a>
                       <HashInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'hash')} />
                     </div>
 
-                    <div className="form-group">
-                      <label for="charsetDropDown">Charset</label><br/>
-                      <CharsetDropDown className="form-control" />
-                    </div>
+                  <div className="form-group">
+                    <label htmlFor="charsetDropDown">Charset</label><br/>
+                    <CharsetDropDown className="form-control" selectChar={this.props.selectChar}/>
+                  </div>
 
                     <h3 className="local-settings">Local Settings</h3>
                     <div className="form-group">
-                      <label for="workerInput">Workers</label>
+                      <label htmlFor="workerInput">Workers</label>
                       <WorkerInput className="form-control" optimalWorkers={this.props.optimalWorkers} updateSettings={this.props.updateSettings.bind(null, 'workers')} />
                       <p className="worker-recommendation">Optimal number of workers for your device: {this.props.optimalWorkers} </p>
                       <p className="worker-recommendation">(Choose 1 worker if you are running other processes)</p>
                     </div>                    
                   </form>
+
 
                   <button style={hideUponSuccess} className="startHash btn btn-danger" 
                     onClick={this.props.startMD5Decrypt}>
