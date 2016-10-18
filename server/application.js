@@ -62,8 +62,9 @@ function socketConnection(io) {
     });
 
     socket.on('disconnect', () => {
-      if (!state.calculating) return;
+      if (!state.calculating || socket.id === state.master.id) return;
 
+      // Update state counts
       state.activeWorkerCount -= socket.workers;
       state.activeSocketCount -= 1;
 
@@ -76,6 +77,8 @@ function socketConnection(io) {
       if (state.socketPool.length) distributeWork(state.socketPool.shift());
 
       socket.broadcast.emit('client-disconnect', { globalWorkers : state.activeWorkerCount, globalConnections : state.activeSocketCount });
+
+      delete state.sockets[socket.id];
     });
   });
 }
