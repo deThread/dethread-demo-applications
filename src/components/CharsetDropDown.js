@@ -4,9 +4,9 @@ const CharsetDropDown = (props) => {
   return (
     <div>
         <select onChange={props.selectChar}>
-          <option value="lower">Lowercase characters</option>
-          <option value="upperLow">Uppercase & Lowercase characters</option>
-          <option value="alphanumeric">Alphanumeric (upper and lowercase)</option>
+          <option value="lower">Lowercase characters (a-z)</option>
+          <option value="upperLow">Uppercase & Lowercase characters (a-zA-Z)</option>
+          <option value="alphanumeric">Alphanumeric (a-zA-Z0-9)</option>
         </select>
     </div>
     );
