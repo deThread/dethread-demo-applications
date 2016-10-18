@@ -21,6 +21,7 @@ class Performance extends Component {
 
     const is = this.props.globalConnections === 1 ? 'is' : 'are';
     const client = this.props.globalConnections === 1 ? 'client' : 'total clients';
+    const noTasksAvailable = (this.props.noTasksAvailable && !this.props.clearText) ? <p>Local tasks are complete, and there are no available tasks from the sever. The current process should end shortly.</p> : '';
 
     return(<div>
               <div className="perfContainer">
@@ -62,6 +63,7 @@ class Performance extends Component {
                   <div>
                     There {is} currently {this.props.globalConnections} {client} in the room.
                   </div>
+                  {noTasksAvailable}
                 </div>
             </div>
           </div>

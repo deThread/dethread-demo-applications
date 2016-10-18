@@ -17,7 +17,6 @@ this.addEventListener('message', (e) => {
       crackMD5(begin, end, hash);
       break;
     default:
-      console.log(`Worker doesn't understand command.`);
       break;
   }
 });

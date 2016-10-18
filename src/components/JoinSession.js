@@ -23,6 +23,7 @@ class JoinSession extends Component {
 			globalConnections: undefined,
 			globalWorkers: undefined,
 			globalNumCombos: undefined,
+			noTasksAvailable: false,
 			clearText: undefined,
 			duration: undefined,
 			length: undefined,
@@ -68,6 +69,10 @@ class JoinSession extends Component {
 		});
 
 		socket.on('start-work', this.startWork);
+
+		socket.on('no-available-tasks', (data) => {
+			this.setState({ ...data, noTasksAvailable: true, calculating: true });
+		});
 
 		socket.on('password-found', (data) => {
 			console.log('password-found', data);

@@ -10,7 +10,7 @@ function socketConnection(io) {
 
     // Add event handlers to socket
     socket.on('claim-master', () => {
-      console.log('master selected. Socket id: ', socket.id)
+      console.log(socket.id, 'claim master');
       socket.ready = true;
       state.activeSocketCount += 1; // Note that the activeWorkerCount will not include the master's web workers until 'start-decryption'
       state.master = socket;
@@ -18,7 +18,7 @@ function socketConnection(io) {
       socket.broadcast.emit('master-claimed', { globalConnections: state.activeSocketCount });
       
       socket.on('disconnect', () => {
-        console.log('master disconnected');
+        console.log(socket.id, 'master disconnected');
         socket.broadcast.emit('master-disconnected');
         state = initState();
       })
@@ -48,6 +48,7 @@ function socketConnection(io) {
     });
 
     socket.on('request-more-work', () => {
+      console.log(socket.id, 'requested more work')
       distributeWork(socket);
     });
 
@@ -57,14 +58,22 @@ function socketConnection(io) {
       state.duration = data.duration;
       socket.broadcast.emit('password-found', data);
       socket.disconnect();
+      initState();
     });
 
-    socket.on('disconnect', ()=> {
+    socket.on('disconnect', () => {
+      if (!state.calculating) return;
+
       state.activeWorkerCount -= socket.workers;
       state.activeSocketCount -= 1;
 
+      // Store the incompleted task load in the redistribution pool
       const task = { begin: socket.begin, end: socket.end };
       state.redistributeQueue.push(task);
+      console.log(socket.id, 'disconnected. queue:', state.redistributeQueue);
+
+      // Call any available sockets from the socketPool
+      if (state.socketPool.length) distributeWork(state.socketPool.shift());
 
       socket.broadcast.emit('client-disconnect', { globalWorkers : state.activeWorkerCount, globalConnections : state.activeSocketCount });
     });
@@ -86,6 +95,7 @@ function initState() {
     clearText: undefined,
     duration: undefined,
     sockets: {},
+    socketPool: [],
     activeSocketCount: 0, // Clients become 'active/ready' when they submit the # of workers to use
     activeWorkerCount: 0,
     master: undefined,
@@ -120,8 +130,8 @@ function initiateWork() {
 
 function distributeWork(socket) {
   const clientCombos = state.workerFrag * socket.workers;
-  let begin;
-  let end;
+  var begin;
+  var end;
 
   if (state.redistributeQueue.length === 0) {
     begin = state.taskIndex * state.workerFrag;
@@ -145,15 +155,25 @@ function distributeWork(socket) {
   socket.begin = begin;
   socket.end = end;
 
-  // Stop distributing work when all tasks have been distributed
+  // Distribute work until all tasks are completed.
+  // If all tasks are complete, store the socket in the socket pool, in case a node disconnects
+  var data;
   if (begin >= state.globalNumCombos) {
-    socket.emit('no-available-tasks');
+    data = {
+      globalNumCombos: state.globalNumCombos,
+      globalConnections: state.activeSocketCount,
+      globalWorkers: state.activeWorkerCount,
+      hash: state.hash,
+    };
+
+    socket.emit('no-available-tasks', data);
+    state.socketPool.push(socket);
   } else {
     if (end >= state.globalNumCombos) end = state.globalNumCombos - 1;
 
     state.taskIndex += socket.workers;
 
-    const data = {
+    data = {
       startTime: state.startTime,
       length: state.length,
       globalNumCombos: state.globalNumCombos,

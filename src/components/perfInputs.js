@@ -20,7 +20,7 @@ function startWorkers(passwordCracked, begin, end, numWorkers, hash, length, sta
     const workerBegin = begin + (workerFrag * i);
     const workerEnd = workerBegin + (workerFrag - 1);
     const id = i;
-    console.log('Id: ', id, 'workerBegin: ', workerBegin, 'workerEnd :', workerEnd, 'hash', hash);
+    console.log('Worker id:', id, 'workerBegin:', workerBegin, 'workerEnd:', workerEnd);
 
     // Check for and re-use existing workers, if available. Otherwise, create new workers
     let worker = workerArr[i];
@@ -30,7 +30,7 @@ function startWorkers(passwordCracked, begin, end, numWorkers, hash, length, sta
       worker.onmessage = handleMessage;
       workerArr.push(worker);
     }
-    
+
     worker.postMessage({ cmd: 'start', hash, id, workerBegin, workerEnd, length});
   }
 }
