@@ -15,6 +15,7 @@ class JoinSession extends Component {
 	constructor() {
 		super(); 
 		this.state = {
+			charset: undefined, 
 			userParticipation: false,
 			ready: false,
 			hasMaster: false,
@@ -40,6 +41,8 @@ class JoinSession extends Component {
 		this.startMD5Decrypt = this.startMD5Decrypt.bind(this);
 		this.startWork = this.startWork.bind(this);
 		this.passwordCracked = this.passwordCracked.bind(this);
+		this.selectChar = this.selectChar.bind(this) 
+
 	}
 
 	componentDidMount() {
@@ -130,6 +133,8 @@ class JoinSession extends Component {
 			alert('Please enter a valid length');
 		} else if (!this.state.workers) {
 			alert('Please enter a valid number of Web Workers');
+		} else if (!this.state.charset) {
+			alert('Please enter the chracters description of the password you entered');
 		} else {
 			console.log('start decryption hash', this.state.hash);
 	  	socket.emit('start-decryption', { hash: this.state.hash, length: this.state.length, workers: this.state.workers });
@@ -159,10 +164,14 @@ class JoinSession extends Component {
 		this.setState(data);
 	}
 
+	selectChar(e) {
+		this.setState({charset: e.target.value});
+	}
+
 	render() {
 		const sessionView = !this.state.userParticipation ? <Participate startSocketConnection={this.startSocketConnection} /> 
 						 : !this.state.hasMaster ? <Host claimMaster={this.claimMaster} /> 
-						 : this.state.isMaster ? <Performance {...this.state} updateSettings={this.updateSettings} startMD5Decrypt={this.startMD5Decrypt} /> 
+						 : this.state.isMaster ? <Performance {...this.state} updateSettings={this.updateSettings} startMD5Decrypt={this.startMD5Decrypt} selectChar={this.selectChar}/> 
 						 : !this.state.calculating || !this.state.ready ? <Pending ready={this.state.ready} optimalWorkers={this.state.optimalWorkers} workers={this.state.workers} updateSettings={this.updateSettings} chooseWorkerCount={this.chooseWorkerCount} globalConnections={this.state.globalConnections} />
 						 : <WorkerProcess {...this.state} />;
 		return (	<div>
