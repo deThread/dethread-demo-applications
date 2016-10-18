@@ -67,6 +67,7 @@ var state = initState();
 
 function initState() {
   return {
+    characterSet: 'lower',
     calculating: false,
     hash: undefined,
     length: undefined,
