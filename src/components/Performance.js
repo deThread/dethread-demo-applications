@@ -42,10 +42,11 @@ class Performance extends Component {
                       <HashInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'hash')} />
                     </div>
 
-                  <div className="form-group">
+                {/* <div className="form-group">
                     <label htmlFor="charsetDropDown">Charset</label><br/>
                     <CharsetDropDown className="form-control" selectChar={this.props.selectChar}/>
                   </div>
+                  */}
 
                     <h3 className="local-settings">Local Settings</h3>
                     <div className="form-group">
