@@ -138,8 +138,6 @@ class JoinSession extends Component {
 			alert('Please enter a valid length');
 		} else if (!this.state.workers) {
 			alert('Please enter a valid number of Web Workers');
-		} else if (!this.state.charset) {
-			alert('Please select the character set for the password you entered');
 		} else {
 			console.log('start decryption hash', this.state.hash);
 	  	socket.emit('start-decryption', { hash: this.state.hash, length: this.state.length, workers: this.state.workers });
@@ -148,7 +146,6 @@ class JoinSession extends Component {
 
 	startWork(data) {
 		const newState = {
-
 			startTime: data.startTime,
 			length: data.length,
 			globalNumCombos: data.globalNumCombos,
