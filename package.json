@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "babel-preset-stage-1": "^6.1.18",
+    "enzyme": "^2.5.1",
     "eslint": "^3.8.1",
     "express": "^4.14.0",
     "lodash": "^3.10.1",

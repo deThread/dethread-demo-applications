@@ -13,12 +13,13 @@ function startWorkers(passwordCracked, begin, end, numWorkers, hash, length, sta
   requestMoreWork = requestCallback;
   localSocket = socket;
   const numCombos = end - begin;
-  const workerFrag = Math.ceil(numCombos / numWorkers);
-  // TODO: Need to verify that workerFrag is the correct number
+  const workerFrag = Math.floor(numCombos / numWorkers);
+  const remainder = numCombos % numWorkers; 
   
   for (let i = 0; i < numWorkers; i += 1) {
     const workerBegin = begin + (workerFrag * i);
-    const workerEnd = workerBegin + (workerFrag - 1);
+    let workerEnd = workerBegin + (workerFrag - 1);
+    if (i === numWorkers - 1) workerEnd += remainder;
     const id = i;
     console.log('Worker id:', id, 'workerBegin:', workerBegin, 'workerEnd:', workerEnd);
 
@@ -31,7 +32,7 @@ function startWorkers(passwordCracked, begin, end, numWorkers, hash, length, sta
       workerArr.push(worker);
     }
 
-    worker.postMessage({ cmd: 'start', hash, id, workerBegin, workerEnd, length});
+    worker.postMessage({ cmd: 'start', hash, id, workerBegin, workerEnd, length });
   }
 }
 
