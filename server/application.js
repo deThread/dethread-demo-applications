@@ -10,7 +10,7 @@ function socketConnection(io) {
 
     // Add event handlers to socket
     socket.on('claim-master', () => {
-      console.log('master selected. Socket id: ', socket.id)
+      console.log(socket.id, 'claim master');
       socket.ready = true;
       state.activeSocketCount += 1; // Note that the activeWorkerCount will not include the master's web workers until 'start-decryption'
       state.master = socket;
@@ -18,7 +18,7 @@ function socketConnection(io) {
       socket.broadcast.emit('master-claimed', { globalConnections: state.activeSocketCount });
       
       socket.on('disconnect', () => {
-        console.log('master disconnected');
+        console.log(socket.id, 'master disconnected');
         socket.broadcast.emit('master-disconnected');
         state = initState();
       })
@@ -47,18 +47,38 @@ function socketConnection(io) {
       startDecryption(data);
     });
 
+    socket.on('request-more-work', () => {
+      console.log(socket.id, 'requested more work')
+      distributeWork(socket);
+    });
+
     socket.on('password-cracked', (data) => {
       console.log('password-cracked', data);
       state.clearText = data.clearText;
       state.duration = data.duration;
       socket.broadcast.emit('password-found', data);
       socket.disconnect();
+      initState();
     });
 
-    socket.on('disconnect', ()=> {
+    socket.on('disconnect', () => {
+      if (!state.calculating || socket.id === state.master.id) return;
+
+      // Update state counts
       state.activeWorkerCount -= socket.workers;
       state.activeSocketCount -= 1;
+
+      // Store the incompleted task load in the redistribution pool
+      const task = { begin: socket.begin, end: socket.end };
+      state.redistributeQueue.push(task);
+      console.log(socket.id, 'disconnected. queue:', state.redistributeQueue);
+
+      // Call any available sockets from the socketPool
+      if (state.socketPool.length) distributeWork(state.socketPool.shift());
+
       socket.broadcast.emit('client-disconnect', { globalWorkers : state.activeWorkerCount, globalConnections : state.activeSocketCount });
+
+      delete state.sockets[socket.id];
     });
   });
 }
@@ -79,6 +99,7 @@ function initState() {
     clearText: undefined,
     duration: undefined,
     sockets: {},
+    socketPool: [],
     activeSocketCount: 0, // Clients become 'active/ready' when they submit the # of workers to use
     activeWorkerCount: 0,
     master: undefined,
@@ -113,25 +134,62 @@ function initiateWork() {
 
 function distributeWork(socket) {
   const clientCombos = state.workerFrag * socket.workers;
-  const begin = state.taskIndex * state.workerFrag;
-  const end = (begin + clientCombos) - 1;
+  var begin;
+  var end;
 
-  if (end >= state.globalNumCombos) end = state.globalNumCombos - 1;
+  if (state.redistributeQueue.length === 0) {
+    begin = state.taskIndex * state.workerFrag;
+    end = (begin + clientCombos) - 1;
+  } else {
+    // If there are tasks in the redistribute queue, deploy from the queue
+    const task = state.redistributeQueue.pop();
+    begin = task.begin;
+    end = (begin + clientCombos) - 1;
 
-  state.taskIndex += socket.workers;
+    // If the task in the redistribute queue contains work for more workers than the
+    // requesting socket, store the remaining work back in the queue
+    const remainder = ((task.end - task.begin) + 1) - clientCombos;
 
-  const data = {
-    startTime: state.startTime,
-    length: state.length,
-    globalNumCombos: state.globalNumCombos,
-    globalConnections: state.activeSocketCount,
-    globalWorkers: state.activeWorkerCount,
-    hash: state.hash,
-    begin,
-    end,
-  };
+    if (remainder > 0) {
+      const newTask = { begin: task.end - remainder, end: task.end };
+      state.redistributeQueue.push(newTask);
+    }
+  }
 
-  socket.emit('start-work', data);
+  socket.begin = begin;
+  socket.end = end;
+
+  // Distribute work until all tasks are completed.
+  // If all tasks are complete, store the socket in the socket pool, in case a node disconnects
+  var data;
+  if (begin >= state.globalNumCombos) {
+    data = {
+      globalNumCombos: state.globalNumCombos,
+      globalConnections: state.activeSocketCount,
+      globalWorkers: state.activeWorkerCount,
+      hash: state.hash,
+    };
+
+    socket.emit('no-available-tasks', data);
+    state.socketPool.push(socket);
+  } else {
+    if (end >= state.globalNumCombos) end = state.globalNumCombos - 1;
+
+    state.taskIndex += socket.workers;
+
+    data = {
+      startTime: state.startTime,
+      length: state.length,
+      globalNumCombos: state.globalNumCombos,
+      globalConnections: state.activeSocketCount,
+      globalWorkers: state.activeWorkerCount,
+      hash: state.hash,
+      begin,
+      end,
+    };
+
+    socket.emit('start-work', data);
+  }
 }
 
 module.exports = socketConnection;
