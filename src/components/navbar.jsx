@@ -14,7 +14,6 @@ class Navbar extends Component{
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <a className="navbar-brand" href="#"><img alt="Brand" src="http://pokemon3d.net/wiki/images/8/87/Pok%C3%A9_Ball.png" /></a>
             </div>
             <div id="navbar" className="navbar-collapse collapse">
               <ul className="nav navbar-nav navbar-right">
