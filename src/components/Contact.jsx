@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { terminateAllWorkers } from './PerfInputs';
+import { terminateAllWorkers } from '../workerController';
 import { disconnectSocket } from '../Socket';
 
 class Contact extends Component {

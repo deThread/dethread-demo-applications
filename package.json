@@ -1,7 +1,7 @@
 {
-  "name": "distributed-computing-for-teams",
+  "name": "DeThread",
   "version": "1.0.0",
-  "description": "distribute computing",
+  "description": "An application library for distributed computing with JavaScript, WebSockets, and web workers in the browser.",
   "main": "index.js",
   "repository": "https://github.com/dethread/dethread",
   "scripts": {
