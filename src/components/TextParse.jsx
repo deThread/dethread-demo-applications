@@ -7,6 +7,7 @@ class TextParse extends Component{
 	constructor(){
     super();
     this.state = {}
+    this.parseTextData = this.parseTextData.bind(this);
   }
   componentDidMount(){
     socket = initSocket(io);
@@ -15,7 +16,7 @@ class TextParse extends Component{
       socket.emit('joinTextParse');
     })
     socket.on('sendBookString', (data) => {
-      console.log(`This is inside text parse, book data is : ${data}`)
+      this.parseTextData(data);
     })
   }
   parseTextData(bookString){
@@ -24,6 +25,8 @@ class TextParse extends Component{
     for (var word of splitBook){
        wordFrequency[word] ? wordFrequency[word] += 1 : wordFrequency[word] = 1;
      }
+     console.dir(`This is inside text parse, book data frequency is : ${JSON.stringify(wordFrequency)}`)
+     socket.emit('textParseComplete', wordFrequency);
   }
   render(){
     return (

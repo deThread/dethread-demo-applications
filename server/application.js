@@ -88,6 +88,9 @@ function socketConnection(io) {
       var book = textParseController.read();
       socket.emit('sendBookString', book);
     })
+      socket.on('textParseComplete', (frequencyObject) => {
+        console.log('parsing complete, frequency object is : ', frequencyObject)
+      })
   });
 }
 
