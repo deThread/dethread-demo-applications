@@ -26,3 +26,4 @@ const base26Table = {
   o: 'y',
   p: 'z',
 };
+

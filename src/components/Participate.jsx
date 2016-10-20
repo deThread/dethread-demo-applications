@@ -5,7 +5,7 @@ const Participate = function(props) {
 	
 	return (
 			<div className="card well well-lg">
-				<p> Would you like to join a room to compute MD5 hash decrytpion? </p>
+				<p> Would you like to join a room to compute MD5 hash decryption? </p>
 				<button className="partBTN btn btn-primary" onClick={props.startSocketConnection}>Yes</button>
 				<article className="partText">
 				To demonstrate the efficacy of browser side distributed computing, we have hosted an MD5 decryption script.

@@ -15,6 +15,7 @@ class JoinSession extends Component {
 	constructor() {
 		super(); 
 		this.state = {
+			charset: undefined, 
 			userParticipation: false,
 			ready: false,
 			hasMaster: false,
@@ -23,6 +24,7 @@ class JoinSession extends Component {
 			globalConnections: undefined,
 			globalWorkers: undefined,
 			globalNumCombos: undefined,
+			noTasksAvailable: false,
 			clearText: undefined,
 			duration: undefined,
 			length: undefined,
@@ -39,7 +41,10 @@ class JoinSession extends Component {
 		this.chooseWorkerCount = this.chooseWorkerCount.bind(this);
 		this.startMD5Decrypt = this.startMD5Decrypt.bind(this);
 		this.startWork = this.startWork.bind(this);
+		this.requestMoreWork = this.requestMoreWork.bind(this);
 		this.passwordCracked = this.passwordCracked.bind(this);
+		this.selectChar = this.selectChar.bind(this) 
+
 	}
 
 	componentDidMount() {
@@ -49,6 +54,7 @@ class JoinSession extends Component {
 	startSocketConnection() {
 		socket = initSocket(io);
 
+		// Handlers for custom socket events
 		socket.on('client-connected-response', (data) => {
 			this.setState({ hasMaster: data.hasMaster, userParticipation: true });
 		});
@@ -62,11 +68,14 @@ class JoinSession extends Component {
 		});
 
 		socket.on('new-client-ready', (data) => {
-			console.log("data.globalWorkers!!!!!!!!!!", data.globalWorkers);
 			this.setState({ globalConnections: data.globalConnections, globalWorkers: data.globalWorkers });
 		});
 
 		socket.on('start-work', this.startWork);
+
+		socket.on('no-available-tasks', (data) => {
+			this.setState({ ...data, noTasksAvailable: true, calculating: true });
+		});
 
 		socket.on('password-found', (data) => {
 			console.log('password-found', data);
@@ -81,6 +90,11 @@ class JoinSession extends Component {
 			browserHistory.push('MasterDisconnect');
 		});
 
+		socket.on('client-disconnect', (data) => {
+			this.setState({globalConnections: data.globalConnections, globalWorkers: data.globalWorkers});
+		});
+
+		// Handlers for connection events
 		socket.on('connect_error', (e) => {
 		  console.log('connection error', socket.id);
 		});
@@ -93,10 +107,6 @@ class JoinSession extends Component {
 		  console.log('reconnect connection error', socket.id);
 		})
 
-		socket.on('client-disconnect', (data) => {
-			this.setState({globalConnections: data.globalConnections, globalWorkers: data.globalWorkers});
-			console.log("client disconnected ");
-		})
 
 		const optimalWorkers = (navigator.hardwareConcurrency / 2) + 1;
 		this.setState({ optimalWorkers });
@@ -122,47 +132,53 @@ class JoinSession extends Component {
 	}
 
 	startMD5Decrypt() {
-	  console.log('start decryption hash', this.state.hash);
-		if(!this.state.hash || this.state.hash.length !== 32){
-			alert('Please enter a valid hash')
-		} else if (!this.state.length){
-			alert('Please enter a valid length')
-		} else if (!this.state.workers){
+		if (!this.state.hash || this.state.hash.length !== 32) {
+			alert('Please enter a valid hash');
+		} else if (!this.state.length) {
+			alert('Please enter a valid length');
+		} else if (!this.state.workers) {
 			alert('Please enter a valid number of Web Workers');
 		} else {
+			console.log('start decryption hash', this.state.hash);
 	  	socket.emit('start-decryption', { hash: this.state.hash, length: this.state.length, workers: this.state.workers });
 		} 
 	}
+
 	startWork(data) {
 		const newState = {
 			startTime: data.startTime,
 			length: data.length,
 			globalNumCombos: data.globalNumCombos,
+			globalConnections: data.globalConnections,
 			globalWorkers: data.globalWorkers,
 			hash: data.hash,
 			begin: data.begin,
 			end: data.end,
 			calculating: true,
 		};
-		console.log("startWork server", data);
-		startWorkers(this.passwordCracked, data.begin, data.end, this.state.workers, data.hash, data.length, data.startTime);
+
+		startWorkers(this.passwordCracked, data.begin, data.end, this.state.workers, data.hash, data.length, data.startTime, this.requestMoreWork, socket);
 		this.setState(newState);
 	}
 
+	requestMoreWork(socket) {
+		socket.emit('request-more-work');
+	}
+
 	passwordCracked(clearText, duration) {
-		const data = {
-			clearText,
-			duration,
-		};
-		
+		const data = { clearText, duration };
 		socket.emit('password-cracked', data);
 		this.setState(data);
+	}
+
+	selectChar(e) {
+		this.setState({charset: e.target.value});
 	}
 
 	render() {
 		const sessionView = !this.state.userParticipation ? <Participate startSocketConnection={this.startSocketConnection} /> 
 						 : !this.state.hasMaster ? <Host claimMaster={this.claimMaster} /> 
-						 : this.state.isMaster ? <Performance {...this.state} updateSettings={this.updateSettings} startMD5Decrypt={this.startMD5Decrypt} /> 
+						 : this.state.isMaster ? <Performance {...this.state} updateSettings={this.updateSettings} startMD5Decrypt={this.startMD5Decrypt} selectChar={this.selectChar}/> 
 						 : !this.state.calculating || !this.state.ready ? <Pending ready={this.state.ready} optimalWorkers={this.state.optimalWorkers} workers={this.state.workers} updateSettings={this.updateSettings} chooseWorkerCount={this.chooseWorkerCount} globalConnections={this.state.globalConnections} />
 						 : <WorkerProcess {...this.state} />;
 		return (	<div>

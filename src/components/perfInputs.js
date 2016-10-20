@@ -1,23 +1,38 @@
 const workerArr = [];
+let localNumWorkers;
+let failCount = 0;
 let globalStartTime;
 let localPasswordCracked;
+let requestMoreWork;
+let localSocket;
 
-function startWorkers(passwordCracked, begin, end, numWorkers, hash, length, startTime) {
-  localPasswordCracked = passwordCracked;
+function startWorkers(passwordCracked, begin, end, numWorkers, hash, length, startTime, requestCallback, socket) {
+  localNumWorkers = numWorkers;
   globalStartTime = startTime;
+  localPasswordCracked = passwordCracked;
+  requestMoreWork = requestCallback;
+  localSocket = socket;
   const numCombos = end - begin;
-  const workerFrag = Math.ceil(numCombos / numWorkers);
-  // TODO: Need to verify that workerFrag is the correct number
+  const workerFrag = Math.floor(numCombos / numWorkers);
+  const remainder = numCombos % numWorkers; 
   
   for (let i = 0; i < numWorkers; i += 1) {
     const workerBegin = begin + (workerFrag * i);
-    const workerEnd = workerBegin + (workerFrag - 1);
+    let workerEnd = workerBegin + (workerFrag - 1);
+    if (i === numWorkers - 1) workerEnd += remainder;
     const id = i;
-    console.log('Id: ', id, 'workerBegin: ', workerBegin, 'workerEnd :', workerEnd, 'hash', hash);
-    const worker = new Worker('worker.js');
-    workerArr.push(worker);
-    worker.onmessage = handleMessage;
-    worker.postMessage({ cmd: 'start', hash, id, workerBegin, workerEnd, length});
+    console.log('Worker id:', id, 'workerBegin:', workerBegin, 'workerEnd:', workerEnd);
+
+    // Check for and re-use existing workers, if available. Otherwise, create new workers
+    let worker = workerArr[i];
+
+    if (!worker) {
+      worker = new Worker('worker.js');
+      worker.onmessage = handleMessage;
+      workerArr.push(worker);
+    }
+
+    worker.postMessage({ cmd: 'start', hash, id, workerBegin, workerEnd, length });
   }
 }
 
@@ -28,14 +43,22 @@ function handleMessage(e) {
     terminateAllWorkers();
     localPasswordCracked(e.data.clearText, duration);
   }
+
+  if (e.data.cmd === 'fail') {
+    failCount++;
+
+    if (failCount === localNumWorkers) {
+      failCount = 0;
+      requestMoreWork(localSocket);
+    }
+  }
 }
 
 function terminateAllWorkers() {
-  while(workerArr.length) {
-    let worker = workerArr.pop(); 
+  while (workerArr.length) {
+    const worker = workerArr.pop(); 
     worker.terminate();
   }
-  console.log("workerArr Expect", workerArr);
 }
 
 export { startWorkers, terminateAllWorkers };

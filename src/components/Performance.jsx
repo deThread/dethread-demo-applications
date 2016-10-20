@@ -8,20 +8,22 @@ import CharsetDropDown from './CharsetDropDown';
 import Spinner from './Spinner';
 
 class Performance extends Component {
+
   render() {
-    let solved,
-        hideUponSuccess = {};
+    let solved;
+    const hideUponSuccess = {};
     if (this.props.clearText) {
-      solved = <Success clearText={this.props.clearText} duration={this.props.duration}/>
+      solved = <Success clearText={this.props.clearText} duration={this.props.duration} globalConnections={this.props.globalConnections}/>
       hideUponSuccess.display = 'none';
       console.log(hideUponSuccess);
     } else if (this.props.calculating) {
-      console.log("WORKERS in performance!!", this.props.globalWorkers);
       solved = <div><Spinner /><p>Number of contributing web workers: {this.props.globalWorkers}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
     }
 
-    let is = this.props.globalConnections === 1 ? 'is' : 'are';
-    let client = this.props.globalConnections === 1 ? 'client' : 'total clients';
+    const is = this.props.globalConnections === 1 ? 'is' : 'are';
+    const client = this.props.globalConnections === 1 ? 'client' : 'total clients';
+    const noTasksAvailable = (this.props.noTasksAvailable && !this.props.clearText) ? <p>Local tasks are complete, and there are no available tasks from the sever. The current process should end shortly.</p> : '';
+
     return(<div>
               <div className="perfContainer">
                 <div className="card well well-lg">
@@ -30,39 +32,41 @@ class Performance extends Component {
                   <form style={hideUponSuccess} >
                     <h3>Host Settings</h3>
                     <div className="form-group">
-                      <label for="lengthInput">Length of Word</label>
+                      <label htmlFor="lengthInput">Length of Word</label>
                       <LengthInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'length')} />
                     </div>
 
                     <div className="form-group">
-                      <label for="hashInput">Hash</label><br/>
+                      <label htmlFor="hashInput">Hash</label><br/>
                       <a target="_blank" href="http://www.miraclesalad.com/webtools/md5.php">[Hash Generator]</a>
                       <HashInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'hash')} />
                     </div>
 
-                    <div className="form-group">
-                      <label for="charsetDropDown">Charset</label><br/>
-                      <CharsetDropDown className="form-control" />
-                    </div>
+                {/* <div className="form-group">
+                    <label htmlFor="charsetDropDown">Charset</label><br/>
+                    <CharsetDropDown className="form-control" selectChar={this.props.selectChar}/>
+                  </div>
+                  */}
 
                     <h3 className="local-settings">Local Settings</h3>
                     <div className="form-group">
-                      <label for="workerInput">Workers</label>
+                      <label htmlFor="workerInput">Workers</label>
                       <WorkerInput className="form-control" optimalWorkers={this.props.optimalWorkers} updateSettings={this.props.updateSettings.bind(null, 'workers')} />
                       <p className="worker-recommendation">Optimal number of workers for your device: {this.props.optimalWorkers} </p>
                       <p className="worker-recommendation">(Choose 1 worker if you are running other processes)</p>
                     </div>                    
                   </form>
 
+
                   <button style={hideUponSuccess} className="startHash btn btn-danger" 
                     onClick={this.props.startMD5Decrypt}>
                     Start
                   </button><br /><br />
                   {solved}
-                  <p> This problem was solved by {this.props.globalConnections} {client}! </p>
                   <div>
                     There {is} currently {this.props.globalConnections} {client} in the room.
                   </div>
+                  {noTasksAvailable}
                 </div>
             </div>
           </div>
