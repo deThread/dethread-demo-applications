@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "distribute computing",
   "main": "index.js",
-  "repository": "https://github.com/shawn-southwell/Distributed-Computing-for-Teams",
+  "repository": "https://github.com/dethread/dethread",
   "scripts": {
     "startDev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --history-api-fallback",
     "start": "nodemon ./server/server.js",

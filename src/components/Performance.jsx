@@ -17,6 +17,7 @@ class Performance extends Component {
       hideUponSuccess.display = 'none';
       console.log(hideUponSuccess);
     } else if (this.props.calculating) {
+      hideUponSuccess.display = 'none';
       solved = <div><Spinner /><p>Number of contributing web workers: {this.props.globalWorkers}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
     }
 
