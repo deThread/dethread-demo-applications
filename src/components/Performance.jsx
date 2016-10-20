@@ -14,12 +14,10 @@ class Performance extends Component {
     const hideUponSuccess = {};
     if (this.props.clearText) {
       solved = <Success clearText={this.props.clearText} duration={this.props.duration} globalConnections={this.props.globalConnections}/>
-      hideUponSuccess.display = 'none';
-      console.log(hideUponSuccess);
     } else if (this.props.calculating) {
-      hideUponSuccess.display = 'none';
       solved = <div><Spinner /><p>Number of contributing web workers: {this.props.globalWorkers}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
     }
+    this.props.clearText || this.props.calculating ? hideUponSuccess.display = 'none' : hideUponSucess = {};
 
     const is = this.props.globalConnections === 1 ? 'is' : 'are';
     const client = this.props.globalConnections === 1 ? 'client' : 'total clients';
