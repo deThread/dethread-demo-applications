@@ -1,7 +1,7 @@
 {
-  "name": "distributed-computing-for-teams",
+  "name": "DeThread",
   "version": "1.0.0",
-  "description": "distribute computing",
+  "description": "An application library for distributed computing with JavaScript, WebSockets, and web workers in the browser.",
   "main": "index.js",
   "repository": "https://github.com/shawn-southwell/Distributed-Computing-for-Teams",
   "scripts": {
@@ -24,7 +24,7 @@
     "css-loader": "^0.25.0",
     "eslint": "^3.8.1",
     "eslint-config-airbnb": "^12.0.0",
-    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.4.1",
     "extract-text-webpack-plugin": "^1.0.1",
