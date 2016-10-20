@@ -7,7 +7,7 @@ import WorkerProcess from './WorkerProcess';
 import Success from './Success';
 import Host from './Host';
 import { initSocket } from '../Socket';
-import { startWorkers, terminateAllWorkers } from './PerfInputs';
+import { startWorkers, terminateAllWorkers } from '../workerController';
 
 let socket; 
 

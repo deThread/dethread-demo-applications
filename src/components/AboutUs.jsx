@@ -3,7 +3,7 @@ import Motivation from './Motivation';
 import Connection from './Connection';
 import WhyJS from './Whyjs'
 import Footer from './Footer';
-import { terminateAllWorkers } from './PerfInputs';
+import { terminateAllWorkers } from '../workerController';
 import { disconnectSocket } from '../Socket';
 
 class AboutUs extends Component {

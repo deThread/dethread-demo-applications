@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { startWorkers } from './PerfInputs';
+import { startWorkers } from '../workerController';
 
 import Success from './Success';
 import Spinner from './Spinner';
