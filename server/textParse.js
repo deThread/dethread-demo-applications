@@ -5,10 +5,8 @@ var book,
 const textParseController = {
   //read method
   read(){
-    fs.readFile(path.join(__dirname , 'alg.txt'), 'utf-8', (err,res) => {
-      !err ?  book = res : console.error(err);
-      this.parse(book);
-    })
+    book = fs.readFileSync(path.join(__dirname , 'alg.txt'), 'utf-8');
+    return book.toLowerCase();
   },
   //parse and count read data
   parse(){
@@ -22,4 +20,6 @@ const textParseController = {
   //store results
 }
 
-textParseController.read();
+// textParseController.read();
+
+module.exports = textParseController;

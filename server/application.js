@@ -1,3 +1,5 @@
+const textParseController = require('./textParse');
+
 function socketConnection(io) {
   io.on('connection', (socket) => {
     socket.on('joinMD5', () => {
@@ -82,7 +84,9 @@ function socketConnection(io) {
       });
     });
     socket.on('joinTextParse', () => {
-      
+      console.log('Woah, youre about to parse some text. Cool.');
+      var book = textParseController.read();
+      socket.emit('sendBookString', book);
     })
   });
 }

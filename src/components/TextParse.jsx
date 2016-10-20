@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { initSocket } from '../Socket';
 
-let socket;
+let socket,
+    wordFrequency = {};
 class TextParse extends Component{
 	constructor(){
     super();
@@ -13,6 +14,16 @@ class TextParse extends Component{
       console.log('connected');
       socket.emit('joinTextParse');
     })
+    socket.on('sendBookString', (data) => {
+      console.log(`This is inside text parse, book data is : ${data}`)
+    })
+  }
+  parseTextData(bookString){
+    if (!bookString.length) return;
+    var splitBook = bookString.split(/\b\W+\b/);
+    for (var word of splitBook){
+       wordFrequency[word] ? wordFrequency[word] += 1 : wordFrequency[word] = 1;
+     }
   }
   render(){
     return (
