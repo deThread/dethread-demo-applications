@@ -15,7 +15,6 @@ class JoinSession extends Component {
 	constructor() {
 		super(); 
 		this.state = {
-			charset: undefined, 
 			userParticipation: false,
 			ready: false,
 			hasMaster: false,
@@ -53,7 +52,9 @@ class JoinSession extends Component {
 
 	startSocketConnection() {
 		socket = initSocket(io);
-
+		socket.on('connect', () => {
+			socket.emit('joinMD5');
+		})
 		// Handlers for custom socket events
 		socket.on('client-connected-response', (data) => {
 			this.setState({ hasMaster: data.hasMaster, userParticipation: true });

@@ -20,12 +20,14 @@ class Navbar extends Component{
                 <li><NavLink to="/AboutUs">About Us</NavLink></li>
                 <li><NavLink to="/Contact">Contact</NavLink></li>
                 <li><NavLink to="/JoinSession">Join Session</NavLink></li>
+                <li><NavLink to="/TextParse">Text Parse</NavLink></li>
                 <li className="dropdown">
                 
                 <ul className="dropdown-menu">
                  <li><NavLink to="/AboutUs">About Us</NavLink></li>
                  <li><NavLink to="/Contact">Contact</NavLink></li>
                  <li><NavLink to="/JoinSession">Join Session</NavLink></li>
+                 <li><NavLink to="/TextParse">Text Parse</NavLink></li>
                   <li role="separator" className="divider"></li>
                   <li className="dropdown-header">Nav header</li>
                   <li><a href="#">Separated link</a></li>

@@ -17,7 +17,7 @@ class Performance extends Component {
     } else if (this.props.calculating) {
       solved = <div><Spinner /><p>Number of contributing web workers: {this.props.globalWorkers}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
     }
-    this.props.clearText || this.props.calculating ? hideUponSuccess.display = 'none' : hideUponSucess = {};
+    if (this.props.clearText || this.props.calculating) hideUponSuccess.display = 'none';
 
     const is = this.props.globalConnections === 1 ? 'is' : 'are';
     const client = this.props.globalConnections === 1 ? 'client' : 'total clients';
