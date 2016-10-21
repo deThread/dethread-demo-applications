@@ -1,85 +1,97 @@
+const textParseController = require('./textParse');
+
 function socketConnection(io) {
   io.on('connection', (socket) => {
+    socket.on('joinMD5', () => {
+      // Initialize connection info
+      console.log(socket.id, 'connected');
+      socket.ready = false;
+      state.sockets[socket.id] = socket;
 
-    // Initialize connection info
-    console.log(socket.id, 'connected');
-    socket.ready = false;
-    state.sockets[socket.id] = socket;
+      socket.emit('client-connected-response', { hasMaster: !!state.master, numConnections: state.activeSocketCount });
 
-    socket.emit('client-connected-response', { hasMaster: !!state.master, numConnections: state.activeSocketCount });
+      // Add event handlers to socket
+      socket.on('claim-master', () => {
+        console.log(socket.id, 'claim master');
+        socket.ready = true;
+        state.activeSocketCount += 1; // Note that the activeWorkerCount will not include the master's web workers until 'start-decryption'
+        state.master = socket;
+        socket.emit('claim-master-response', { globalConnections: state.activeSocketCount });
+        socket.broadcast.emit('master-claimed', { globalConnections: state.activeSocketCount });
 
-    // Add event handlers to socket
-    socket.on('claim-master', () => {
-      console.log(socket.id, 'claim master');
-      socket.ready = true;
-      state.activeSocketCount += 1; // Note that the activeWorkerCount will not include the master's web workers until 'start-decryption'
-      state.master = socket;
-      socket.emit('claim-master-response', { globalConnections: state.activeSocketCount });
-      socket.broadcast.emit('master-claimed', { globalConnections: state.activeSocketCount });
-      
-      socket.on('disconnect', () => {
-        console.log(socket.id, 'master disconnected');
-        socket.broadcast.emit('master-disconnected');
-        state = initState();
-      })
-    });
+        socket.on('disconnect', () => {
+          console.log(socket.id, 'master disconnected');
+          socket.broadcast.emit('master-disconnected');
+          state = initState();
+        })
+      });
 
-    socket.on('client-ready', (data) => {
-      socket.ready = true;
-      socket.workers = data.workers;
-      state.activeSocketCount += 1;
-      state.activeWorkerCount += data.workers;
+      socket.on('client-ready', (data) => {
+        socket.ready = true;
+        socket.workers = data.workers;
+        state.activeSocketCount += 1;
+        state.activeWorkerCount += data.workers;
 
-      const response = { globalConnections: state.activeSocketCount, globalWorkers: state.activeWorkerCount };
+        const response = { globalConnections: state.activeSocketCount, globalWorkers: state.activeWorkerCount };
 
-      if (state.calculating) {
+        if (state.calculating) {
+          distributeWork(socket);
+          socket.broadcast.emit('new-client-ready', response);
+        } else {
+          io.emit('new-client-ready', response);
+        }
+      });
+
+      socket.on('start-decryption', (data) => {
+        console.log('start decryption', data);
+        socket.workers = data.workers;
+        state.activeWorkerCount += data.workers;
+        startDecryption(data);
+      });
+
+      socket.on('request-more-work', () => {
+        console.log(socket.id, 'requested more work')
         distributeWork(socket);
-        socket.broadcast.emit('new-client-ready', response);
-      } else {
-        io.emit('new-client-ready', response);
-      }
+      });
+
+      socket.on('password-cracked', (data) => {
+        console.log('password-cracked', data);
+        state.clearText = data.clearText;
+        state.duration = data.duration;
+        socket.broadcast.emit('password-found', data);
+        socket.disconnect();
+        initState();
+      });
+
+      socket.on('disconnect', () => {
+        if (!state.calculating || socket.id === state.master.id) return;
+
+        // Update state counts
+        state.activeWorkerCount -= socket.workers;
+        state.activeSocketCount -= 1;
+
+        // Store the incompleted task load in the redistribution pool
+        const task = { begin: socket.begin, end: socket.end };
+        state.redistributeQueue.push(task);
+        console.log(socket.id, 'disconnected. queue:', state.redistributeQueue);
+
+        // Call any available sockets from the socketPool
+        if (state.socketPool.length) distributeWork(state.socketPool.shift());
+
+        socket.broadcast.emit('client-disconnect', { globalWorkers: state.activeWorkerCount, globalConnections: state.activeSocketCount });
+
+        delete state.sockets[socket.id];
+      });
     });
-
-    socket.on('start-decryption', (data) => {
-      console.log('start decryption', data);
-      socket.workers = data.workers;
-      state.activeWorkerCount += data.workers;
-      startDecryption(data);
-    });
-
-    socket.on('request-more-work', () => {
-      console.log(socket.id, 'requested more work')
-      distributeWork(socket);
-    });
-
-    socket.on('password-cracked', (data) => {
-      console.log('password-cracked', data);
-      state.clearText = data.clearText;
-      state.duration = data.duration;
-      socket.broadcast.emit('password-found', data);
-      socket.disconnect();
-      initState();
-    });
-
-    socket.on('disconnect', () => {
-      if (!state.calculating || socket.id === state.master.id) return;
-
-      // Update state counts
-      state.activeWorkerCount -= socket.workers;
-      state.activeSocketCount -= 1;
-
-      // Store the incompleted task load in the redistribution pool
-      const task = { begin: socket.begin, end: socket.end };
-      state.redistributeQueue.push(task);
-      console.log(socket.id, 'disconnected. queue:', state.redistributeQueue);
-
-      // Call any available sockets from the socketPool
-      if (state.socketPool.length) distributeWork(state.socketPool.shift());
-
-      socket.broadcast.emit('client-disconnect', { globalWorkers : state.activeWorkerCount, globalConnections : state.activeSocketCount });
-
-      delete state.sockets[socket.id];
-    });
+    socket.on('joinTextParse', () => {
+      console.log('Woah, youre about to parse some text. Cool.');
+      var bookFrag = textParseController.distribute();
+      socket.emit('sendBookFragString', bookFrag);
+    })
+    socket.on('textParseComplete', (frequencyObject) => {
+      var data = textParseController.aggregateData(frequencyObject);
+      if (data === true) io.emit('processComplete');
+    })
   });
 }
 

@@ -9,6 +9,7 @@ import Performance from './components/Performance';
 import AboutUs from './components/AboutUs';
 import JoinSession from './components/JoinSession';
 import MasterDisconnect from './components/MasterDisconnect';
+import TextParse from './components/TextParse';
 //style
 import stylesheet from './css/style.scss';
 
@@ -20,6 +21,7 @@ render((
     <Route path="AboutUs" component={AboutUs} />
     <Route path="Contact" component={Contact} />
     <Route path="JoinSession" component={JoinSession} />
+    <Route path="TextParse" component={TextParse} />
     <Route path="MasterDisconnect" component={MasterDisconnect} />
     </Route>
   </Router>),document.getElementById('root'));
