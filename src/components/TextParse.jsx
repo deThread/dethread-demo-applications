@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { initSocket } from '../Socket';
 import Spinner from './Spinner';
-
+let start;
 let socket,
     wordFrequency = {};
 class TextParse extends Component{
@@ -13,13 +13,14 @@ class TextParse extends Component{
   componentDidMount(){
     socket = initSocket(io);
     socket.on('connect', () => { 
-      console.log('connected');
+      console.log('connected', socket.id);
       socket.emit('joinTextParse');
     })
     socket.on('sendBookFragString', (data) => {
       this.parseTextData(data);
     })
-    socket.on('processComplete', () => {
+    socket.on('processComplete', (data) => {
+      console.log('process completed in ', data, ' seconds.');
       this.setState({complete : true})
       socket.disconnect();
     })

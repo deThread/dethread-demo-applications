@@ -89,9 +89,9 @@ function socketConnection(io) {
       socket.emit('sendBookFragString', bookFrag);
     })
     socket.on('textParseComplete', (frequencyObject) => {
-      var success = textParseController.aggregateData(frequencyObject);
-      if (success === true) {
-        io.emit('processComplete');
+      var duration = textParseController.aggregateData(frequencyObject);
+      if (duration) {
+        io.emit('processComplete',duration);
       } else {
         var bookFrag = textParseController.distribute();
         socket.emit('sendBookFragString', bookFrag);
