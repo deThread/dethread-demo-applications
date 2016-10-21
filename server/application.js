@@ -18,7 +18,7 @@ function socketConnection(io) {
         state.master = socket;
         socket.emit('claim-master-response', { globalConnections: state.activeSocketCount });
         socket.broadcast.emit('master-claimed', { globalConnections: state.activeSocketCount });
-        
+
         socket.on('disconnect', () => {
           console.log(socket.id, 'master disconnected');
           socket.broadcast.emit('master-disconnected');
@@ -78,19 +78,20 @@ function socketConnection(io) {
         // Call any available sockets from the socketPool
         if (state.socketPool.length) distributeWork(state.socketPool.shift());
 
-        socket.broadcast.emit('client-disconnect', { globalWorkers : state.activeWorkerCount, globalConnections : state.activeSocketCount });
+        socket.broadcast.emit('client-disconnect', { globalWorkers: state.activeWorkerCount, globalConnections: state.activeSocketCount });
 
         delete state.sockets[socket.id];
       });
     });
     socket.on('joinTextParse', () => {
       console.log('Woah, youre about to parse some text. Cool.');
-      var book = textParseController.read();
-      socket.emit('sendBookString', book);
+      var bookFrag = textParseController.distribute();
+      socket.emit('sendBookFragString', bookFrag);
     })
-      socket.on('textParseComplete', (frequencyObject) => {
-        console.log('parsing complete, frequency object is : ', frequencyObject)
-      })
+    socket.on('textParseComplete', (frequencyObject) => {
+      var data = textParseController.aggregateData(frequencyObject);
+      if (data === true) io.emit('processComplete');
+    })
   });
 }
 

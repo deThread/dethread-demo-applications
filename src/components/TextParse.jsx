@@ -15,13 +15,17 @@ class TextParse extends Component{
       console.log('connected');
       socket.emit('joinTextParse');
     })
-    socket.on('sendBookString', (data) => {
+    socket.on('sendBookFragString', (data) => {
       this.parseTextData(data);
     })
+    socket.on('processComplete', () => {
+      console.log('DONE!');
+      socket.disconnect();
+    })
   }
-  parseTextData(bookString){
-    if (!bookString.length) return;
-    var splitBook = bookString.split(/\b\W+\b/);
+  parseTextData(bookFragString){
+    console.log('textparse',bookFragString.length,bookFragString.substring(0,25))
+    var splitBook = bookFragString.split(/\b\W+\b/);
     for (var word of splitBook){
        wordFrequency[word] ? wordFrequency[word] += 1 : wordFrequency[word] = 1;
      }
