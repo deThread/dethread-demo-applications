@@ -89,8 +89,13 @@ function socketConnection(io) {
       socket.emit('sendBookFragString', bookFrag);
     })
     socket.on('textParseComplete', (frequencyObject) => {
-      var data = textParseController.aggregateData(frequencyObject);
-      if (data === true) io.emit('processComplete');
+      var success = textParseController.aggregateData(frequencyObject);
+      if (success === true) {
+        io.emit('processComplete');
+      } else {
+        var bookFrag = textParseController.distribute();
+        socket.emit('sendBookFragString', bookFrag);
+      }
     })
   });
 }

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { initSocket } from '../Socket';
+import Spinner from './Spinner';
 
 let socket,
     wordFrequency = {};
 class TextParse extends Component{
 	constructor(){
     super();
-    this.state = {}
+    this.state = {complete : false}
     this.parseTextData = this.parseTextData.bind(this);
   }
   componentDidMount(){
@@ -19,11 +20,12 @@ class TextParse extends Component{
       this.parseTextData(data);
     })
     socket.on('processComplete', () => {
-      console.log('DONE!');
+      this.setState({complete : true})
       socket.disconnect();
     })
   }
   parseTextData(bookFragString){
+    if (bookFragString === false) return; 
     console.log('textparse',bookFragString.length,bookFragString.substring(0,25))
     var splitBook = bookFragString.split(/\b\W+\b/);
     for (var word of splitBook){
@@ -33,10 +35,14 @@ class TextParse extends Component{
      socket.emit('textParseComplete', wordFrequency);
   }
   render(){
+    let successMessage = this.state.complete ? <div>Finished text parsing</div> : '';
+    let spinner = this.state.complete ? '' : <Spinner />
     return (
         <div className="card well well-lg">
           <article>
-            This is an example of map reduce paradigm for parsing large text file. 
+            This is an example of map reduce paradigm for parsing large text file.
+            {spinner}
+            {successMessage}
           </article>
         </div>
     )

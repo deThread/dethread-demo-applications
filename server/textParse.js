@@ -18,7 +18,7 @@ setState();
 const textParseController = {
   distribute() {
     if (!bookFragQueue.length) return false;
-    var bookFrag = bookFragQueue.shift();
+    var bookFrag = bookFragQueue.pop();
     console.log('the next frag is : ', bookFrag.slice(0, 20))
     return bookFrag;
   },
