@@ -1,31 +1,44 @@
 'use strict'
 const fs = require('fs');
 const path = require('path')
-
-var book = fs.readFileSync(path.join(__dirname, 'alg.txt'), 'utf-8');
+var start;
+var book = fs.readFileSync(path.join(__dirname, 'algLG.txt'), 'utf-8');
 var freqResults;
 var bookFragQueue;
-var mid;
-var hasRan;
+var hasFirstResponseOccurred;
+var calculating = false;
 function setState() {
   freqResults = {};
-  mid = Math.floor(book.length / 2);
-  hasRan = false;
+  hasFirstResponseOccurred = false;
+  calculating = false;
   bookFragQueue = [];
-  bookFragQueue.push(book.slice(0, mid), book.slice(mid));
+  chunkBookData();
+}
+function chunkBookData(){
+  const fragSize = Math.floor(book.length / 30);
+  let index = 0;
+  while(index < 30){
+    let begin = index * fragSize;
+    let end = begin + fragSize - 1;
+    if (index === 29) end = book.length - 1;
+    bookFragQueue.push(book.slice(begin,end));
+    index++;
+  }
 }
 setState();
 const textParseController = {
   distribute() {
     if (!bookFragQueue.length) return false;
-    var bookFrag = bookFragQueue.shift();
+    if (!calculating) start = Date.now();
+    calculating = true;
+    var bookFrag = bookFragQueue.pop();
     console.log('the next frag is : ', bookFrag.slice(0, 20))
     return bookFrag;
   },
   aggregateData(obj) {
-    if (!hasRan) {
+    if (!hasFirstResponseOccurred) {
       freqResults = obj;
-      hasRan = true;
+      hasFirstResponseOccurred = true;
       console.log('first time calling agg');
     } else {
       console.log('inside else if, inside agg data');
@@ -35,7 +48,7 @@ const textParseController = {
       if (bookFragQueue.length === 0) {
         console.log('work is complete, from server w/ love')
         setState();
-        return true;
+        return (Date.now() - start) / 1000;
       }
     }
   }
