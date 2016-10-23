@@ -1,3 +1,4 @@
+'use strict'
 const textParseController = require('./textParse');
 
 function socketConnection(io) {
@@ -85,17 +86,23 @@ function socketConnection(io) {
     });
     socket.on('joinTextParse', () => {
       console.log('Woah, youre about to parse some text. Cool.');
-      var bookFrag = textParseController.distribute();
-      socket.emit('sendBookFragString', bookFrag);
+      var fragData = textParseController.distribute();
+      socket.i = fragData.i;
+      fragData.bookFrag ? console.log('inside joinTextParse',fragData.bookFrag.length) : console.log('inside joinTextParse',fragData.bookFrag);
+      socket.emit('sendBookFragString', fragData.bookFrag);
     })
     socket.on('textParseComplete', (frequencyObject) => {
       var duration = textParseController.aggregateData(frequencyObject);
       if (duration) {
         io.emit('processComplete',duration);
       } else {
-        var bookFrag = textParseController.distribute();
-        socket.emit('sendBookFragString', bookFrag);
+        var fragData = textParseController.distribute();
+        socket.i = fragData.i;
+        socket.emit('sendBookFragString', fragData.bookFrag);
       }
+    })
+    socket.on('disconnect', () => {
+      textParseController.queueFailedTasks(socket.i);
     })
   });
 }
