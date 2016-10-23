@@ -26,8 +26,8 @@ class TextParse extends Component{
     })
   }
   parseTextData(bookFragString){
-    if (bookFragString === false) return; 
-    console.log('textparse',bookFragString.length,bookFragString.substring(0,25))
+    if (!bookFragString) return; 
+    (bookFragString) ?  console.log('textparse',bookFragString.length) : console.log(bookFragString);
     var splitBook = bookFragString.split(/\b\W+\b/);
     for (var word of splitBook){
        wordFrequency[word] ? wordFrequency[word] += 1 : wordFrequency[word] = 1;
