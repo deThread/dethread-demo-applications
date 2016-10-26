@@ -4,7 +4,7 @@ const Footer = function() {
   return (<div>
             <footer className="footer">
               <div className="container">
-                <span className="text-muted">Connect with us on Github-</span>
+                <span className="text-muted"></span>
               </div>
             </footer>
           </div>
