@@ -7,7 +7,7 @@
   "scripts": {
     "startDev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --history-api-fallback",
     "start": "nodemon ./server/server.js",
-    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
+    "test": "mocha --reporter nyan --compilers js:babel-core/register --require ./test/.setup.js --recursive ./test",
     "enzyme": "mocha test/.setup.js test/test.js",
     "test:watch": "npm run test -- --watch",
     "test-routes": "mocha --timeout 20000 tests/",
