@@ -7,7 +7,7 @@ import WorkerProcess from './WorkerProcess';
 import Success from './Success';
 import Host from './Host';
 import { initSocket } from '../Socket';
-import { startWorkers, terminateAllWorkers } from './PerfInputs';
+import { startWorkers, terminateAllWorkers } from '../workerController';
 
 let socket; 
 
@@ -118,11 +118,9 @@ class JoinSession extends Component {
 	}
 
 	updateSettings(name, e) {
-	  const toChange = name;
-	  const stateVal = this.state[toChange];
 	  const stateUpdate = {};
-	  if (name === 'workers' || name === 'length' ) stateUpdate[toChange] = Number(e.target.value);
-	  else stateUpdate[toChange] = e.target.value;
+	  if (name === 'workers' || name === 'length' ) stateUpdate[name] = Number(e.target.value);
+	  else stateUpdate[name] = e.target.value;
 	  this.setState(stateUpdate);   
 	}
 
