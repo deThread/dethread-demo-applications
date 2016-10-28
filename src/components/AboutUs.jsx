@@ -19,15 +19,16 @@ class AboutUs extends Component {
 
           <div className="jumbotron">
             <div className="container">
-              <h1>DeThread</h1>
-              <p className="subTitle">A platform for making Distributed Computing easier, all in the browser.</p>
+              <img className="center-block img-responsive" src='src/images/dethreadBlack.png'/>
+                <br></br>
+                <p>A platform for making Distributed Computing easier, all in the browser.</p>
             </div>
           </div>
 
           <div className="container">
             <section>
               <div className="text-center" id="CSS">
-                <h2> What is DeThread? </h2> 
+                <h2> What is deThread? </h2> 
                   <p>DeThread is an place where users can use idle computer time to cure diseases,
                   study the environment, and participate in cutting edge, scientific research.
                   When you find a project you would like to support, simply click the link, and your computer will become
