@@ -65,8 +65,9 @@ describe("Performance Input Fields", function () {
   const minProps = {
     updateSettings : () => {},
     optimalWorkers : 3,
-    startMD5Decrypt : () => {}
+    startMD5Decrypt : () => {inc++;}
   };
+  let inc = 0;
   
   it('doesn\'t explode upon render', () => {
     const wrapper = shallow(<Performance {...minProps}/>);
@@ -77,7 +78,10 @@ describe("Performance Input Fields", function () {
     expect(wrapper.find('.form-control')).to.have.length(3);
   })
   it('should fire start function upon button click', () => {
+    expect(inc).to.equal(0);
     const wrapper = shallow(<Performance {...minProps}/>);
+    wrapper.find('button').simulate('click');
+    expect(inc).to.equal(1);
   })
 })
 
