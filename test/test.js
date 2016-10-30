@@ -8,30 +8,20 @@ import JoinSession from '../src/components/JoinSession';
 import Performance from '../src/components/Performance';
 import WorkerInput from '../src/components/workerInput';
 import LengthInput from '../src/components/lengthInput';
+import NavLink from '../src/components/NavLink';
 
-
-// 			userParticipation: false,
-// 			ready: false,
-// 			hasMaster: false,
-// 			isMaster: false,
-// 			calculating: false,
-// 			globalConnections: undefined,
-// 			globalWorkers: undefined,
-// 			globalNumCombos: undefined,
-// 			noTasksAvailable: false,
-// 			clearText: undefined,
-// 			duration: undefined,
-// 			length: undefined,
-// 			workers: undefined,
-// 			optimalWorkers: undefined,
-// 			hash: undefined,
-// 			begin: undefined,
-// 			end: undefined,
 describe("Navbar", function () {
   it("contains one nav tag", function () {
     const wrapper = mount(<Navbar />);
     expect(wrapper.find('nav')).to.have.length(1);
   });
+  it("all navlinks should direct to correct page", () => {
+    const wrapper = shallow(<Navbar />);
+    const links = ['/AboutUs', '/Contact', '/JoinSession'];
+    expect(wrapper.find('NavLink').forEach((node) => {
+      links.indexOf(node.prop('to') !== -1);
+    }))
+  })
 });
 describe("JoinSession", function () {
   beforeEach(() => {
@@ -71,9 +61,23 @@ describe("AboutUs", function () {
   });
 })
 
-describe("Join Session / Performance Input Fields", function () {
-  it('renders spinner when calculating', () => {
-    const wrapper = shallow(<Performance calculating={true}/>);
+describe("Performance Input Fields", function () {
+  const minProps = {
+    updateSettings : () => {},
+    optimalWorkers : 3,
+    startMD5Decrypt : () => {}
+  };
+  
+  it('doesn\'t explode upon render', () => {
+    const wrapper = shallow(<Performance {...minProps}/>);
+    expect((wrapper).length).to.equal(1);
+  })
+  it('should contain three input fields', () => {
+    const wrapper = shallow(<Performance {...minProps}/>);
+    expect(wrapper.find('.form-control')).to.have.length(3);
+  })
+  it('should fire start function upon button click', () => {
+    const wrapper = shallow(<Performance {...minProps}/>);
   })
 })
 
