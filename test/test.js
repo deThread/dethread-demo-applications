@@ -56,15 +56,6 @@ describe("Join Session", function(){
     expect(wrapper.find(Success)).to.have.length(1);
   });
 
-  it('should have an initial email state', function () {
-    const wrapper = mount(<JoinSession />);
-    expect(wrapper.state().email).to.equal('someone@example.com');
-  });
-
-  it('should have an initial src state', function () {
-    const wrapper = mount(<JoinSession />);
-    expect(wrapper.state().src).to.equal('http://placehold.it/200x200');
-  })
 });
 
 describe("Performance", function(){

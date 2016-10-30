@@ -14,12 +14,13 @@ class Navbar extends Component{
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
+              <a className="navbar-brand" href="#">deThread</a>
             </div>
             <div id="navbar" className="navbar-collapse collapse">
               <ul className="nav navbar-nav navbar-right">
-                <li><NavLink to="/AboutUs">About Us</NavLink></li>
+                <li><NavLink to="/AboutUs">Home</NavLink></li>
                 <li><NavLink to="/Contact">Contact</NavLink></li>
-                <li><NavLink to="/JoinSession">Join Session</NavLink></li>
+                <li><NavLink to="/JoinSession">Join Demo</NavLink></li>
                 <li className="dropdown">
                 
                 <ul className="dropdown-menu">

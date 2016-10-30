@@ -4,7 +4,6 @@ import Success from './Success';
 import WorkerInput from './WorkerInput';
 import HashInput from './HashInput';
 import LengthInput from './LengthInput';
-import CharsetDropDown from './CharsetDropDown';
 import Spinner from './Spinner';
 
 class Performance extends Component {
@@ -26,7 +25,7 @@ class Performance extends Component {
     return(<div>
               <div className="perfContainer">
                 <div className="card well well-lg">
-                  <h2> MD5 Hash Decryption </h2><br />
+                  <h2> MD5 Hash Decryption </h2><br/>
 
                   <form style={hideUponSuccess} >
                     <h3>Host Settings</h3>
@@ -37,8 +36,8 @@ class Performance extends Component {
 
                     <div className="form-group">
                       <label htmlFor="hashInput">Hash</label><br/>
-                      <a target="_blank" href="http://www.miraclesalad.com/webtools/md5.php">[Hash Generator]</a>
-                      <HashInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'hash')} />
+                      <a target="_blank" href="http://www.miraclesalad.com/webtools/md5.php">[Hash Generator <em>a-z ONLY </em>]</a>
+                      <HashInput className="form-control inputHash" updateSettings={this.props.updateSettings.bind(null, 'hash')} />
                     </div>
 
                 {/* <div className="form-group">
@@ -55,8 +54,6 @@ class Performance extends Component {
                       <p className="worker-recommendation">(Choose 1 worker if you are running other processes)</p>
                     </div>                    
                   </form>
-
-
                   <button style={hideUponSuccess} className="startHash btn btn-danger" 
                     onClick={this.props.startMD5Decrypt}>
                     Start

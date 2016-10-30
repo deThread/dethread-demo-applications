@@ -20,9 +20,6 @@ h1, h2 {
   margin-top: -20px;
   height: 300px; }
 
-.subTitle {
-  text-align: center; }
-
 .section1 {
   height: 500px;
   margin-top: -2.2em;
@@ -35,7 +32,11 @@ h1, h2 {
   padding-left: 85px;
   padding-right: 85px; }
 
-.collection {
+
+
+.brandImg {
+  height: 5px;
+  width: 5px;
 }
 
 .section2 {
