@@ -3,8 +3,12 @@ import React, { Component } from 'react';
 const LengthInput = function(props) {
   return (
     <div>
-      <input type="number" id="length" name="length" min="0" onChange={props.updateSettings} />
+      <input className="inputMaterial numInput" type="number" id="length" name="Length" min="0" placeholder="length" onChange={props.updateSettings} />
+      <span className="highlight"></span>
+      <span className="bar"></span>
+      
     </div>
+    
   )
 };
 
