@@ -23,9 +23,9 @@ class Performance extends Component {
     let solved;
     let hideUponSuccess = {};
     if (this.props.clearText) {
-      solved = <Success clearText={this.props.clearText} duration={this.props.duration} globalConnections={this.props.globalConnections}/>
+      solved = <Success length={this.props.length} clearText={this.props.clearText} duration={this.props.duration} globalConnections={this.props.globalConnections} workers={this.props.globalWorkers} hash={this.props.hash}/>
     } else if (this.props.calculating) {
-      solved = <div><Spinner /><p>Number of contributing web workers: {this.props.globalWorkers}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
+      solved = <div><Spinner /><br/><p>Number of contributing web workers: {this.props.globalWorkers}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
     }
     if (this.props.clearText || this.props.calculating) hideUponSuccess.display = 'none';
 
@@ -42,7 +42,9 @@ class Performance extends Component {
                     <LengthInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'length')} />
                   </div>
                   <div className="group">
-                    &nbsp;<a target="_blank" className="md5Link"href="http://www.miraclesalad.com/webtools/md5.php">[Hash Generator a-z ONLY]</a>
+                    &nbsp;<a target="_blank" className="md5Link"href="http://www.miraclesalad.com/webtools/md5.php">Generate Hash Here</a>
+                    &nbsp; &nbsp;
+                    <i className="material-icons help" onClick={this.togglePopup}>help</i>
                     <HashInput togglePopup={this.togglePopup.bind(this)}className="form-control inputHash" updateSettings={this.props.updateSettings.bind(null, 'hash')} />
                     <HashExplained />
                   </div>
@@ -50,8 +52,9 @@ class Performance extends Component {
                     <WorkerInput className="form-control" optimalWorkers={this.props.optimalWorkers} updateSettings={this.props.updateSettings.bind(null, 'workers')} />
                   </div>
                   <div className="selectGroup">
-                      <p className="worker-recommendation">Optimal number of workers for your device: {this.props.optimalWorkers} </p>
+                      <p className="worker-recommendation">Optimal number of workers for your device: <b>{this.props.optimalWorkers}</b> </p>
                       <p className="worker-recommendation">(Choose 1 worker if you are running other processes)</p>
+                      <p className="worker-recommendation">There {is} currently {this.props.globalConnections} {client} in the room.</p>
                     <button style={hideUponSuccess} 
                     onClick={this.props.startMD5Decrypt}>
                     Start
@@ -60,7 +63,6 @@ class Performance extends Component {
                   </div>                    
                   {solved}
                   <div>
-                    There {is} currently {this.props.globalConnections} {client} in the room.
                   </div>
                   {noTasksAvailable}
                 </div>
