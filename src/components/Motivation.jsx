@@ -4,6 +4,7 @@ const Motivation = function() {
   return (<div className="container">
             <div className="text-center">
               <h2> What motivates us? </h2>
+              <br/>
               <div>
                 <article>
                   <p>The possibility of utilizing millions of idle computers to do something great.</p>

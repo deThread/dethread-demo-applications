@@ -3,69 +3,69 @@ import NavLink from './NavLink';
 import Success from './Success';
 import WorkerInput from './WorkerInput';
 import HashInput from './HashInput';
+import HashExplained from './HashExplained';
 import LengthInput from './LengthInput';
 import Spinner from './Spinner';
 
 class Performance extends Component {
-
+  togglePopup(e) {
+    e.preventDefault();
+    let isVisible = $('.popup').is(':visible');
+    if (!isVisible){
+    $('.popup').show("slow");
+    $('.popup').css('display','inline-block');
+    } else {
+      $('.popup').hide('200');
+    }
+    console.log(isVisible);
+  }
   render() {
     let solved;
-    const hideUponSuccess = {};
+    let hideUponSuccess = {};
     if (this.props.clearText) {
-      solved = <Success clearText={this.props.clearText} duration={this.props.duration} globalConnections={this.props.globalConnections}/>
+      solved = <Success length={this.props.length} clearText={this.props.clearText} duration={this.props.duration} globalConnections={this.props.globalConnections} workers={this.props.globalWorkers} hash={this.props.hash}/>
     } else if (this.props.calculating) {
-      solved = <div><Spinner /><p>Number of contributing web workers: {this.props.globalWorkers}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
+      solved = <div><Spinner /><br/><p>Number of contributing web workers: {this.props.globalWorkers}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div>
     }
-    this.props.clearText || this.props.calculating ? hideUponSuccess.display = 'none' : hideUponSucess = {};
+    if (this.props.clearText || this.props.calculating) hideUponSuccess.display = 'none';
 
     const is = this.props.globalConnections === 1 ? 'is' : 'are';
     const client = this.props.globalConnections === 1 ? 'client' : 'total clients';
     const noTasksAvailable = (this.props.noTasksAvailable && !this.props.clearText) ? <p>Local tasks are complete, and there are no available tasks from the sever. The current process should end shortly.</p> : '';
 
     return(<div>
-              <div className="perfContainer">
-                <div className="card well well-lg">
-                  <h2> MD5 Hash Decryption </h2><br/>
-
-                  <form style={hideUponSuccess} >
-                    <h3>Host Settings</h3>
-                    <div className="form-group">
-                      <label htmlFor="lengthInput">Length of Word</label>
-                      <LengthInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'length')} />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="hashInput">Hash</label><br/>
-                      <a target="_blank" href="http://www.miraclesalad.com/webtools/md5.php">[Hash Generator <em>a-z ONLY </em>]</a>
-                      <HashInput className="form-control inputHash" updateSettings={this.props.updateSettings.bind(null, 'hash')} />
-                    </div>
-
-                {/* <div className="form-group">
-                    <label htmlFor="charsetDropDown">Charset</label><br/>
-                    <CharsetDropDown className="form-control" selectChar={this.props.selectChar}/>
+                <div style={hideUponSuccess} className="box">
+                <h2> MD5 Hash Decryption </h2>
+                <br/>
+                <br/>
+                  <div className="group">
+                    <LengthInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'length')} />
                   </div>
-                  */}
-
-                    <h3 className="local-settings">Local Settings</h3>
-                    <div className="form-group">
-                      <label htmlFor="workerInput">Workers</label>
-                      <WorkerInput className="form-control" optimalWorkers={this.props.optimalWorkers} updateSettings={this.props.updateSettings.bind(null, 'workers')} />
-                      <p className="worker-recommendation">Optimal number of workers for your device: {this.props.optimalWorkers} </p>
+                  <div className="group">
+                    &nbsp;<a target="_blank" className="md5Link"href="http://www.miraclesalad.com/webtools/md5.php">Generate Hash Here</a>
+                    &nbsp; &nbsp;
+                    <i className="material-icons help" onClick={this.togglePopup}>help</i>
+                    <HashInput togglePopup={this.togglePopup.bind(this)}className="form-control inputHash" updateSettings={this.props.updateSettings.bind(null, 'hash')} />
+                    <HashExplained />
+                  </div>
+                  <div className="group">
+                    <WorkerInput className="form-control" optimalWorkers={this.props.optimalWorkers} updateSettings={this.props.updateSettings.bind(null, 'workers')} />
+                  </div>
+                  <div className="selectGroup">
+                      <p className="worker-recommendation">Optimal number of workers for your device: <b>{this.props.optimalWorkers}</b> </p>
                       <p className="worker-recommendation">(Choose 1 worker if you are running other processes)</p>
-                    </div>                    
-                  </form>
-                  <button style={hideUponSuccess} className="startHash btn btn-danger" 
+                      <p className="worker-recommendation">There {is} currently {this.props.globalConnections} {client} in the room.</p>
+                    <button style={hideUponSuccess} 
                     onClick={this.props.startMD5Decrypt}>
                     Start
-                  </button><br /><br />
+                    </button>
+                    </div>
+                  </div>                    
                   {solved}
                   <div>
-                    There {is} currently {this.props.globalConnections} {client} in the room.
                   </div>
                   {noTasksAvailable}
                 </div>
-            </div>
-          </div>
        )
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Motivation from './Motivation';
 import Connection from './Connection';
+import HowDoesItWork from './HowDoesItWork';
 import WhyJS from './Whyjs'
 import Footer from './Footer';
 import { terminateAllWorkers } from '../workerController';
@@ -29,17 +30,19 @@ class AboutUs extends Component {
             <section>
               <div className="text-center" id="CSS">
                 <h2> What is deThread? </h2> 
-                  <p>DeThread is an place where users can use idle computer time to cure diseases,
-                  study the environment, and participate in cutting edge, scientific research.
-                  When you find a project you would like to support, simply click the link, and your computer will become
-                  part of a bot-net.  Each node in the bot-net has two-way communication with the master node,
-                  which distributes a process to each participating node. It's safe easy, and free, and it always will be.
+                <br/>
+                  <p>deThread is an application library for distributed computation using the resources of website visitors.
+                   deThread allows developers to easily establish an in-browser distributed computing network that is fault
+                   tolerant, secure, and compatible with any batch, iterative process.  
                   </p>
+                  <br/>
+                  <br/>
               </div>
               </section>
             </div>
-
+        
           <Connection />
+          <HowDoesItWork />
           <Motivation />
           <WhyJS />
           <Footer />

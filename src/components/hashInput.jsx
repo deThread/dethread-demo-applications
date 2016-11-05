@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 
+
 const HashInput = function(props) {
   return (
     <div>
-      <input type="text" id="hash" name="hash" placeholder="hash" onChange={props.updateSettings} />
+        <input className="inputMaterial" type="text" id="hash" name="Hash" placeholder="Hash" onChange={props.updateSettings} />
+        <span className="highlight"></span>
+        <span className="bar"></span>
     </div>
   )
 };
