@@ -6,7 +6,7 @@ import Participate from './Participate';
 import WorkerProcess from './WorkerProcess';
 import Success from './Success';
 import Host from './Host';
-import { initSocket } from '../Socket';
+import { initSocket, disconnectSocket } from '../Socket';
 import { startWorkers, terminateAllWorkers } from '../workerController';
 
 let socket; 
@@ -47,8 +47,9 @@ class JoinSession extends Component {
 
 	}
 
-	componentDidMount() {
+	componentWillUnmount() {
 	  terminateAllWorkers();
+		disconnectSocket();
 	}
 
 	startSocketConnection() {
