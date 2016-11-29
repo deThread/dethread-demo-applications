@@ -17,10 +17,10 @@ import stylesheet from './css/style.scss';
 render((
   <Router history={browserHistory}>
     <Route component={App}>
-    <Route path="/" component={AboutUs} />
-    <Route path="AboutUs" component={AboutUs} />
-    <Route path="Contact" component={Contact} />
-    <Route path="JoinSession" component={JoinSession} />
-    <Route path="MasterDisconnect" component={MasterDisconnect} />
+      <Route path="/" component={AboutUs} />
+      <Route path="AboutUs" component={AboutUs} />
+      <Route path="Contact" component={Contact} />
+      <Route path="JoinSession" component={JoinSession} />
+      <Route path="MasterDisconnect" component={MasterDisconnect} />
     </Route>
-  </Router>),document.getElementById('root'));
+  </Router>), document.getElementById('root'));
