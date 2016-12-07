@@ -20,7 +20,9 @@ class Navbar extends Component{
               <ul className="nav navbar-nav navbar-right">
                 <li><NavLink to="/AboutUs">Home</NavLink></li>
                 <li><NavLink to="/Contact">Contact</NavLink></li>
+                <li><NavLink to="/Docs">Docs</NavLink></li> 
                 <li><NavLink to="/JoinSession">Join MD5 Demo</NavLink></li>
+
                 <li className="dropdown">
                 
                 <ul className="dropdown-menu">
