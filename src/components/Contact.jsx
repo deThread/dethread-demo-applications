@@ -9,7 +9,7 @@ const Contact = () => {
 						<img className="center-block img-responsive" src="/src/images/github-logo.png" />
 					</a>
 				</h1>
-				<p> Feel Free to contact us out at Github below! </p>
+				<p> Feel free to check us out on Github! </p>
 				<div className="btn-group">
 					<a target="_blank" href="https://github.com/DeThread/dethread" className="btn btn-lg btn-info">Go to Github!</a>
 				</div>
@@ -19,13 +19,13 @@ const Contact = () => {
 
 			<div className="text-center">
 				<h1>
-					<a target="_blank" href="https://www.npmjs.com/">
+					<a target="_blank" href="https://www.npmjs.com/package/dethread">
 						<img className="center-block img-responsive" src="/src/images/npm.png" />
 					</a>
 				</h1>
-				<p> Feel Free to contact us out at NPM below! </p>
+				<p> Feel free to check us out on npm! </p>
 				<div className="btn-group">
-					<a target="_blank" href="https://www.npmjs.com/" className="btn btn-lg btn-info">Go to NPM!</a>
+					<a target="_blank" href="https://www.npmjs.com/package/dethread" className="btn btn-lg btn-info">Go to NPM!</a>
 				</div>
 			</div>
 		</div>

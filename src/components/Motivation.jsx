@@ -7,7 +7,7 @@ const Motivation = function() {
               <br/>
               <div>
                 <article>
-                  <p>The possibility of utilizing millions of idle computers to do something great.</p>
+                  <p>The possibility of utilizing thousands of computers to do something great.</p>
                 </article>
               </div>
             </div>
