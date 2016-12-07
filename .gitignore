@@ -5,6 +5,7 @@ bundle.js
 notes
 *.log
 *.zip
+algLG.txt
 
 
 # Elastic Beanstalk Files

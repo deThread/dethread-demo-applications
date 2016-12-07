@@ -298,7 +298,13 @@ h1, h2{
    color: #b2dfdb; 
 }
 
+.well-overflow {
+  overflow: auto;
+}
 
+.img-border {
+  border: 1px solid black;
+}
 
 /* Pending */
 .pending{

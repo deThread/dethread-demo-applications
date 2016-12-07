@@ -13,7 +13,7 @@ const AboutUs = () => {
         <div className="container">
           <img className="center-block img-responsive" src='src/images/dethreadBlack.png' />
           <br></br>
-          <p>A platform for making Distributed Computing easier, all in the browser.</p>
+          <p>A library for enabling distributed computing with JavaScript.</p>
         </div>
       </div>
 
@@ -22,20 +22,22 @@ const AboutUs = () => {
           <div className="text-center" id="CSS">
             <h2> What is deThread? </h2>
             <br />
-            <p>deThread is an application library for distributed computation using the resources of website visitors.
-                  deThread allows developers to easily establish an in-browser distributed computing network that is fault
-                  tolerant, secure, and compatible with any batch, iterative process.
-                </p>
+            <p>deThread enables developers to easily establish an in-browser distributed computing network that is fault
+                  tolerant, secure, and compatible with any batch, iterative process.</p>
             <br />
             <br />
+            <Connection />
+            <br />
+            <br />
+            <p>Traditionally, distributed computing processes have been written with lower level 
+            languages such as C++ and Java. However, by using JavaScript, deThread enables the distribution
+            of processes on any device with a web browser. In-browser distributed computing inherently has a 
+            low barrier to entry: users can contribute to a distributed process simply by accessing a URL.</p>
           </div>
         </section>
       </div>
-
-      <Connection />
       <HowDoesItWork />
       <Motivation />
-      <WhyJS />
       <Footer />
     </div>
   );
