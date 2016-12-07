@@ -7,6 +7,7 @@ import App from './components/App';
 import Contact from './components/Contact';
 import Performance from './components/Performance';
 import AboutUs from './components/AboutUs';
+import Docs from './components/Docs';
 import JoinSession from './components/JoinSession';
 import MasterDisconnect from './components/MasterDisconnect';
 
@@ -20,6 +21,7 @@ render((
       <Route path="/" component={AboutUs} />
       <Route path="AboutUs" component={AboutUs} />
       <Route path="Contact" component={Contact} />
+      <Route path="Docs" component={Docs} />
       <Route path="JoinSession" component={JoinSession} />
       <Route path="MasterDisconnect" component={MasterDisconnect} />
     </Route>
