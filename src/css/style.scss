@@ -244,9 +244,13 @@ h1, h2{
   animation:inputHighlighter 0.3s ease;
 }
 /* help hover */
-.help{
+.help {
   cursor: pointer;
   margin-top: -2px;
+}
+
+.hash-instructions {
+  text-align: left;
 }
 
 /* ANIMATIONS ================ */

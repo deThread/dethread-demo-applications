@@ -42,8 +42,6 @@ class Performance extends Component {
                     <LengthInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'length')} />
                   </div>
                   <div className="group">
-                    &nbsp;<a target="_blank" className="md5Link"href="http://www.miraclesalad.com/webtools/md5.php">Generate Hash Here</a>
-                    &nbsp; &nbsp;
                     <i className="material-icons help" onClick={this.togglePopup}>help</i>
                     <HashInput togglePopup={this.togglePopup.bind(this)}className="form-control inputHash" updateSettings={this.props.updateSettings.bind(null, 'hash')} />
                     <HashExplained />
