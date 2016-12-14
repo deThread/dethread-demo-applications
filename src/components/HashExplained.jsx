@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 
 const HashExplained = () => {
-return (
-  <div>
-    <div className="popup">Confused? <br/><br/> You can learn more about MD5 hash decryption 
-    <a target="_blank" href="#"> here</a>.</div>
-  </div>
-)
+  return (
+    <div>
+      <div className="popup"><strong>Instructions:</strong>
+        <ol className="hash-instructions">
+          <li><a target="_blank" className="md5Link"href="http://www.miraclesalad.com/webtools/md5.php">Visit this link</a> to generate a hash.</li>
+          <li>Enter a lowercase string.<br />e.g. "stack" (without quotes)</li>
+          <li>Copy the generated hash (32 characters).<br />e.g. d41d8cd98f00b204e9800998ecf8427e</li>
+          <li>Enter the hash into the input.</li>
+        </ol>
+      </div>
+    </div>
+  );
 }
 
 export default HashExplained;
