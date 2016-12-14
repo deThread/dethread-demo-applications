@@ -6,7 +6,7 @@ const Contact = () => {
 			<div className="text-center">
 				<h1>
 					<a target="_blank" href="https://github.com/DeThread/dethread">
-						<img className="center-block img-responsive" src="/src/images/github-logo.png" />
+						<img className="center-block img-responsive" src="/github-logo.png" />
 					</a>
 				</h1>
 				<p> Feel free to check us out on Github! </p>
@@ -20,7 +20,7 @@ const Contact = () => {
 			<div className="text-center">
 				<h1>
 					<a target="_blank" href="https://www.npmjs.com/package/dethread">
-						<img className="center-block img-responsive" src="/src/images/npm.png" />
+						<img className="center-block img-responsive" src="/npm.png" />
 					</a>
 				</h1>
 				<p> Feel free to check us out on npm! </p>

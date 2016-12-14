@@ -52,7 +52,7 @@ class Performance extends Component {
           <div className="selectGroup">
             <p className="worker-recommendation">Optimal number of workers for your device: <b>{this.props.optimalWorkers}</b> </p>
             <p className="worker-recommendation">(Choose 1 worker if you are running other processes)</p>
-            <p className="worker-recommendation">There {is}currently {this.props.globalConnections} {client}in the room.</p>
+            <p className="worker-recommendation">There {is} currently {this.props.globalConnections} {client} in the room.</p>
             <button style={hideUponSuccess} onClick={this.props.startMD5Decrypt}>Start</button>
           </div>
         </div>

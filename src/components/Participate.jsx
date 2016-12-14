@@ -38,7 +38,7 @@ class Participate extends Component {
 					configurations of clients and web workers. The decryption of a six-letter lowercase word consists 
 					of over 308 million permutations:</p>
 					<br />
-					<img className="img-responsive img-border" src="src/images/comparison-graph.png"/>
+					<img className="img-responsive img-border" src="/comparison-graph.png"/>
 				</div>
 		)
 	}

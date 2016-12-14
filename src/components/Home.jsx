@@ -5,13 +5,13 @@ import HowDoesItWork from './HowDoesItWork';
 import WhyJS from './Whyjs'
 import Footer from './Footer';
 
-const AboutUs = () => {
+const Home = () => {
   return (
     <div>
 
       <div className="jumbotron">
         <div className="container">
-          <img className="center-block img-responsive" src='src/images/dethreadBlack.png' />
+          <img className="center-block img-responsive" src='/dethreadBlack.png' />
           <br></br>
           <p>A library for enabling distributed computing with JavaScript.</p>
         </div>
@@ -43,4 +43,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default Home;

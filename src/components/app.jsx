@@ -4,7 +4,6 @@ import NavLink from './NavLink';
 import Navbar from './Navbar';
 
 const App = (props) => {
-  console.log("props children", props.children);
   return (
     <div>
         <Navbar />
