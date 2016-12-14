@@ -19,7 +19,7 @@ class Participate extends Component {
 		const spinner = (this.state.waiting) ? <Spinner /> : '';
 
 		return (
-				<div className="card well well-lg well-overflow">
+				<div className="card well well-lg well-demo">
 					<p> Would you like to join a room to compute MD5 hash decryption? </p>
 					<button className="partBTN btn btn-primary" onClick={this.notifyServer}>Yes</button>
 					<br />
