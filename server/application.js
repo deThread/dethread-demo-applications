@@ -1,4 +1,8 @@
-function socketConnection(io) {
+var exports = {};
+var state;
+var disconnectSockets;
+
+exports.socketConnection = (io) => {
   io.on('connection', (socket) => {
 
     // Initialize connection info
@@ -80,10 +84,14 @@ function socketConnection(io) {
 
       delete state.sockets[socket.id];
     });
-  });
-}
+  }); // End of io connection handler
 
-var state = initState();
+  disconnectSockets = () => {
+    io.emit('master-disconnected');
+  }
+}; // End of exports.socketConnection
+
+state = initState();
 
 function initState() {
   return {
@@ -190,6 +198,11 @@ function distributeWork(socket) {
 
     socket.emit('start-work', data);
   }
-}
+} // End of distributeWork
 
-module.exports = socketConnection;
+exports.resetApp = () => {
+  disconnectSockets();
+  state = initState();
+};
+
+module.exports = exports;
