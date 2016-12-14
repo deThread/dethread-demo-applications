@@ -23,20 +23,6 @@ class Navbar extends Component {
                 <li><NavLink to="/Docs">Docs</NavLink></li>
                 <li><NavLink to="/Contact">Contact</NavLink></li>
                 <li><NavLink to="/JoinSession">Hash Decryption Demo</NavLink></li>
-
-                <li className="dropdown">
-
-                  <ul className="dropdown-menu">
-                    <li><NavLink to="/Home">Home</NavLink></li>
-                    <li><NavLink to="/Docs">Docs</NavLink></li>
-                    <li><NavLink to="/Contact">Contact</NavLink></li>
-                    <li><NavLink to="/JoinSession">Hash Decryption Demo</NavLink></li>
-                    <li role="separator" className="divider"></li>
-                    <li className="dropdown-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
               </ul>
             </div>
           </div>
