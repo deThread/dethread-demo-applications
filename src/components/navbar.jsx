@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import NavLink from './NavLink';
 
-class Navbar extends Component{
-  render(){
-    return(
+class Navbar extends Component {
+  render() {
+    return (
       <div>
         <nav className="navbar navbar-default">
           <div className="container">
@@ -20,28 +20,29 @@ class Navbar extends Component{
             <div id="navbar" className="navbar-collapse collapse">
               <ul className="nav navbar-nav navbar-right">
                 <li><NavLink to="/Home">Home</NavLink></li>
+                <li><NavLink to="/Docs">Docs</NavLink></li>
                 <li><NavLink to="/Contact">Contact</NavLink></li>
-                <li><NavLink to="/Docs">Docs</NavLink></li> 
                 <li><NavLink to="/JoinSession">Hash Decryption Demo</NavLink></li>
 
                 <li className="dropdown">
-                
-                <ul className="dropdown-menu">
-                 <li><NavLink to="/Home">Home</NavLink></li>
-                 <li><NavLink to="/Contact">Contact</NavLink></li>
-                 <li><NavLink to="/JoinSession">Hash Decryption Demo</NavLink></li>
-                  <li role="separator" className="divider"></li>
-                  <li className="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>
-            </ul>
+
+                  <ul className="dropdown-menu">
+                    <li><NavLink to="/Home">Home</NavLink></li>
+                    <li><NavLink to="/Docs">Docs</NavLink></li>
+                    <li><NavLink to="/Contact">Contact</NavLink></li>
+                    <li><NavLink to="/JoinSession">Hash Decryption Demo</NavLink></li>
+                    <li role="separator" className="divider"></li>
+                    <li className="dropdown-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
-    </div>
-    )
+        </nav>
+      </div>
+    );
   }
 }
 

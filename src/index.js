@@ -20,8 +20,8 @@ render((
     <Route component={App}>
       <Route path="/" component={Home} />
       <Route path="Home" component={Home} />
-      <Route path="Contact" component={Contact} />
       <Route path="Docs" component={Docs} />
+      <Route path="Contact" component={Contact} />
       <Route path="JoinSession" component={JoinSession} />
       <Route path="MasterDisconnect" component={MasterDisconnect} />
     </Route>
