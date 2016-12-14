@@ -11,7 +11,18 @@ const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3000;
 
 
-app.use(express.static(path.join(__dirname, '../')));
+app.get(/^\/((index.html)|(home)|(docs)|(contact)|(joinsession))?$/i, (req, res) => {
+  res.sendFile(path.join(__dirname, '../', 'index.html'));
+});
+
+// Route paths can be strings, string patterns or regular expressions
+app.get(/\w+\.(png|jpg)$/, express.static(path.join(__dirname, '../', 'src', 'images')));
+app.get('/*.(css|scss)', express.static(path.join(__dirname, '../', 'src', 'css')));
+
+app.get('/bundle.js', (req, res) => {
+  res.sendFile(path.join(__dirname, '../', 'bundle.js'));
+});
+
 app.use(express.static(path.join(__dirname, '../', 'src', 'md5Crack')));
 
 app.use((req, res) => {
