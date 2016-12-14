@@ -294,7 +294,7 @@ h1, h2{
   to 	{ width:0; background:transparent; }
 }
 
-#footer-box{
+#footer-box {
   width: 100%;
   height: 50px;
   background: #00695c;
@@ -302,22 +302,22 @@ h1, h2{
   bottom: 0;
 }
 
-.footer-text{
+.footer-text {
   color: #cfd8dc;
   
 }
 
-.sign-up{
+.sign-up {
   color: white;
   cursor: pointer;
 }
 
-.sign-up:hover{
+.sign-up:hover {
    color: #b2dfdb; 
 }
 
-.well-overflow {
-  overflow: auto;
+.well-demo {
+  height: 920px;
 }
 
 .img-border {
@@ -325,16 +325,16 @@ h1, h2{
 }
 
 /* Pending */
-.pending{
+.pending {
   margin-top: 125px;
   margin-left: -30px;
 }
-.partText{
+.partText {
   margin-top: 30px;
 }
 
 /* Success */
-.successBox{
+.successBox {
 	position: relative;
 	margin: auto;
 	height: 580px;
@@ -360,36 +360,39 @@ h1, h2{
   justify-content: center;
   align-items: center;
 }
-.dataContainer{
-margin-top: 25px;
-font-family: "Roboto";
-font-size: 18px;
-display: flex;
-width: 100%;
-height: 100%;
+.dataContainer {
+  margin-top: 25px;
+  font-family: "Roboto";
+  font-size: 18px;
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
-.dataType{
-justify-content: flex-start;
-display:inline-block;
-width: 50%;
-p{
-  font-weight: bold;
+.dataType {
+  justify-content: flex-start;
+  display:inline-block;
+  width: 50%;
+  p {
+    font-weight: bold;
+  }
 }
+
+.dataValue {
+  justify-content: flex-end;
+  display: inline-block;
+  width: 50%;
 }
-.dataValue{
-justify-content: flex-end;
-display: inline-block;
-width: 50%;
+
+hr {
+  border: 0;
+  height: 1px;
+  background: #333;
+  width: 400px;
 }
-hr{
-border: 0;
-height: 1px;
-background: #333;
-width: 400px;
-}
+
 /* Spinner */
   /* Layout Basics */
-.spinner{
+.spinner {
   margin-top: 50px;
 }
 .is_loading {
