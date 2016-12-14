@@ -5,7 +5,7 @@ import HowDoesItWork from './HowDoesItWork';
 import WhyJS from './Whyjs'
 import Footer from './Footer';
 
-const AboutUs = () => {
+const Home = () => {
   return (
     <div>
 
@@ -43,4 +43,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default Home;

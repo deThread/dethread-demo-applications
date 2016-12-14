@@ -6,7 +6,7 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import App from './components/App';
 import Contact from './components/Contact';
 import Performance from './components/Performance';
-import AboutUs from './components/AboutUs';
+import Home from './components/Home';
 import Docs from './components/Docs';
 import JoinSession from './components/JoinSession';
 import MasterDisconnect from './components/MasterDisconnect';
@@ -18,8 +18,8 @@ import stylesheet from './css/style.scss';
 render((
   <Router history={browserHistory}>
     <Route component={App}>
-      <Route path="/" component={AboutUs} />
-      <Route path="AboutUs" component={AboutUs} />
+      <Route path="/" component={Home} />
+      <Route path="Home" component={Home} />
       <Route path="Contact" component={Contact} />
       <Route path="Docs" component={Docs} />
       <Route path="JoinSession" component={JoinSession} />

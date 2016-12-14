@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import NavLink from './NavLink';
 
 class Navbar extends Component{
@@ -14,11 +15,11 @@ class Navbar extends Component{
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <a className="navbar-brand" href="#">deThread</a>
+              <Link className="navbar-brand" to="/Home" >deThread</Link>
             </div>
             <div id="navbar" className="navbar-collapse collapse">
               <ul className="nav navbar-nav navbar-right">
-                <li><NavLink to="/AboutUs">Home</NavLink></li>
+                <li><NavLink to="/Home">Home</NavLink></li>
                 <li><NavLink to="/Contact">Contact</NavLink></li>
                 <li><NavLink to="/Docs">Docs</NavLink></li> 
                 <li><NavLink to="/JoinSession">Join MD5 Demo</NavLink></li>
@@ -26,7 +27,7 @@ class Navbar extends Component{
                 <li className="dropdown">
                 
                 <ul className="dropdown-menu">
-                 <li><NavLink to="/AboutUs">About Us</NavLink></li>
+                 <li><NavLink to="/Home">Home</NavLink></li>
                  <li><NavLink to="/Contact">Contact</NavLink></li>
                  <li><NavLink to="/JoinSession">Join Demo</NavLink></li>
                   <li role="separator" className="divider"></li>
