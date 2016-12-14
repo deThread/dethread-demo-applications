@@ -10,6 +10,7 @@ p{
   font-size: 18px;
   text-align: center;
 }
+
 h1, h2{
   text-align: center;
 }
@@ -17,14 +18,18 @@ h1, h2{
 .section{
   text-align: center;
 }
-/*About Us!*/
+
+/*Home*/
+
 .jumbotron{
   margin-top: -20px;
   height: 300px;
 }
+
 .subTitle{
   text-align: center;
 }
+
 .section1 {
   height: 500px;
   margin-top: -2.2em;
@@ -32,6 +37,7 @@ h1, h2{
   padding-left: 155px; 
   padding-right: 155px;
 }
+
 .textContainer{
   margin-top: 45px;
   padding-left: 85px;
@@ -85,6 +91,21 @@ h1, h2{
   width: 500px;
   border: 1px solid gold;
   margin: 25px auto;
+}
+/* Docs */
+
+.comments {
+  color: #a9a9a9;
+  text-align: left; 
+}
+
+.pDoc {
+  text-align: left; 
+}
+
+.docContainer {
+  max-width: 960px;
+  margin: auto; 
 }
 
 /* HostChecking */
@@ -348,47 +369,55 @@ h1, h2{
   justify-content: center;
   align-items: center;
 }
+
 .dataContainer{
-margin-top: 25px;
-font-family: "Roboto";
-font-size: 18px;
-display: flex;
-width: 100%;
-height: 100%;
+  margin-top: 25px;
+  font-family: "Roboto";
+  font-size: 18px;
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
+
 .dataType{
-justify-content: flex-start;
-display:inline-block;
-width: 50%;
-p{
-  font-weight: bold;
+  justify-content: flex-start;
+  display:inline-block;
+  width: 50%;
+  p{
+    font-weight: bold;
+  }
 }
-}
+
 .dataValue{
-justify-content: flex-end;
-display: inline-block;
-width: 50%;
+  justify-content: flex-end;
+  display: inline-block;
+  width: 50%;
 }
+
 hr{
-border: 0;
-height: 1px;
-background: #333;
-width: 400px;
+  border: 0;
+  height: 1px;
+  background: #333;
+  width: 400px;
 }
+
 /* Spinner */
   /* Layout Basics */
 .spinner{
   margin-top: 50px;
 }
+
 .is_loading {
   position: relative;
 }
+
 .is_loading:before,
 .is_loading:after {
   content: '';
   position: absolute;
   top: 50%; left: 50%;
 }
+
 /* Spinner Styling */
 .animation:after,
 .animation--double:after,

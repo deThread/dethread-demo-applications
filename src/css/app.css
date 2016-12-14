@@ -9,6 +9,10 @@ p {
   font-size: 18px;
   text-align: center; }
 
+hr {
+  width: 100%;
+}
+
 h1, h2 {
   text-align: center; }
 
