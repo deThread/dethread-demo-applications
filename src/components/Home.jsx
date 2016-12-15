@@ -8,7 +8,6 @@ import Footer from './Footer';
 const Home = () => {
   return (
     <div>
-
       <div className="jumbotron">
         <div className="container">
           <img className="center-block img-responsive" src='/dethreadBlack.png' />
@@ -16,14 +15,15 @@ const Home = () => {
           <p>A library for enabling distributed computing with JavaScript.</p>
         </div>
       </div>
-
       <div className="container">
         <section>
           <div className="text-center" id="CSS">
             <h2> What is deThread? </h2>
             <br />
-            <p>deThread enables developers to easily establish an in-browser distributed computing network that is fault
-                  tolerant, secure, and compatible with any batch, iterative process.</p>
+            <p>
+              deThread enables developers to easily establish an in-browser distributed computing network that is fault
+              tolerant, secure, and compatible with any batch, iterative process.
+            </p>
             <br />
             <br />
             <Connection />

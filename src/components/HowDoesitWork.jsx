@@ -19,6 +19,24 @@ const HowDoesItWork = function () {
               which run non-blocking JavaScript threads outside the main browser context.
           </p>
           </article>
+          <br/>
+          <div className="diagram-container">
+            <img className="center-block img-responsive figure-format" src="/Diagram1a.jpg"/>
+            <h4 > 
+              <strong>
+                <span className="header-highlight">Figure 1:&nbsp;</span> 
+                Task distribution from the server to multiple clients
+              </strong>
+            </h4>
+            <br /> 
+            <img className="center-block img-responsive figure-format" src="/Diagram2a.jpg"/>
+            <h4> 
+              <strong>
+                <span className="header-highlight">Figure 2:&nbsp;</span> 
+                Task distribution to a single client utilizing multiple web workers
+              </strong>
+            </h4>
+          </div>
         </div>
       </div>
     </div>
