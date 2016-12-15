@@ -2,23 +2,29 @@ import React, { Component } from 'react';
 import NavLink from './NavLink';
 import Success from './Success';
 import WorkerInput from './WorkerInput';
+import WorkerExplained from './WorkerExplained';
 import HashInput from './HashInput';
 import HashExplained from './HashExplained';
 import LengthInput from './LengthInput';
 import Spinner from './Spinner';
 
 class Performance extends Component {
-  togglePopup(e) {
+  togglePopup(id, e) {
     e.preventDefault();
-    let isVisible = $('.popup').is(':visible');
+    const $targetInfo = $(id);
+    const isVisible = $targetInfo.is(':visible');
+    const $otherInfoBox = (id === '#hash-info') ? $('#worker-info') : $('#hash-info');
+
     if (!isVisible) {
-      $('.popup').show("slow");
-      $('.popup').css('display', 'inline-block');
+      $targetInfo.show("slow");
+      $targetInfo.css('display', 'inline-block');
+      $otherInfoBox.hide('200');
     } else {
-      $('.popup').hide('200');
+      $targetInfo.hide('200');
+      $otherInfoBox.hide('200');
     }
-    console.log(isVisible);
   }
+
   render() {
     let solved;
     let hideUponSuccess = {};
@@ -35,7 +41,7 @@ class Performance extends Component {
 
     return (
       <div>
-        <div style={hideUponSuccess} className="box">
+        <div style={hideUponSuccess} className="box host-settings-container">
           <h2> MD5 Hash Decryption </h2>
           <br />
           <br />
@@ -43,11 +49,12 @@ class Performance extends Component {
             <LengthInput className="form-control" updateSettings={this.props.updateSettings.bind(null, 'length')} />
           </div>
           <div className="group">
-            <HashInput togglePopup={this.togglePopup.bind(this)} className="form-control inputHash" updateSettings={this.props.updateSettings.bind(null, 'hash')} />
+            <HashInput className="form-control inputHash" togglePopup={this.togglePopup.bind(this)} updateSettings={this.props.updateSettings.bind(null, 'hash')} />
             <HashExplained />
           </div>
           <div className="group">
-            <WorkerInput className="form-control" optimalWorkers={this.props.optimalWorkers} updateSettings={this.props.updateSettings.bind(null, 'workers')} />
+            <WorkerInput className="form-control" togglePopup={this.togglePopup.bind(this)} optimalWorkers={this.props.optimalWorkers} updateSettings={this.props.updateSettings.bind(null, 'workers')} />
+            <WorkerExplained />
           </div>
           <div className="selectGroup">
             <p className="worker-recommendation">Optimal number of workers for your device: <b>{this.props.optimalWorkers}</b> </p>
