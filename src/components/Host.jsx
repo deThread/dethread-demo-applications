@@ -5,8 +5,11 @@ const Host = function(props) {
 			<div className="card well well-lg">
 				<div className="container-fluid">
 					<div className="row text-center"> 
-						<p className="hostLabel">Would you like to host?</p>
+						<h2>Would you like to host?</h2>
+						<br/>
 						<button className="hostBTN btn btn-primary btn-md" onClick={props.claimMaster}>Host</button>
+						<br/>
+						<img className="center-block img-responsive host-img" src="/ant2.png" />
 					</div>
 				</div>
 			</div>
