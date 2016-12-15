@@ -122,10 +122,10 @@ h1, h2 {
 
 /* Performance inputs */
 /* BOX LOGIN */
-.box {
+.host-settings-container {
 	position: relative;
 	margin: auto;
-	height: 600px;
+	min-height: 600px;
   top: 40px;
 	left: 0;
 	z-index: 200;
@@ -278,15 +278,20 @@ h1, h2 {
   animation:inputHighlighter 0.3s ease;
 }
 /* help hover */
-.help {
+.help-button {
   cursor: pointer;
   position: absolute;
   top: 10px;
-  right: 40px;
+  right: 34px;
 }
 
-.hash-instructions {
+.instruction-box {
+  width: 340px;
   text-align: left;
+}
+
+.instruction-title {
+  font-weight: bold;
 }
 
 /* ANIMATIONS ================ */
