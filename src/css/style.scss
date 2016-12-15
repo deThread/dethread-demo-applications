@@ -53,6 +53,25 @@ h1, h2 {
   margin-top: 4em;
   padding: 45px;
 }
+
+.header-title {
+  margin-left: 125px; 
+}
+
+.header-highlight {
+  color: red;
+}
+.figure-format {
+  width: 100%; 
+  border: 1px dotted black; 
+}
+
+.diagram-container {
+  max-width: 750px; 
+  text-align: left;
+  margin: 0 auto;
+}
+
 /* Section Three */
 .section3 {
   padding-left: 125px;
@@ -118,6 +137,10 @@ h1, h2 {
 .hostBTN {
   display: block;
   margin: auto;
+}
+
+.host-img {
+  width: 60%;
 }
 
 /* Performance inputs */
