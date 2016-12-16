@@ -2,33 +2,41 @@ import React, { Component } from 'react';
 
 const Contact = () => {
 	return (
-		<div>
-			<div className="text-center">
-				<h1>
-					<a target="_blank" href="https://github.com/DeThread/dethread">
-						<img className="center-block img-responsive" src="/github-logo.png" />
-					</a>
-				</h1>
-				<p> Feel free to check us out on Github! </p>
-				<div className="btn-group">
-					<a target="_blank" href="https://github.com/DeThread/dethread" className="btn btn-lg btn-info">Go to Github!</a>
-				</div>
+		<div className="container">
+			<h1><strong>Check us out!</strong></h1>
+			<div className="row">
+				<div className="col-sm-6 text-center">					
+					<img className="image-set-git" src="/github.png" />
+					<br/>
+					<a target="_blank" href="https://github.com/DeThread/dethread" 
+						 className="btn btn-lg btn-info btn-go">Go to Github!</a>
+				</div> 
+				<div className="col-sm-6 text-center">
+					<img className="image-set-git" src="/npm.png" />
+					<br/>
+					<a target="_blank" href="https://www.npmjs.com/package/dethread" 
+					   className="btn btn-lg btn-info btn-go">Go to NPM!</a>
+				</div> 	
 			</div>
-
-			<h2><small><hr width="50%"></hr></small></h2>
-
-			<div className="text-center">
-				<h1>
-					<a target="_blank" href="https://www.npmjs.com/package/dethread">
-						<img className="center-block img-responsive" src="/npm.png" />
-					</a>
-				</h1>
-				<p> Feel free to check us out on npm! </p>
-				<div className="btn-group">
-					<a target="_blank" href="https://www.npmjs.com/package/dethread" className="btn btn-lg btn-info">Go to NPM!</a>
+			<br/>
+			<hr/>
+			<h2> Created By </h2>
+				<div className="row">
+					<div className="col-md-4 text-center"> 
+						<img className="image-set" src="/bryan.jpg" />
+						<h3>Bryan Yee</h3>
+					</div>
+					<div className="col-md-4 text-center"> 
+						<img className="image-set" src="/D1.jpg"/>
+						<h3>Daniel Lao</h3>
+					</div>
+					<div className="col-md-4 text-center">
+						<img className="image-set" src="/shawn.jpg"/>
+						<h3>Shawn Southwell</h3>								
+					</div>
 				</div>
-			</div>
 		</div>
+		
 		);
 };
 
