@@ -8,7 +8,7 @@ const WorkerExplained = () => {
         <p>Web workers are a technology that allow a web browser to run multiple
         simultaneous scripts without interfering with the web page. By allowing the
         running of multiple web workers, your web browser will be able to process
-        multiple tasks at the same time, at expense of CPU resources.</p>
+        multiple tasks at the same time, at the expense of CPU resources.</p>
       </div>
     </div>
   );
