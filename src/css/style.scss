@@ -115,17 +115,35 @@ h1, h2 {
 }
 
 /* Contacts */
-.image-set {
-  height: 350px;
-  width: 350px;
-  padding-right: 50px;
+// .image-set {
+//   height: 350px;
+//   width: 350px;
+//   padding-right: 50px;
+//   border-radius: 100%;
+// }
+.icons {
+  width: 55px;
+  height: 55px;
+  margin-bottom: 20px;
 }
 
-.image-set-git {
+.profile-img {
+  height: 300px; 
+  width: 300px;
+  border-radius: 50%;
+}
+
+.site-logo {
   height: 200px;
-  width: 250px;
+  max-width: 345px;
   padding-top: 50px;
   padding-bottom: 25px;
+}
+
+.logo-container {
+  min-height: 300px;
+  max-width: 900px; 
+  min-width: 400px;
 }
 
 
