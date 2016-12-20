@@ -8,7 +8,7 @@ const Docs = () => {
       <div className="well">
         <p className='pDoc'>npm install --S dethread </p>
       </div>
-      <hr/>
+      <hr width="100%"></hr>
       <h2>API Documentation</h2>
       <h3 className="pDoc">Methods</h3>
       <div className="well">
