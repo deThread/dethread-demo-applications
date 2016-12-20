@@ -113,6 +113,45 @@ h1, h2 {
   border: 1px solid gold;
   margin: 25px auto;
 }
+
+/* Contacts */
+// .image-set {
+//   height: 350px;
+//   width: 350px;
+//   padding-right: 50px;
+//   border-radius: 100%;
+// }
+.icons {
+  width: 55px;
+  height: 55px;
+  margin-bottom: 20px;
+}
+
+.profile-img {
+  height: 300px; 
+  width: 300px;
+  border-radius: 50%;
+}
+
+.site-logo {
+  height: 200px;
+  max-width: 345px;
+  padding-top: 50px;
+  padding-bottom: 25px;
+}
+
+.logo-container {
+  min-height: 300px;
+  max-width: 900px; 
+  min-width: 400px;
+}
+
+
+.btn-go {
+  height: 50px;
+  width: 150px;
+}
+
 /* Docs */
 
 .comments {
