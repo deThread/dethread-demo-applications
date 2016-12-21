@@ -1,30 +1,45 @@
-import React, { Component } from 'react';
-import { startWorkers } from '../workerController';
-
-import Success from './Success';
+import React from 'react';
+import StateHeader from './StateHeader';
 import Spinner from './Spinner';
 
-class WorkerProcess extends Component {
-  render() {
-    const solved = this.props.clearText ? <Success clearText={this.props.clearText} duration={this.props.duration} globalConnections={this.props.globalConnections} /> : '';
-    const spinner = !this.props.clearText ? <Spinner /> : '';
-    const processing = !this.props.clearText 
-      ? <div><h2>Processing . . .</h2><p>There are {this.props.globalConnections} clients participating, using {this.props.globalWorkers} web workers.</p><p>Hash: {this.props.hash}</p><p>Number of permutations: {this.props.globalNumCombos}</p></div> 
-      : '';
-    const noTasksAvailable = (this.props.noTasksAvailable && !this.props.clearText)
-      ? <span><br /><p>Local tasks are complete, and there are no available tasks from the sever. The current process should end shortly.</p></span>
-      : '';
+const WorkerProcess = (props) => {
+  const noTasksAvailable = props.noTasksAvailable
+    ? <span><br /><p>Local tasks are complete, and there are no available tasks from the sever. The current process should end shortly.</p></span>
+    : '';
 
-    return(<div> 
-              <div className="card well well-lg">
-                {processing}
-                {spinner}
-                {noTasksAvailable}
-                {solved}
-              </div>
+  const client = props.globalConnections === 1 ? 'client' : 'clients';
+  const worker = props.workers === 1 ? 'worker' : 'workers';
+
+  return (
+    <div>
+      <div className="state-box">
+        <StateHeader title={'MD5 Hash Decryption'} hash={props.hash} />
+        <div className="dataContainer">
+          <div className="dataType">
+            <p>Target word length</p><hr /><br />
+            <p>Number of potential permutations</p><hr /><br />
+            <p>Number of participating clients</p><hr /><br />
+            <p>Number of contributing workers</p><hr /><br />
+            <p>Your workers</p><hr /><br />
+
           </div>
-        )
-  }
+          <div className="dataValue">
+            <p>{props.length}</p><hr /><br />
+            <p>{props.globalNumCombos}</p><hr /><br />
+            <p>{props.globalConnections}</p><hr /><br />
+            <p>{props.globalWorkers}</p><hr /><br />
+            <p>{props.workers}</p><hr /><br />
+            {noTasksAvailable}
+          </div>
+        </div>
+      </div>
+      <Spinner />
+    </div>
+  );
 }
 
+
 export default WorkerProcess;
+
+
+

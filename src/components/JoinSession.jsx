@@ -176,14 +176,18 @@ class JoinSession extends Component {
 
 	render() {
 		const sessionView = !this.state.userParticipation ? <Participate startSocketConnection={this.startSocketConnection} /> 
-						 : !this.state.hasMaster ? <Host claimMaster={this.claimMaster} /> 
-						 : this.state.isMaster ? <Performance {...this.state} updateSettings={this.updateSettings} startMD5Decrypt={this.startMD5Decrypt} selectChar={this.selectChar}/> 
-						 : !this.state.calculating || !this.state.ready ? <Pending ready={this.state.ready} optimalWorkers={this.state.optimalWorkers} workers={this.state.workers} updateSettings={this.updateSettings} chooseWorkerCount={this.chooseWorkerCount} globalConnections={this.state.globalConnections} />
-						 : <WorkerProcess {...this.state} />;
-		return (	<div>
-								{sessionView}
-							</div>
-		)
+						 : !this.state.hasMaster ? <Host claimMaster={this.claimMaster} />
+						 : this.state.clearText ? <Success {...this.state}/>
+						 : this.state.isMaster && !this.state.calculating ? <Performance {...this.state} updateSettings={this.updateSettings} startMD5Decrypt={this.startMD5Decrypt} selectChar={this.selectChar}/>
+						 : this.state.isMaster && this.state.calculating ? <WorkerProcess {...this.state} />
+						 : this.state.calculating && this.state.ready ? <WorkerProcess {...this.state} />
+						 : <Pending ready={this.state.ready} optimalWorkers={this.state.optimalWorkers} workers={this.state.workers} updateSettings={this.updateSettings} chooseWorkerCount={this.chooseWorkerCount} globalConnections={this.state.globalConnections} />;
+		
+		return (	
+				<div>
+					{sessionView}
+				</div>
+		);
 	}
 }
 

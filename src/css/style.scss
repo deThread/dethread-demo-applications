@@ -421,7 +421,7 @@ h1, h2 {
 }
 
 /* Success */
-.successBox {
+.state-box {
 	position: relative;
 	margin: auto;
 	height: 580px;
@@ -437,8 +437,10 @@ h1, h2 {
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   overflow: hidden;
 }
-.successHeader {
+
+.state-header {
   background-color: $color;
+  color: white;
   font-family: "Roboto";
   height: 145px;
   margin-top: -20px;
