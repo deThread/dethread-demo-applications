@@ -1,13 +1,15 @@
 import React from 'react';
 
 const StateHeader = (props) => {
-  const clearText = props.clearText ? <span className="found-clear-text"><br/> {props.clearText}</span> : '';
+  const clearText = props.clearText || '';
+  const className = ('state-header').concat(!props.clearText ? ' bc-lb' : '');
+  const clientType = props.isMaster ? 'Host' : 'Client'
 
   return (
-    <div className="state-header">
-      <h2> {props.title}
-        <br/> {props.hash}
-        {clearText}  
+    <div className={className}>
+      <span className="client-type">{clientType}</span>
+      <h2>{props.title}: <em>{clearText}</em>
+        <br/>{props.hash}
       </h2>
     </div>
   );

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const Host = function(props) {
+const Host = (props) => {
 	return (
 			<div className="card well well-lg">
 				<div className="container-fluid">
@@ -8,12 +8,12 @@ const Host = function(props) {
 						<h2>Would you like to host?</h2>
 						<br/>
 						<button className="hostBTN btn btn-primary btn-md" onClick={props.claimMaster}>Host</button>
-						<br/>
-						<img className="center-block img-responsive host-img" src="/ant2.png" />
+						<br/><br/>
+						<img className="center-block img-responsive host-img" src="antenna.png" />
 					</div>
 				</div>
 			</div>
-		)
+		);
 };
 
 export default Host;

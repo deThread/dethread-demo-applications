@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const HowDoesItWork = function () {
+const HowDoesItWork = () => {
   return (
     <div className="container">
       <div className="text-center">
@@ -40,7 +40,7 @@ const HowDoesItWork = function () {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default HowDoesItWork;

@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const Spinner = function() {
-  return (<div>
-            <div className="spinner">
-					    <div className="any-element animation is_loading">
-  				 	    &nbsp;
-  				    </div>
-            </div>
-          </div>)
+const Spinner = () => {
+  return (
+    <div className="spinner">
+      <div className="any-element animation is_loading">
+      </div>
+    </div>
+  );
 };
 
 export default Spinner;
