@@ -10,7 +10,7 @@ const WorkerProcess = (props) => {
     <div>
       <Spinner />
       <div className="state-box">
-        <StateHeader title={'Decrypting hash:'} hash={props.hash} isMaster={props.isMaster}/>
+        <StateHeader title={'Decrypting hash'} hash={props.hash} isMaster={props.isMaster}/>
         <div className="dataContainer">
           <div className="dataType">
             <p>Target word length</p><hr /><br />

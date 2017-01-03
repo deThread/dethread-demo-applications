@@ -12,4 +12,4 @@ function initSocket(io) {
 	return socket; 
 }
 
-export { disconnectSocket, initSocket, socket };
+export { disconnectSocket, initSocket };

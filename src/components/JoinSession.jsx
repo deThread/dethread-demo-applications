@@ -9,32 +9,38 @@ import Host from './Host';
 import { initSocket, disconnectSocket } from '../Socket';
 import { startWorkers, terminateAllWorkers } from '../workerController';
 
-let socket; 
+let socket;
+
+function initSessionState() {
+	return {
+		charset: undefined,
+		userParticipation: false,
+		ready: false,
+		hasMaster: false,
+		isMaster: false,
+		calculating: false,
+		globalConnections: undefined,
+		globalWorkers: undefined,
+		globalNumCombos: undefined,
+		noTasksAvailable: false,
+		clearText: undefined,
+		duration: undefined,
+		length: undefined,
+		workers: undefined,
+		optimalWorkers: undefined,
+		hash: undefined,
+		begin: undefined,
+		end: undefined,
+		startTime: undefined
+	};
+}
 
 class JoinSession extends Component {
 	constructor() {
-		super(); 
-		this.state = {
-			charset: undefined, 
-			userParticipation: false,
-			ready: false,
-			hasMaster: false,
-			isMaster: false,
-			calculating: false,
-			globalConnections: undefined,
-			globalWorkers: undefined,
-			globalNumCombos: undefined,
-			noTasksAvailable: false,
-			clearText: undefined,
-			duration: undefined,
-			length: undefined,
-			workers: undefined,
-			optimalWorkers: undefined,
-			hash: undefined,
-			begin: undefined,
-			end: undefined,
-		};
+		super();
+		this.state = initSessionState();
 
+		this.resetState = this.resetState.bind(this);
 		this.startSocketConnection = this.startSocketConnection.bind(this);
 		this.claimMaster = this.claimMaster.bind(this);
 		this.updateSettings = this.updateSettings.bind(this);
@@ -43,13 +49,16 @@ class JoinSession extends Component {
 		this.startWork = this.startWork.bind(this);
 		this.requestMoreWork = this.requestMoreWork.bind(this);
 		this.passwordCracked = this.passwordCracked.bind(this);
-		this.selectChar = this.selectChar.bind(this) 
 
 	}
 
 	componentWillUnmount() {
-	  terminateAllWorkers();
+		terminateAllWorkers();
 		disconnectSocket();
+	}
+
+	resetState() {
+		this.setState(initSessionState());
 	}
 
 	startSocketConnection() {
@@ -92,26 +101,26 @@ class JoinSession extends Component {
 		});
 
 		socket.on('client-disconnect', (data) => {
-			this.setState({globalConnections: data.globalConnections, globalWorkers: data.globalWorkers});
+			this.setState({ globalConnections: data.globalConnections, globalWorkers: data.globalWorkers });
 		});
 
 		// Handlers for connection events
 		socket.on('connect_error', (e) => {
-		  console.log('connection error', socket.id);
+			console.log('connection error', socket.id);
 		});
 
 		socket.on('reconnect', () => {
-		  console.log('socket reconnected', socket.id);
+			console.log('socket reconnected', socket.id);
 		})
 
 		socket.on('reconnect_error', (e) => {
-		  console.log('reconnect connection error', socket.id);
+			console.log('reconnect connection error', socket.id);
 		})
 
 
 		const optimalWorkers = (navigator.hardwareConcurrency / 2) + 1;
 		this.setState({ optimalWorkers });
-	}
+	} // End of startSocketConnection()
 
 	claimMaster() {
 		socket.emit('claim-master');
@@ -119,10 +128,10 @@ class JoinSession extends Component {
 	}
 
 	updateSettings(name, e) {
-	  const stateUpdate = {};
-	  if (name === 'workers' || name === 'length' ) stateUpdate[name] = Number(e.target.value);
-	  else stateUpdate[name] = e.target.value;
-	  this.setState(stateUpdate);   
+		const stateUpdate = {};
+		if (name === 'workers' || name === 'length') stateUpdate[name] = Number(e.target.value);
+		else stateUpdate[name] = e.target.value;
+		this.setState(stateUpdate);
 	}
 
 	chooseWorkerCount() {
@@ -139,8 +148,8 @@ class JoinSession extends Component {
 			alert('Please enter a valid number of Web Workers');
 		} else {
 			console.log('start decryption hash', this.state.hash);
-	  	socket.emit('start-decryption', { hash: this.state.hash, length: this.state.length, workers: this.state.workers });
-		} 
+			socket.emit('start-decryption', { hash: this.state.hash, length: this.state.length, workers: this.state.workers });
+		}
 	}
 
 	startWork(data) {
@@ -171,22 +180,22 @@ class JoinSession extends Component {
 	}
 
 	selectChar(e) {
-		this.setState({charset: e.target.value});
+		this.setState({ charset: e.target.value });
 	}
 
 	render() {
-		const sessionView = !this.state.userParticipation ? <Participate startSocketConnection={this.startSocketConnection} /> 
-						 : !this.state.hasMaster ? <Host claimMaster={this.claimMaster} />
-						 : this.state.clearText ? <Success {...this.state}/>
-						 : this.state.isMaster && !this.state.calculating ? <Performance {...this.state} updateSettings={this.updateSettings} startMD5Decrypt={this.startMD5Decrypt} selectChar={this.selectChar}/>
-						 : this.state.isMaster && this.state.calculating ? <WorkerProcess {...this.state} />
-						 : this.state.calculating && this.state.ready ? <WorkerProcess {...this.state} />
-						 : <Pending ready={this.state.ready} optimalWorkers={this.state.optimalWorkers} workers={this.state.workers} updateSettings={this.updateSettings} chooseWorkerCount={this.chooseWorkerCount} globalConnections={this.state.globalConnections} />;
-		
-		return (	
-				<div>
-					{sessionView}
-				</div>
+		const sessionView = !this.state.userParticipation ? <Participate startSocketConnection={this.startSocketConnection} />
+			: !this.state.hasMaster ? <Host claimMaster={this.claimMaster} ready={this.state.ready} resetState={this.resetState}/>
+				: this.state.clearText ? <Success {...this.state} />
+					: this.state.isMaster && !this.state.calculating ? <Performance {...this.state} updateSettings={this.updateSettings} startMD5Decrypt={this.startMD5Decrypt} selectChar={this.selectChar} />
+						: this.state.isMaster && this.state.calculating ? <WorkerProcess {...this.state} />
+							: this.state.calculating && this.state.ready ? <WorkerProcess {...this.state} />
+								: <Pending ready={this.state.ready} optimalWorkers={this.state.optimalWorkers} workers={this.state.workers} updateSettings={this.updateSettings} chooseWorkerCount={this.chooseWorkerCount} globalConnections={this.state.globalConnections} />;
+
+		return (
+			<div>
+				{sessionView}
+			</div>
 		);
 	}
 }
