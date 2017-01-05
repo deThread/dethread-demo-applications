@@ -1,38 +1,42 @@
-# DeThread - Demo Application
+# deThread - MD5 Hash Decryption Demo Application
 
-DeThread is an application library that allows a developer to do utilize the power of distributed computing in the web browser. 
+deThread is a library that enables distributed computing with JavaScript in the web browser.
 
-If you are a DeThread user and would like to provide feed back on how we can improve, please
-[click here to leave some feedback](https://docs.google.com/forms/d/e/1FAIpQLSdRxi7h0A7A0YFU5Bmcj1nduDyMIPpE5H9zZzPCwHnAY7cgdQ/viewform)
+Visit the [main repo](https://github.com/deThread/dethread) to learn more about the deThread library.
 
-We would love the opportunity to dethread your problems.
+To demonstrate the utility of using deThread, we built an application that applies distributed computing to MD5 hash decryption.
+Our application uses a brute force process to decrypt the hash into clear text, trying all combinations of the lowercase alphabet until the hash is decrypted.
+For a word of length **N**, the number of combinations of the lowercase alphabet is **26 ^ N**.
+A host user selects the MD5 hash for a target word and starts the distributed process.
 
-* [View our site and Demo here]()
+Features:
+* Non-host clients may join a session before the host starts the process or can join an existing ongoing session.
+* If a client leaves the session, deThread saves the unfinished task load for another client to take in the future.
+* Each client may choose to use multiple web workers in order to run multiple tasks at the same time.
 
---- 
+## Links & Resources
+* [Checkout our website and demo application!](http://www.dethread.io)
+* [Provide feedback on how deThread can improve.](https://docs.google.com/forms/d/e/1FAIpQLSdRxi7h0A7A0YFU5Bmcj1nduDyMIPpE5H9zZzPCwHnAY7cgdQ/viewform)
+* [Visit the main repo for the deThread library.](https://github.com/deThread/dethread)
+* [Learn more about **MD5 Hashes**.](http://searchsecurity.techtarget.com/definition/MD5)
+* [Learn more about **Distributed Computing**.](https://www.techopedia.com/definition/7/distributed-computing-system)
 
-## Contents 
-* [MD5 Decryption Example](#md5)
-* [How to see this Demo in Action](#demo)
+## How to use this Demo
+* Visit [dethread.io](http://www.dethread.io)
+* Select "Join Demo"
+* Join a room to compute MD5 hash decryption
 
----
+To host:
 
-## <a name="md5"></a> Examples and Use Cases 
-We used MD5 hash decryption as an example to illustrate the power of distributed computing.  Not only does DeThread allow for users to distribute a problem across multiple bot-net nodes, it distributes the problem further on each connected device. 
-The problem is chunked once before it is distributed, then it is chunked again on the client and distributed to Web Workers dependent upon the client's hardware.
+* Select "Host" (if a distributed process is currently running, you must wait for the process to complete)
+* Enter the settings for the session:
+  1. Length of the target clear text
+  2. Hash (32 characters) of the clear text
+  3. Number of web workers for your client
+* Click start to begin decryption!
 
-* [Want to know more about **MD5**](http://searchsecurity.techtarget.com/definition/MD5)
-* [Want to know more about **Distributed Computing**](https://www.techopedia.com/definition/7/distributed-computing-system)
+To participate:
 
----
-
-## <a name="demo"></a> How to use this Demo
-* Join Demo
-* Choose Host
-* Set the length of the word you are trying to crack "supports lower case only"
-* Go to the hashing function and type in the word you would like to use
-* Copy that hash and paste it into the hash input 
-* Set the amount of workers you would like to use (suggested amount is given)
-* Other users can join the demo dynamically 
-* Enjoy the Demo!
-
+* If the Host button is visible, wait for another client to host a session.
+* Enter the number of workers for your client
+* Click submit to join the decryption session!
