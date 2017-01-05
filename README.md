@@ -1,8 +1,10 @@
 # deThread - MD5 Hash Decryption Demo Application
 
-[Checkout our website and demo application](dethread.io)!
+[Checkout our website and demo application!](dethread.io)<br />
+[Provide feedback on how deThread can improve.](https://docs.google.com/forms/d/e/1FAIpQLSdRxi7h0A7A0YFU5Bmcj1nduDyMIPpE5H9zZzPCwHnAY7cgdQ/viewform)<br />
+[Visit the main repo for the deThread library.](https://github.com/deThread/dethread)
 
-To provide feed back on how deThread can improve, please [click here](https://docs.google.com/forms/d/e/1FAIpQLSdRxi7h0A7A0YFU5Bmcj1nduDyMIPpE5H9zZzPCwHnAY7cgdQ/viewform).
+---
 
 deThread is a library that enables distributed computing with JavaScript in the web browser. deThread handles server-side application logic & task distribution, task failure management (e.g. client disconnection) and client management, and encourages the use of web workers on the client to maximize the processing of tasks in parallel.
 
@@ -16,8 +18,11 @@ Features:
 * If a client leaves the session, deThread saves the unfinished task load for another client to take in the future.
 * Each client may choose to use multiple web workers in order to run multiple tasks at the same time.
 
-[Learn more about **MD5**](http://searchsecurity.techtarget.com/definition/MD5).
+---
 
+## Resources
+
+[Learn more about **MD5 Hashes**](http://searchsecurity.techtarget.com/definition/MD5).<br />
 [Learn more about **Distributed Computing**](https://www.techopedia.com/definition/7/distributed-computing-system).
 
 ---
