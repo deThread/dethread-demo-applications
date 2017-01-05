@@ -58,15 +58,14 @@ exports.socketConnection = (io) => {
 
     socket.on('password-cracked', (data) => {
       console.log('password-cracked', data);
-      state.clearText = data.clearText;
-      state.duration = data.duration;
       socket.broadcast.emit('password-found', data);
       socket.disconnect();
-      initState();
+      state = initState();
     });
 
     socket.on('disconnect', () => {
       if (!state.calculating || socket.id === state.master.id) return;
+      console.log(socket.id, 'client disconnected');
 
       // Update state counts
       state.activeWorkerCount -= socket.workers;
