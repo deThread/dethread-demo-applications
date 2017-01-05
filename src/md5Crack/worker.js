@@ -24,7 +24,6 @@ this.addEventListener('message', (e) => {
 function crackMD5(begin, end, hash) {
   console.log('START AT', Date());
   for (let i = begin; i <= end; i += 1) {
-    // call i to str, compare hashed string to actual hash
     const base26 = padWithZeros(i.toString(26));
     const convertedStr = base26toSTR(base26);
     

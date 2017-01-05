@@ -12,7 +12,7 @@ function startWorkers(passwordCracked, begin, end, numWorkers, hash, length, sta
   localPasswordCracked = passwordCracked;
   requestMoreWork = requestCallback;
   localSocket = socket;
-  const numCombos = end - begin;
+  const numCombos = end - begin + 1;
   const workerFrag = Math.floor(numCombos / numWorkers);
   const remainder = numCombos % numWorkers; 
   

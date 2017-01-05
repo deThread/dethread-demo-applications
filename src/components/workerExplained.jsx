@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const WorkerExplained = () => {
   return (
@@ -12,6 +12,6 @@ const WorkerExplained = () => {
       </div>
     </div>
   );
-}
+};
 
 export default WorkerExplained;

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const WhyJS = function () {
+const WhyJS = () => {
   return (
     <div className="container">
       <div className="text-center">
@@ -16,6 +16,7 @@ const WhyJS = function () {
         </article>
       </div>
     </div>
-  )
+  );
 };
+
 export default WhyJS;

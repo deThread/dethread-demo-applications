@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { browserHistory } from 'react-router';
 import PendingWorkers from './PendingWorkers';
 import PendingStart from './PendingStart';
 
-const Pending = function(props) {
+const Pending = (props) => {
 	const pending = !props.ready ? <PendingWorkers optimalWorkers={props.optimalWorkers} updateSettings={props.updateSettings} chooseWorkerCount={props.chooseWorkerCount} />
-									: <PendingStart globalConnections={props.globalConnections} workers={props.workers} />;
+																: <PendingStart globalConnections={props.globalConnections} workers={props.workers} />;
 
-	return (<div>
+	return (
+		<div>
 						<div className="card well well-lg">
-							<div className="pending"> 
-								{pending}
-							</div> 
+				<div className="pending">
+					{pending}
+				</div>
 						</div>
-					</div>
-					)
+		</div>
+	);
 };
 
 export default Pending;
