@@ -8,7 +8,7 @@ function disconnectSocket() {
 
 function initSocket(io) {
 	//returning a live socket connection
-	socket = io();
+	socket = io('http://' + window.location.hostname + ':3000');
 	return socket; 
 }
 

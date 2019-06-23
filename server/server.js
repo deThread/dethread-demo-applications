@@ -1,7 +1,6 @@
 'use strict';
 
 const socketConnection = require('./application').socketConnection;
-const reset = require('./reset');
 
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -27,8 +26,6 @@ app.get('/bundle.js', (req, res) => {
 });
 
 app.use(express.static(path.join(__dirname, '../', 'src', 'md5Crack')));
-
-app.post('/reset', reset);
 
 app.use((req, res) => {
   res.sendStatus(404);
