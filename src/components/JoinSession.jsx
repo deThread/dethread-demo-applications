@@ -8,6 +8,7 @@ import Success from './Success';
 import Host from './Host';
 import { initSocket, disconnectSocket } from '../Socket';
 import { startWorkers, terminateAllWorkers } from '../workerController';
+import io from 'socket.io-client';
 
 let socket;
 
